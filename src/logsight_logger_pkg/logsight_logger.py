@@ -1,7 +1,7 @@
 from logging import StreamHandler
 import requests
 
-url = 'http://localhost/api_v1/data'
+url = 'https://logsight.ai/api_v1/data'
 
 
 class LogsightLogger(StreamHandler):
