@@ -1,10 +1,12 @@
 from logging import StreamHandler
 import requests
-
-url = 'https://logsight.ai/api_v1/data'
+import urllib.parse
 
 
 class LogsightLogger(StreamHandler):
+
+    host = 'https://logsight.ai'
+    path = '/api_v1/data'
 
     def __init__(self, private_key, app_name):
         StreamHandler.__init__(self)
@@ -25,4 +27,7 @@ class LogsightLogger(StreamHandler):
         elif self.level == 50:
             log_level = 'CRITICAL'
         myobj = {'private-key': self.private_key, 'app': self.app_name, 'message': msg, 'level': log_level}
-        x = requests.post(url, json=myobj)
+        self._post(self.path, json=myobj)
+
+    def _post(self, path, json):
+        return requests.post(urllib.parse.urljoin.urljoin(self.host, path), json=json)
