@@ -1,7 +1,7 @@
 from logging import StreamHandler
 import requests
 import urllib.parse
-
+import datetime
 
 class LogsightLogger(StreamHandler):
 
@@ -12,7 +12,6 @@ class LogsightLogger(StreamHandler):
         StreamHandler.__init__(self)
         self.private_key = private_key
         self.app_name = app_name
-
     def emit(self, record):
         msg = self.format(record)
         log_level = 'null'
@@ -26,7 +25,7 @@ class LogsightLogger(StreamHandler):
             log_level = 'ERROR'
         elif self.level == 50:
             log_level = 'CRITICAL'
-        myobj = {'private-key': self.private_key, 'app': self.app_name, 'message': msg, 'level': log_level}
+        myobj = {'private-key': self.private_key, 'app': self.app_name, 'logMessages':['timestamp':str(datetime.datetime.now().isoformat()), 'level': log_level, 'message':msg]}
         self._post(self.path, json=myobj)
 
     def _post(self, path, json):
