@@ -18,7 +18,7 @@ ANOMALIES = {
 class LogsightResult:
 
     host = 'https://logsight.ai'
-    path = '/api_v1/get-results'
+    path = '/api_v1/results'
 
     def __init__(self, private_key, app_name):
         self.private_key = private_key
