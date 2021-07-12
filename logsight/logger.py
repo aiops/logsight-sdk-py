@@ -1,5 +1,6 @@
 from logging import StreamHandler
 import datetime
+from dateutil.tz import tzlocal
 import requests
 import urllib.parse
 
@@ -19,7 +20,7 @@ class LogsightLogger(StreamHandler):
         json = {"logMessages": [
             {'private-key': self.private_key,
              'app': self.app_name,
-             'timestamp': datetime.datetime.now().isoformat(),
+             'timestamp': datetime.datetime.now(tz=tzlocal()).isoformat(),
              'message': msg,
              'level': record.levelname}]
         }

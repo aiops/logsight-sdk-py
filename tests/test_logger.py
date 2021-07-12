@@ -7,7 +7,7 @@ from logsight.logger import LogsightLogger
 class TestLogger(unittest.TestCase):
 
     PRIVATE_KEY = 'q1oukwa2hzsoxg4j7arvd6q67ik'
-    APP_NAME = 'unittest_9'
+    APP_NAME = 'unittest_11'
 
     def test_send_logs(self):
 
