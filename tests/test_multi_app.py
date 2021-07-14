@@ -64,14 +64,15 @@ class TestMultiApp(unittest.TestCase):
     @data(*MAP_APP_NAME_LOG_FILE)
     @unpack
     def test_template_count(self, log_file, n_log_messages_to_send, app_name):
-        templates = LogsightResult(PRIVATE_KEY, app_name).get_results(self.dt_start, self.dt_end, 'log_ad')
+        # templates = LogsightResult(PRIVATE_KEY, app_name).get_results(self.dt_start, self.dt_end, 'log_ad')
+        templates = LogsightResult(PRIVATE_KEY, app_name).get_results(n_seconds_ago(1000), now(), 'log_ad')
         self.assertEqual(len(templates), n_log_messages_to_send)
 
     @data(*MAP_APP_NAME_LOG_FILE)
     @unpack
     def test_incident_count(self, log_file, n_log_messages_to_send, app_name):
         # incidents = LogsightResult(PRIVATE_KEY, app_name).get_results(self.dt_start, self.dt_end, 'incidents')
-        incidents = LogsightResult(PRIVATE_KEY, app_name).get_results(n_seconds_ago(700), now(), 'incidents')
+        incidents = LogsightResult(PRIVATE_KEY, app_name).get_results(n_seconds_ago(1000), now(), 'incidents')
 
         print(app_name, len(incidents))
 
