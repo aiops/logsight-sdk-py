@@ -1,7 +1,7 @@
 import sys
 import logging
 
-from load_logs import load_log_file, LOG_FILES
+from .load_logs import load_log_file, LOG_FILES
 from logsight.logger import LogsightLogger
 
 PRIVATE_KEY = 'q1oukwa2hzsoxg4j7arvd6q67ik'
