@@ -10,17 +10,10 @@ from config import PRIVATE_KEY, APP_NAME
 from logsight.utils import now
 
 
-def _optional_settings():
-    logging.basicConfig(stream=sys.stderr)
-    logger = logging.getLogger(__name__)
-    logger.setLevel(logging.DEBUG)
-
-
-_optional_settings()
-
 N_LOG_MESSAGES_TO_SEND = 500
 DELAY_TO_QUERY_TEMPLATES = 30
 DELAY_TO_QUERY_INCIDENTS = 90
+DELAY_TO_QUERY_BACKEND = max(DELAY_TO_QUERY_INCIDENTS, DELAY_TO_QUERY_TEMPLATES)
 
 
 class TestSingleApp(unittest.TestCase):
@@ -38,19 +31,31 @@ class TestSingleApp(unittest.TestCase):
         cls.dt_end = now()
         print('Ended message sending', cls.dt_end)
 
+        print('Sleeping before querying backend', DELAY_TO_QUERY_BACKEND, 'sec')
+        time.sleep(DELAY_TO_QUERY_BACKEND)
+
         cls.results = LogsightResult(PRIVATE_KEY, APP_NAME)
 
-    def test_template_count(self):
-        print('Sleeping before querying backend', DELAY_TO_QUERY_TEMPLATES, 'sec')
-        time.sleep(DELAY_TO_QUERY_TEMPLATES)
+    @staticmethod
+    def __setup_handler():
+        handler = LogsightLogger(PRIVATE_KEY, APP_NAME)
+        handler.setLevel(logging.DEBUG)
 
+        logger = logging.getLogger(__name__)
+        logger.setLevel(logging.DEBUG)
+        logger.addHandler(handler)
+        return logger, handler
+
+    @staticmethod
+    def __remove_handler(logger, handler):
+        handler.close()
+        logger.removeHandler(handler)
+
+    def test_template_count(self):
         templates = self.results.get_results(self.dt_start, self.dt_end, 'log_ad')
         self.assertEqual(len(templates), N_LOG_MESSAGES_TO_SEND)
 
     def test_incident_count(self):
-        print('Sleeping before querying backend', DELAY_TO_QUERY_INCIDENTS, 'sec')
-        time.sleep(DELAY_TO_QUERY_INCIDENTS)
-
         incidents = self.results.get_results(self.dt_start, self.dt_end, 'incidents')
         self.assertEqual(len(incidents), 3)
 

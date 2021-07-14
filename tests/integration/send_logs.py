@@ -1,14 +1,8 @@
 import sys
 import logging
 
-from .load_logs import load_log_file, LOG_FILES
+from load_logs import load_log_file, LOG_FILES
 from logsight.logger import LogsightLogger
-
-logger = logging.getLogger(__name__)
-logger.propagate = False
-logging.basicConfig()
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
 
 PRIVATE_KEY = 'q1oukwa2hzsoxg4j7arvd6q67ik'
 APP_NAME = 'unittest'
@@ -16,44 +10,46 @@ APP_NAME = 'unittest'
 
 class SendLogs:
 
-    def __init__(self, private_key, app_name):
-        self.private_key = private_key
-        self.app_name = app_name
+    def __init__(self, logger):
+        self.logger = logger
+        self.logger.propagate = False
 
     def send_log_messages(self, log_file_name, n_messages):
-        handler = self.__setup_logger()
-
         for i, (level, message) in enumerate(load_log_file(log_file_name, n_messages)):
             print('Sending messsage', i)
-            self.send_log_message(logger, i, level, message)
+            self.send_log_message(i, level, message)
 
-        self.__remove_logger(handler)
-
-    def send_log_message(self, logger, i, level, message):
+    def send_log_message(self, i, level, message):
         if level.upper() == 'INFO':
-            logger.info(message)
+            self.logger.info(message)
         elif level.upper() == 'WARNING':
-            logger.warning(message)
+            self.logger.warning(message)
         elif level.upper() == 'ERROR':
-            logger.error(message)
+            self.logger.error(message)
         elif level.upper() == 'DEBUG':
-            logger.debug(message)
+            self.logger.debug(message)
         elif level.upper() == 'CRITICAL':
-            logger.critical(message)
+            self.logger.critical(message)
         else:
             sys.exit('Error parsing level for log message number %d: %s %s' % (i, level, message))
 
-    def __setup_logger(self):
-        handler = LogsightLogger(self.private_key, self.app_name)
-        handler.setLevel(logging.DEBUG)
-        logger.addHandler(handler)
-        return handler
-
-    @staticmethod
-    def __remove_logger(handler):
-        logger.removeHandler(handler)
-
 
 if __name__ == '__main__':
-    r = SendLogs(PRIVATE_KEY, APP_NAME)
+
+    def setup_handler():
+        logger = logging.getLogger(__name__)
+        logger.setLevel(logging.DEBUG)
+        logger.propagate = False
+
+        handler = LogsightLogger(PRIVATE_KEY, APP_NAME)
+        handler.setLevel(logging.DEBUG)
+        logger.addHandler(handler)
+        return logger, handler
+
+    def remove_handler(logger, handler):
+        logger.removeHandler(handler)
+
+    logger, handler = setup_handler()
+    r = SendLogs(logger)
     r.send_log_messages(log_file_name=LOG_FILES['hadoop'], n_messages=200)
+    remove_handler(logger, handler)

@@ -9,6 +9,8 @@ import urllib.parse
 
 class LogsightLogger(BufferingHandler):
 
+    buffer_lifespan_seconds = 1
+
     host = 'https://logsight.ai'
     path = '/api_v1/data'
 
@@ -44,7 +46,8 @@ class LogsightLogger(BufferingHandler):
         super().emit(record)
 
     def shouldFlush(self, record):
-        return True if super().shouldFlush(record) or time.time() - self.last_emit > 59 else False
+        return True if super().shouldFlush(record) or \
+                       time.time() - self.last_emit > self.buffer_lifespan_seconds else False
 
     # def emit(self, record):
     #     msg = self.format(record)

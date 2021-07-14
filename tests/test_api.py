@@ -1,41 +1,37 @@
-import unittest
-import logging, logging.handlers
+import sys
+import logging
+import logging.handlers
 import time
+import unittest
 
 from config import PRIVATE_KEY, APP_NAME
 from logsight.logger import LogsightLogger
 from logsight.result import LogsightResult
 from logsight.utils import now
 
-
-def _optional_settings():
-    logging.basicConfig()
-    logger = logging.getLogger(__name__)
-    logger.setLevel(logging.DEBUG)
-
-
 NUMBER_LOG_BLOCKS_TO_SEND = 30
 N_LOG_MESSAGES_TO_SEND = NUMBER_LOG_BLOCKS_TO_SEND * 15
 DELAY_TO_QUERY_TEMPLATES = 30
 DELAY_TO_QUERY_INCIDENTS = 90
+DELAY_TO_QUERY_BACKEND = max(DELAY_TO_QUERY_INCIDENTS, DELAY_TO_QUERY_TEMPLATES)
 
 
-def send_logs(logger):
-    logger.info("01. Hello World!")
-    logger.debug("02. Hello Debug!")
-    logger.info("03. Hello World!")
-    logger.info("04. Hello World!")
-    logger.info("05. Hello World!")
-    logger.error("06. Hello Error!")
-    logger.warning("07. Hello Warning!")
-    logger.error("08. Hello Error!")
-    logger.warning("09. Hello Warning!")
-    logger.debug("10. Hello Debug!")
-    logger.info("11. Hello World!")
-    logger.info("12. Hello World!")
-    logger.info("13. Hello World!")
-    logger.info("14. Hello World!")
-    logger.info("15. Hello World!")
+def send_logs(logger, i):
+    logger.info(f"{i}.1. Hello World!")
+    logger.debug(f"{i}.2. Hello Debug!")
+    logger.info(f"{i}.3. Hello World!")
+    logger.info(f"{i}.4. Hello World!")
+    logger.info(f"{i}.5. Hello World!")
+    logger.error(f"{i}.6. Hello Error!")
+    logger.warning(f"{i}.7. Hello Warning!")
+    logger.error(f"{i}.8. Hello Error!")
+    logger.warning(f"{i}.9. Hello Warning!")
+    logger.debug(f"{i}.10. Hello Debug!")
+    logger.info(f"{i}.11. Hello World!")
+    logger.info(f"{i}.12. Hello World!")
+    logger.info(f"{i}.13. Hello World!")
+    logger.info(f"{i}.14. Hello World!")
+    logger.info(f"{i}.15. Hello World!")
 
 
 class TestApi(unittest.TestCase):
@@ -44,38 +40,55 @@ class TestApi(unittest.TestCase):
     def setUpClass(cls):
         super(TestApi, cls).setUpClass()
 
-        logger = logging.getLogger(__name__)
-        logger.setLevel(logging.DEBUG)
-
-        logsight_handler = LogsightLogger(PRIVATE_KEY, APP_NAME)
-        logsight_handler.setLevel(logging.DEBUG)
-        logger.addHandler(logsight_handler)
-
         cls.dt_start = now()
         print('Starting message sending', cls.dt_start)
 
-        for i, _ in enumerate(range(NUMBER_LOG_BLOCKS_TO_SEND)):
-            print('Sending block', i)
-            send_logs(logger)
+        logger, handler = cls.__setup_handler()
 
-        logsight_handler.close()
+        for i in range(NUMBER_LOG_BLOCKS_TO_SEND):
+            send_logs(logger, i)
+
+        # Note: need to remove the handler before timing the end
+        # Since the remove_handler will flush the messages in the internal buffer
+        cls.__remove_handler(logger, handler)
+
         cls.dt_end = now()
         print('Ended message sending', cls.dt_end)
 
-        cls.results = LogsightResult(PRIVATE_KEY, APP_NAME)
+        print('Sleeping before querying backend', DELAY_TO_QUERY_BACKEND, 'sec')
+        time.sleep(DELAY_TO_QUERY_BACKEND)
+
+    @staticmethod
+    def __setup_handler():
+        handler = LogsightLogger(PRIVATE_KEY, APP_NAME)
+        handler.setLevel(logging.DEBUG)
+
+        stdout_handler = logging.StreamHandler(sys.stdout)
+        stdout_handler.setLevel(logging.DEBUG)
+
+        logger = logging.getLogger(__name__)
+        logger.setLevel(logging.DEBUG)
+        logger.addHandler(handler)
+        logger.addHandler(stdout_handler)
+        return logger, handler
+
+    @staticmethod
+    def __remove_handler(logger, handler):
+        handler.close()
+        logger.removeHandler(handler)
+
+    @classmethod
+    def tearDownClass(cls):
+        pass
 
     def test_template_count(self):
-        print('Sleeping before querying backend', DELAY_TO_QUERY_TEMPLATES, 'sec')
-        time.sleep(DELAY_TO_QUERY_TEMPLATES)
-
-        templates = self.results.get_results(self.dt_start, self.dt_end, 'log_ad')
+        templates = LogsightResult(PRIVATE_KEY, APP_NAME).\
+            get_results(self.dt_start, self.dt_end, 'log_ad')
         self.assertEqual(len(templates), N_LOG_MESSAGES_TO_SEND)
 
     def test_incident_count(self):
-        print('Sleeping before querying backend', DELAY_TO_QUERY_INCIDENTS, 'sec')
-        time.sleep(DELAY_TO_QUERY_INCIDENTS)
-
-        incidents = self.results.get_results(self.dt_start, self.dt_end, 'incidents')
+        incidents = LogsightResult(PRIVATE_KEY, APP_NAME).\
+            get_results(self.dt_start, self.dt_end, 'incidents')
         self.assertEqual(len(incidents), 1)
 
 
