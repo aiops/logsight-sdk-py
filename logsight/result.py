@@ -8,7 +8,7 @@ from logsight.incidents import Incidents
 
 
 ANOMALIES = {
-    "parsing": Templates,
+    "log_ad": Templates,
     "incidents": Incidents,
     # "log_ad": LogAd,
     # "count_ad": CountAd,

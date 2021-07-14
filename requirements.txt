@@ -1,1 +1,2 @@
-requests>=2.25.1
+requests>=2.25.1        # Apache Software License (Apache 2.0)
+dtt                     # MIT License

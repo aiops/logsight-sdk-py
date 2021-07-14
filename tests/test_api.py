@@ -1,66 +1,77 @@
 import unittest
 import logging
-from dateutil.tz import tzlocal
-import datetime
+import time
 
+from config import PRIVATE_KEY, APP_NAME
 from logsight.logger import LogsightLogger
 from logsight.result import LogsightResult
+from logsight.utils import now
+
+
+def _optional_settings():
+    logging.basicConfig()
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.DEBUG)
+
+_optional_settings()
+
+NUMBER_LOG_BLOCKS_TO_SEND = 1
+N_LOG_MESSAGES_TO_SEND = NUMBER_LOG_BLOCKS_TO_SEND * 15
+DELAY_TO_QUERY_TEMPLATES = 30
+DELAY_TO_QUERY_INCIDENTS = 90
+
+
+def send_logs(logger):
+    logger.info("01. Hello World!")
+    logger.debug("02. Hello Debug!")
+    logger.info("03. Hello World!")
+    logger.info("04. Hello World!")
+    logger.info("05. Hello World!")
+    logger.error("06. Hello Error!")
+    logger.warning("07. Hello Warning!")
+    logger.error("08. Hello Error!")
+    logger.warning("09. Hello Warning!")
+    logger.debug("10. Hello Debug!")
+    logger.info("11. Hello World!")
+    logger.info("12. Hello World!")
+    logger.info("13. Hello World!")
+    logger.info("14. Hello World!")
+    logger.info("15. Hello World!")
 
 
 class TestApi(unittest.TestCase):
 
-    PRIVATE_KEY = 'q1oukwa2hzsoxg4j7arvd6q67ik'
-    APP_NAME = 'unittest_11'
-
-    @staticmethod
-    def _start_time(start_time=None, minutes=60):
-        # time format: = "%Y-%m-%dT%H:%M:%S.%f"
-        if not start_time:
-            start_time = datetime.datetime.now(tz=tzlocal()) - datetime.timedelta(minutes=minutes)
-        return start_time.isoformat()
-
-    @staticmethod
-    def _end_time(end_time=None):
-        # time format: = "%Y-%m-%dT%H:%M:%S.%f"
-        if not end_time:
-            end_time = datetime.datetime.now(tz=tz)
-        return end_time.isoformat()
-
     @classmethod
     def setUpClass(cls):
         super(TestApi, cls).setUpClass()
-        """ Load test data """
 
         logger = logging.getLogger(__name__)
         logger.setLevel(logging.DEBUG)
 
-        logsight_handler = LogsightLogger(cls.PRIVATE_KEY, cls.APP_NAME)
+        logsight_handler = LogsightLogger(PRIVATE_KEY, APP_NAME)
         logsight_handler.setLevel(logging.DEBUG)
         logger.addHandler(logsight_handler)
 
-        # for _ in range(1):
-        #     logger.info("01. Hello World!")
-        #     logger.error("02. Hello Error!")
-        #     logger.warning("03. Hello Warning!")
-        #     logger.debug("04. Hello Debug!")
-        #     logger.info("05. Hello World!")
-        #     logger.info("06. Hello World!")
-        #     logger.info("07. Hello World!")
-        #     logger.error("08. Hello Error!")
-        #     logger.warning("09. Hello Warning!")
-        #     logger.debug("10. Hello Debug!")
-        #     logger.info("11. Hello World!")
-        #     logger.info("12. Hello World!")
+        cls.dt_start = now()
+        print('Starting message sending', cls.dt_start)
 
-        cls.results = LogsightResult(cls.PRIVATE_KEY, cls.APP_NAME)
+        for _ in range(NUMBER_LOG_BLOCKS_TO_SEND):
+            send_logs(logger)
+
+        cls.dt_end = now()
+        print('Ended message sending', cls.dt_end)
+
+        cls.results = LogsightResult(PRIVATE_KEY, APP_NAME)
 
     def test_template_count(self):
-        templates = self.results.get_results(self._start_time(), self._end_time(), 'parsing')
-        self.assertEqual(len(templates), 12)
+        time.sleep(DELAY_TO_QUERY_TEMPLATES)
+        templates = self.results.get_results(self.dt_start, self.dt_end, 'log_ad')
+        self.assertEqual(len(templates), N_LOG_MESSAGES_TO_SEND)
 
     def test_incident_count(self):
-        incidents = self.results.get_results(self._start_time(), self._end_time(), 'incidents')
-        self.assertEqual(len(incidents), 5)
+        time.sleep(DELAY_TO_QUERY_INCIDENTS)
+        incidents = self.results.get_results(self.dt_start, self.dt_end, 'incidents')
+        self.assertEqual(len(incidents), 1)
 
 
 if __name__ == '__main__':

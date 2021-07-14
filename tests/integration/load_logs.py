@@ -7,7 +7,7 @@ import ntpath
 LOG_FILES = {
     'hadoop': os.path.join(os.path.dirname(os.path.abspath(__file__)), './fixtures/Hadoop_2k.log'),
     'openstack': os.path.join(os.path.dirname(os.path.abspath(__file__)), './fixtures/OpenStack_2k.log'),
-    'mac':os.path.join(os.path.dirname(os.path.abspath(__file__)), './fixtures/Mac_2k.log'),
+    'mac': os.path.join(os.path.dirname(os.path.abspath(__file__)), './fixtures/Mac_2k.log'),
 }
 
 
@@ -15,15 +15,15 @@ def parse_generic(f, mappings, level_idx, msg_idx, max_log_messages):
 
     level_msg = []
     for i, line in enumerate(cycle(f.readlines())):
+        if i == max_log_messages:
+            break
+
         words = line.split()
         if len(words) < msg_idx:
             sys.exit('Error splitting log message number %d: %s' % (i, line))
 
         level = mappings[words[level_idx]] if level_idx else 'INFO'
         level_msg.append((level, ' '.join(words[msg_idx:])))
-
-        if i > max_log_messages:
-            break
 
     return level_msg
 
@@ -79,7 +79,8 @@ def load_log_file(filename, max_log_messages):
     except OSError:
         sys.exit("Could not open/read file: %s" % filename)
 
-    return parse(f, max_log_messages)
+    with f:
+        return parse(f, max_log_messages)
 
 
 if __name__ == '__main__':

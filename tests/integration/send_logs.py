@@ -24,7 +24,6 @@ class SendLogs:
         handler = self.__setup_logger()
 
         for i, (level, message) in enumerate(load_log_file(log_file_name, n_messages)):
-            print('Sending message', i)
             self.send_log_message(logger, i, level, message)
 
         self.__remove_logger(handler)
