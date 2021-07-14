@@ -5,13 +5,13 @@ from .load_logs import load_log_file, LOG_FILES
 from logsight.logger import LogsightLogger
 
 logger = logging.getLogger(__name__)
-# logger.propagate = False
-logging.basicConfig(stream=sys.stderr)
+logger.propagate = False
+logging.basicConfig()
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 PRIVATE_KEY = 'q1oukwa2hzsoxg4j7arvd6q67ik'
-APP_NAME = 'unittest_7'
+APP_NAME = 'unittest'
 
 
 class SendLogs:

@@ -40,6 +40,7 @@ class TestMultiApp(unittest.TestCase):
 
         cls.dt_start = now()
         print('Starting message sending', cls.dt_start)
+        print('Sending n messages', sum([n for _, n, _ in MAP_APP_NAME_LOG_FILE]))
 
         def run_cpu_tasks_in_parallel(tasks):
             running_tasks = [Process(target=args[0], args=(*args[1:],)) for args in tasks]

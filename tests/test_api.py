@@ -13,7 +13,6 @@ def _optional_settings():
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.DEBUG)
 
-_optional_settings()
 
 NUMBER_LOG_BLOCKS_TO_SEND = 1
 N_LOG_MESSAGES_TO_SEND = NUMBER_LOG_BLOCKS_TO_SEND * 15
