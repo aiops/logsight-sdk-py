@@ -1,5 +1,5 @@
 import unittest
-import logging
+import logging, logging.handlers
 import time
 
 from config import PRIVATE_KEY, APP_NAME
@@ -14,7 +14,7 @@ def _optional_settings():
     logger.setLevel(logging.DEBUG)
 
 
-NUMBER_LOG_BLOCKS_TO_SEND = 1
+NUMBER_LOG_BLOCKS_TO_SEND = 30
 N_LOG_MESSAGES_TO_SEND = NUMBER_LOG_BLOCKS_TO_SEND * 15
 DELAY_TO_QUERY_TEMPLATES = 30
 DELAY_TO_QUERY_INCIDENTS = 90
@@ -54,21 +54,27 @@ class TestApi(unittest.TestCase):
         cls.dt_start = now()
         print('Starting message sending', cls.dt_start)
 
-        for _ in range(NUMBER_LOG_BLOCKS_TO_SEND):
+        for i, _ in enumerate(range(NUMBER_LOG_BLOCKS_TO_SEND)):
+            print('Sending block', i)
             send_logs(logger)
 
+        logsight_handler.close()
         cls.dt_end = now()
         print('Ended message sending', cls.dt_end)
 
         cls.results = LogsightResult(PRIVATE_KEY, APP_NAME)
 
     def test_template_count(self):
+        print('Sleeping before querying backend', DELAY_TO_QUERY_TEMPLATES, 'sec')
         time.sleep(DELAY_TO_QUERY_TEMPLATES)
+
         templates = self.results.get_results(self.dt_start, self.dt_end, 'log_ad')
         self.assertEqual(len(templates), N_LOG_MESSAGES_TO_SEND)
 
     def test_incident_count(self):
+        print('Sleeping before querying backend', DELAY_TO_QUERY_INCIDENTS, 'sec')
         time.sleep(DELAY_TO_QUERY_INCIDENTS)
+
         incidents = self.results.get_results(self.dt_start, self.dt_end, 'incidents')
         self.assertEqual(len(incidents), 1)
 
