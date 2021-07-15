@@ -2,10 +2,6 @@ import sys
 import logging
 
 from .load_logs import load_log_file, LOG_FILES
-from logsight.logger import LogsightLogger
-
-PRIVATE_KEY = 'q1oukwa2hzsoxg4j7arvd6q67ik'
-APP_NAME = 'unittest'
 
 
 class SendLogs:
@@ -16,7 +12,7 @@ class SendLogs:
 
     def send_log_messages(self, log_file_name, n_messages):
         for i, (level, message) in enumerate(load_log_file(log_file_name, n_messages)):
-            print('Sending messsage', i)
+            # print('Sending messsage', i)
             self.send_log_message(i, level, message)
 
     def send_log_message(self, i, level, message):
@@ -35,6 +31,10 @@ class SendLogs:
 
 
 if __name__ == '__main__':
+    from logsight.logger import LogsightLogger
+
+    PRIVATE_KEY = 'q1oukwa2hzsoxg4j7arvd6q67ik'
+    APP_NAME = 'unittest'
 
     def setup_handler():
         logger = logging.getLogger(__name__)

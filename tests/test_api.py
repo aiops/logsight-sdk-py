@@ -4,16 +4,13 @@ import logging.handlers
 import time
 import unittest
 
-from config import PRIVATE_KEY, APP_NAME
+from config import PRIVATE_KEY, APP_NAME, DELAY_TO_QUERY_BACKEND
 from logsight.logger import LogsightLogger
 from logsight.result import LogsightResult
 from logsight.utils import now
 
 NUMBER_LOG_BLOCKS_TO_SEND = 30
 N_LOG_MESSAGES_TO_SEND = NUMBER_LOG_BLOCKS_TO_SEND * 15
-DELAY_TO_QUERY_TEMPLATES = 30
-DELAY_TO_QUERY_INCIDENTS = 90
-DELAY_TO_QUERY_BACKEND = max(DELAY_TO_QUERY_INCIDENTS, DELAY_TO_QUERY_TEMPLATES)
 
 
 def send_logs(logger, i):

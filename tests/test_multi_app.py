@@ -5,7 +5,7 @@ import time
 from multiprocessing import Process
 from ddt import ddt, data, unpack
 
-from config import PRIVATE_KEY
+from config import PRIVATE_KEY, DELAY_TO_QUERY_BACKEND
 from integration.load_logs import LOG_FILES
 from integration.send_logs import SendLogs
 from logsight.result import LogsightResult
@@ -22,10 +22,6 @@ N_LOG_MESSAGES_TO_SEND = 500
 MAP_APP_NAME_LOG_FILE = [('hadoop', N_LOG_MESSAGES_TO_SEND, 'hadoop', 1),
                          ('openstack', N_LOG_MESSAGES_TO_SEND, 'openstack', 0),
                          ('mac', N_LOG_MESSAGES_TO_SEND, 'mac', 0)]
-
-DELAY_TO_QUERY_TEMPLATES = 30
-DELAY_TO_QUERY_INCIDENTS = 90
-DELAY_TO_QUERY_BACKEND = max(DELAY_TO_QUERY_TEMPLATES, DELAY_TO_QUERY_INCIDENTS)
 
 
 @ddt
