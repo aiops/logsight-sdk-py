@@ -1,5 +1,5 @@
 PRIVATE_KEY = 'q1oukwa2hzsoxg4j7arvd6q67ik'
-APP_NAME = 'unittest_2'
+APP_NAME = 'unittest_3'
 
 DELAY_TO_QUERY_TEMPLATES = 30
 DELAY_TO_QUERY_INCIDENTS = 60
