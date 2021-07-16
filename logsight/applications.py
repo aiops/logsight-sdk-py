@@ -31,8 +31,7 @@ class LogsightApplication:
 
     def delete(self, app_id):
         data = {'key': self.private_key}
-        p = '/'.join([self.path_delete, app_id])
-        return self._post(data, p)
+        return self._post(data, '/'.join([self.path_delete, app_id]))
 
     def _post(self, data, path):
         try:
@@ -56,24 +55,14 @@ class LogsightApplication:
 
         return err
 
-    def _build_object(self, anomaly_type, data):
-        try:
-            klass = ANOMALIES[anomaly_type.lower()]
-        except KeyError as e:
-            raise RuntimeError(f'No class found: {e}')
-        except Exception as e:
-            raise RuntimeError(f'Unknown error: {e}')
-
-        return klass(data)
-
 
 if __name__ == '__main__':
     PRIVATE_KEY = 'q1oukwa2hzsoxg4j7arvd6q67ik'
-    # PRIVATE_KEY = 'this.key'
-    APP_NAME = 'unittest_4'
+    APP_NAME = 'unittest_6'
 
     app = LogsightApplication(PRIVATE_KEY)
     app_id = app.create(APP_NAME)
     print(app_id)
     result = app.delete(str(app_id['id']))
+    # result = app.delete(str(146))
     print(result)
