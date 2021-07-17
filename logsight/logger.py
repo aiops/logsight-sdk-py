@@ -34,7 +34,7 @@ class LogsightLogger(BufferingHandler):
                      'message': msg,
                      'level': record.levelname}
                 )
-            json = {"logMessages": messages}
+            json = {"log-messages": messages}
             self._post(self.path, json=json)
 
             self.buffer = []

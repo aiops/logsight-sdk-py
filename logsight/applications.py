@@ -8,6 +8,7 @@ class LogsightApplication:
 
     host = 'https://logsight.ai'
     path_create = '/api/applications/create'
+    path_list = '/api/applications/user'
     path_delete = '/api/applications'
 
     def __init__(self, private_key):
@@ -16,14 +17,30 @@ class LogsightApplication:
     def create(self, app_name):
         data = {'key': self.private_key,
                 'name': app_name}
-        return self._post(data, self.path_create)
+        return self._post(self.path_create, data)
+
+    def lst(self):
+        payload = {}
+        query = f'{self.private_key}'
+        return self._get('/'.join([self.path_list, query]), payload)
 
     def delete(self, app_id):
         data = {}
         query = f'{app_id}?key={self.private_key}'
-        return self._post(data, '/'.join([self.path_delete, query]))
+        return self._post('/'.join([self.path_delete, query]), data)
 
-    def _post(self, data, path):
+    def _get(self, path, payload):
+        try:
+            url = urllib.parse.urljoin(self.host, path)
+            r = requests.get(url)
+            r.raise_for_status()
+        except requests.exceptions.HTTPError as err:
+            err = self._extract_elasticsearch_error(err)
+            raise SystemExit(err)
+
+        return json.loads(r.content)
+
+    def _post(self, path, data):
         try:
             url = urllib.parse.urljoin(self.host, path)
             r = requests.post(url, json=data)
@@ -32,7 +49,7 @@ class LogsightApplication:
             err = self._extract_elasticsearch_error(err)
             raise SystemExit(err)
 
-        return json.loads(r.text)
+        return json.loads(r.content)
 
     @staticmethod
     def _extract_elasticsearch_error(err):
@@ -51,8 +68,11 @@ if __name__ == '__main__':
     APP_NAME = 'unittest_7'
 
     app = LogsightApplication(PRIVATE_KEY)
-    app_id = app.create(APP_NAME)
-    print(app_id)
+    print(app.lst())
+
+    # app_id = app.create(APP_NAME)
+    # print(app_id)
+
     # result = app.delete(str(app_id['id']))
     # result = app.delete(str(152))
     # print(result)
