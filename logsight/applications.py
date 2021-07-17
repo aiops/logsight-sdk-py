@@ -29,16 +29,16 @@ class LogsightApplication:
         query = f'{app_id}?key={self.private_key}'
         return self._post('/'.join([self.path_delete, query]), data)
 
-    def _get(self, path, payload):
+    def _get(self, path, params=None):
         try:
             url = urllib.parse.urljoin(self.host, path)
-            r = requests.get(url)
+            r = requests.get(url, params=params or {})
             r.raise_for_status()
         except requests.exceptions.HTTPError as err:
             err = self._extract_elasticsearch_error(err)
             raise SystemExit(err)
 
-        return json.loads(r.content)
+        return r.status_code, json.loads(r.content)
 
     def _post(self, path, data):
         try:
@@ -49,7 +49,7 @@ class LogsightApplication:
             err = self._extract_elasticsearch_error(err)
             raise SystemExit(err)
 
-        return json.loads(r.content)
+        return r.status_code, json.loads(r.content)
 
     @staticmethod
     def _extract_elasticsearch_error(err):

@@ -66,3 +66,5 @@ class LogsightLogger(BufferingHandler):
             r.raise_for_status()
         except requests.exceptions.HTTPError as err:
             raise SystemExit(err)
+
+        # return r.status_code, json.loads(r.content)
