@@ -5,14 +5,15 @@ import json
 
 from logsight.template import Templates
 from logsight.incidents import Incidents
+from logsight.quality import LogQuality
 
 
 ANOMALIES = {
     "log_ad": Templates,
     "incidents": Incidents,
-    # "log_ad": LogAd,
-    # "count_ad": CountAd,
+    "log_quality": LogQuality,
 }
+# it returns a list of logs with 'actual_level' and  'predicted_log_level' (from QLog)
 
 
 class LogsightResult:

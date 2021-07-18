@@ -88,6 +88,11 @@ class TestApi(unittest.TestCase):
             get_results(self.dt_start, self.dt_end, 'incidents')
         self.assertEqual(len(incidents), 1)
 
+    def test_log_quality(self):
+        quality = LogsightResult(PRIVATE_KEY, APP_NAME).\
+            get_results(self.dt_start, self.dt_end, 'log_quality')
+        self.assertEqual(len(quality), 1)
+
 
 if __name__ == '__main__':
     unittest.main()
