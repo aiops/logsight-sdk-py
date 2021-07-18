@@ -33,7 +33,7 @@ class TestSingleApp(unittest.TestCase):
         cls.dt_end = now()
         print('Ended message sending', cls.dt_end)
 
-        print('Sleeping before querying backend', DELAY_TO_QUERY_BACKEND, 'sec')
+        print('Sleeping before querying backend:', DELAY_TO_QUERY_BACKEND, 'sec')
         time.sleep(DELAY_TO_QUERY_BACKEND)
 
     @staticmethod
@@ -55,10 +55,10 @@ class TestSingleApp(unittest.TestCase):
         handler.close()
         logger.removeHandler(handler)
 
-    # def test_template_count(self):
-    #     templates = LogsightResult(PRIVATE_KEY, APP_NAME)\
-    #         .get_results(self.dt_start, self.dt_end, 'log_ad')
-    #     self.assertEqual(len(templates), N_LOG_MESSAGES_TO_SEND)
+    def test_template_count(self):
+        templates = LogsightResult(PRIVATE_KEY, APP_NAME)\
+            .get_results(self.dt_start, self.dt_end, 'log_ad')
+        self.assertEqual(len(templates), N_LOG_MESSAGES_TO_SEND)
 
     def test_pseudo_incident_count(self):
         incidents = LogsightResult(PRIVATE_KEY, APP_NAME)\
@@ -68,7 +68,6 @@ class TestSingleApp(unittest.TestCase):
     def test_real_incident_count(self):
         incidents = LogsightResult(PRIVATE_KEY, APP_NAME)\
             .get_results(self.dt_start, self.dt_end, 'incidents')
-
         real_incidents = sum([1 if i.total_score > 0 else 0 for i in incidents])
         self.assertEqual(real_incidents, 1)
 

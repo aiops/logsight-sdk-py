@@ -52,7 +52,7 @@ class TestApi(unittest.TestCase):
         cls.dt_end = now()
         print('Ended message sending', cls.dt_end)
 
-        print('Sleeping before querying backend', DELAY_TO_QUERY_BACKEND, 'sec')
+        print('Sleeping before querying backend:', DELAY_TO_QUERY_BACKEND, 'sec')
         time.sleep(DELAY_TO_QUERY_BACKEND)
 
     @staticmethod
