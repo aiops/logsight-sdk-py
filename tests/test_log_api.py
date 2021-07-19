@@ -92,6 +92,8 @@ class TestApi(unittest.TestCase):
         quality = LogsightResult(PRIVATE_KEY, APP_NAME).\
             get_results(self.dt_start, self.dt_end, 'log_quality')
         self.assertEqual(len(quality), 1)
+        self.assertEqual(quality[0].actual_level.upper(),
+                         quality[0].predicted_log_level.upper())
 
 
 if __name__ == '__main__':

@@ -1,10 +1,10 @@
-from logging import StreamHandler
 from logging.handlers import BufferingHandler
 import time
 import datetime
 from dateutil.tz import tzlocal
 import requests
 import urllib.parse
+import json
 
 
 class LogsightLogger(BufferingHandler):
@@ -17,7 +17,6 @@ class LogsightLogger(BufferingHandler):
     def __init__(self, private_key, app_name):
         BufferingHandler.__init__(self, capacity=128)
         self.last_emit = None
-        # StreamHandler.__init__(self)
         self.private_key = private_key
         self.app_name = app_name
 
@@ -34,8 +33,8 @@ class LogsightLogger(BufferingHandler):
                      'message': msg,
                      'level': record.levelname}
                 )
-            json = {"log-messages": messages}
-            self._post(self.path, json=json)
+            j = {"log-messages": messages}
+            self._post(self.path, j)
 
             self.buffer = []
         finally:
@@ -49,22 +48,11 @@ class LogsightLogger(BufferingHandler):
         return True if super().shouldFlush(record) or \
                        time.time() - self.last_emit > self.buffer_lifespan_seconds else False
 
-    # def emit(self, record):
-    #     msg = self.format(record)
-    #     json = {"logMessages": [
-    #         {'private-key': self.private_key,
-    #          'app': self.app_name,
-    #          'timestamp': datetime.datetime.now(tz=tzlocal()).isoformat(),
-    #          'message': msg,
-    #          'level': record.levelname}]
-    #     }
-    #     self._post(self.path, json=json)
-
-    def _post(self, path, json):
+    def _post(self, path, j):
         try:
-            r = requests.post(urllib.parse.urljoin(self.host, path), json=json)
+            r = requests.post(urllib.parse.urljoin(self.host, path), json=j)
             r.raise_for_status()
         except requests.exceptions.HTTPError as err:
             raise SystemExit(err)
 
-        # return r.status_code, json.loads(r.content)
+        return r.status_code, json.loads(r.content)

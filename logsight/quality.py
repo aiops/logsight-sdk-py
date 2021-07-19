@@ -26,27 +26,27 @@ class LogQuality(MutableSequence):
 
 class Quality:
     """
-    This class represents an Template.
-    The reference can be found here https://docs.logsight.ai/en/rest/reference/objects#template
+    This class represents an Quality.
+    The reference can be found here https://docs.logsight.ai/en/rest/reference/objects#quality
 
     Example of the structure returned
     {
-       "@timestamp":"2021-07-11T07:27:55.478091",
-       "actual_level":"WARNING",
-       "app_name":"unittest_6",
-       "message":"nova.virt.libvirt.imagecache [req-addc1839-2ed5-4778-b57e-5854eb7b8b09 - - - - -]",
-       "name":"log",
-       "param_0":"[req-addc1839-2ed5-4778-b57e-5854eb7b8b09",
-       "param_1":"Unknown",
-       "param_2":"file:",
-       "param_3":"/var/lib/nova/instances/_base/a489c868f0c37da93b76227c91bb03908ac0e742",
-       "template":"nova.virt.libvirt.imagecache <*> - - - - -] <*> base <*> <*>"
+        '@timestamp': '2021-07-19T18:39:23.238609',
+        'actual_level': 'INFO',
+        'app_name': 'unittest',
+        'message': '0.1. Hello World!',
+        'name': 'log',
+        'param_0': '0.1.',
+        'predicted_log_level': 'info',
+        'prediction': 0,
+        'template': '<*> Hello World!'
     }
     """
 
     def __init__(self, data):
         self._timestamp = data.get("@timestamp", None)
         self._actual_level = data.get("actual_level", None)
+        self._predicted_log_level = data.get("predicted_log_level", None)
         self._app_name = data.get("app_name", None)
         self._message = data.get("message", None)
         self._name = data.get("name", None)
@@ -63,6 +63,10 @@ class Quality:
     @property
     def actual_level(self):
         return self._actual_level
+
+    @property
+    def predicted_log_level(self):
+        return self._predicted_log_level
 
     @property
     def app_name(self):
