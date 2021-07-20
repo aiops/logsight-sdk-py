@@ -38,7 +38,7 @@ class LogsightApplication:
             err = self._extract_elasticsearch_error(err)
             raise SystemExit(err)
 
-        return r.status_code, json.loads(r.content)
+        return r.status_code, json.loads(r.text)
 
     def _post(self, path, data):
         try:
@@ -49,7 +49,7 @@ class LogsightApplication:
             err = self._extract_elasticsearch_error(err)
             raise SystemExit(err)
 
-        return r.status_code, json.loads(r.content)
+        return r.status_code, json.loads(r.text)
 
     @staticmethod
     def _extract_elasticsearch_error(err):

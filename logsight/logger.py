@@ -55,4 +55,8 @@ class LogsightLogger(BufferingHandler):
         except requests.exceptions.HTTPError as err:
             raise SystemExit(err)
 
-        return r.status_code, json.loads(r.content)
+        try:
+            return r.status_code, json.loads(r.text)
+        except json.decoder.JSONDecodeError:
+            print('Content could not be converted to JSON', r.text)
+            return {}

@@ -8,7 +8,7 @@ do
    now=$(date)
    echo "Test number: $i ($now)"
    python -m unittest test_multi_app.TestMultiApp
-   SECONDS=600
+   SECONDS=180
    echo "Sleeping $SECONDS"
    sleep $SECONDS
 done

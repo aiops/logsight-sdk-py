@@ -42,7 +42,11 @@ class LogsightResult:
             err = self._extract_elasticsearch_error(err)
             raise SystemExit(err)
 
-        return json.loads(r.text)
+        try:
+            return json.loads(r.text)
+        except json.decoder.JSONDecodeError:
+            print('Content could not be converted to JSON', r.text)
+            return {}
 
     @staticmethod
     def _extract_elasticsearch_error(err):
