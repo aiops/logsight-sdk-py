@@ -1,14 +1,40 @@
 import sys
 import logging
 
-from .load_logs import load_log_file, LOG_FILES
+from logsight.logger import LogsightLogger
+
+if __name__ == '__main__':
+    from load_logs import load_log_file, LOG_FILES
+else:
+    from .load_logs import load_log_file, LOG_FILES
 
 
 class SendLogs:
 
-    def __init__(self, logger):
-        self.logger = logger
+    def __init__(self, private_key, app_name):
+        self.private_key = private_key
+        self.app_name = app_name
+        self.logger, self.handler = self.__setup_handler(private_key, app_name)
         self.logger.propagate = False
+
+    @staticmethod
+    def __setup_handler(private_key, app_name):
+        handler = LogsightLogger(private_key, app_name)
+        handler.setLevel(logging.DEBUG)
+
+        stdout_handler = logging.StreamHandler(sys.stdout)
+        stdout_handler.setLevel(logging.DEBUG)
+
+        logger = logging.getLogger(__name__)
+        logger.setLevel(logging.DEBUG)
+        logger.addHandler(handler)
+
+        return logger, handler
+
+    @staticmethod
+    def __remove_handler(logger, handler):
+        handler.close()
+        logger.removeHandler(handler)
 
     def send_log_messages(self, log_file_name, n_messages):
         for i, (level, message) in enumerate(load_log_file(log_file_name, n_messages)):
@@ -29,27 +55,14 @@ class SendLogs:
         else:
             sys.exit('Error parsing level for log message number %d: %s %s' % (i, level, message))
 
+    def flush(self):
+        self.__remove_handler(self.logger, self.handler)
+
 
 if __name__ == '__main__':
-    from logsight.logger import LogsightLogger
-
     PRIVATE_KEY = 'q1oukwa2hzsoxg4j7arvd6q67ik'
     APP_NAME = 'unittest'
 
-    def setup_handler():
-        logger = logging.getLogger(__name__)
-        logger.setLevel(logging.DEBUG)
-        logger.propagate = False
-
-        handler = LogsightLogger(PRIVATE_KEY, APP_NAME)
-        handler.setLevel(logging.DEBUG)
-        logger.addHandler(handler)
-        return logger, handler
-
-    def remove_handler(logger, handler):
-        logger.removeHandler(handler)
-
-    logger, handler = setup_handler()
-    r = SendLogs(logger)
+    r = SendLogs(APP_NAME)
     r.send_log_messages(log_file_name=LOG_FILES['hadoop'], n_messages=200)
-    remove_handler(logger, handler)
+    r.flush()

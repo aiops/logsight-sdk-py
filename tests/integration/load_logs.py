@@ -8,6 +8,8 @@ LOG_FILES = {
     'hadoop': os.path.join(os.path.dirname(os.path.abspath(__file__)), './fixtures/Hadoop_2k.log'),
     'openstack': os.path.join(os.path.dirname(os.path.abspath(__file__)), './fixtures/OpenStack_2k.log'),
     'mac': os.path.join(os.path.dirname(os.path.abspath(__file__)), './fixtures/Mac_2k.log'),
+    'zookeeper': os.path.join(os.path.dirname(os.path.abspath(__file__)), './fixtures/Zookeeper_2k.log'),
+    'openssh': os.path.join(os.path.dirname(os.path.abspath(__file__)), './fixtures/OpenSSH_2k.log'),
 }
 
 
@@ -18,14 +20,40 @@ def parse_generic(f, mappings, level_idx, msg_idx, max_log_messages):
         if i == max_log_messages:
             break
 
-        words = line.split()
-        if len(words) < msg_idx:
+        tokens = line.split()
+        if len(tokens) < msg_idx or (level_idx and len(tokens) < level_idx):
             sys.exit('Error splitting log message number %d: %s' % (i, line))
 
-        level = mappings[words[level_idx]] if level_idx else 'INFO'
-        level_msg.append((level, ' '.join(words[msg_idx:])))
+        level = 'INFO'
+        if level_idx:
+            if tokens[level_idx] in mappings:
+                level = mappings[tokens[level_idx]]
+            else:
+                sys.exit('Unknown level, line: %d, %s (%s)' % (i, level_idx, f.name))
+
+        level_msg.append((level, ' '.join(tokens[msg_idx:])))
 
     return level_msg
+
+
+def parse_zookeeper(f, max_log_messages):
+    mappings = {
+        'INFO': 'INFO',
+        'WARN': 'WARNING',
+        'ERROR': 'ERROR',
+    }
+    level_idx, msg_idx = 3, 4
+    return parse_generic(f, mappings, level_idx, msg_idx, max_log_messages)
+
+
+def parse_openssh(f, max_log_messages):
+    mappings = {
+        'INFO': 'INFO',
+        'WARN': 'WARNING',
+        'ERROR': 'ERROR',
+    }
+    level_idx, msg_idx = None, 5
+    return parse_generic(f, mappings, level_idx, msg_idx, max_log_messages)
 
 
 def parse_hadoop(f, max_log_messages):
@@ -33,6 +61,7 @@ def parse_hadoop(f, max_log_messages):
         'INFO': 'INFO',
         'WARN': 'WARNING',
         'ERROR': 'ERROR',
+        'FATAL': 'FATAL',
     }
     level_idx, msg_idx = 2, 3
     return parse_generic(f, mappings, level_idx, msg_idx, max_log_messages)
@@ -62,6 +91,8 @@ PARSERS = {
     "hadoop": parse_hadoop,
     "openstack": parse_openstack,
     "mac": parse_mac,
+    "zookeeper": parse_zookeeper,
+    "openssh": parse_openssh,
 }
 
 
@@ -84,10 +115,14 @@ def load_log_file(filename, max_log_messages):
 
 
 if __name__ == '__main__':
-    max_log_messages = 300
+    max_log_messages = 2000
     a = load_log_file(LOG_FILES['hadoop'], max_log_messages)
     print(a[:10])
     a = load_log_file(LOG_FILES['openstack'], max_log_messages)
     print(a[:10])
     a = load_log_file(LOG_FILES['mac'], max_log_messages)
+    print(a[:10])
+    a = load_log_file(LOG_FILES['zookeeper'], max_log_messages)
+    print(a[:10])
+    a = load_log_file(LOG_FILES['openssh'], max_log_messages)
     print(a[:10])

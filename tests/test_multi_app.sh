@@ -7,7 +7,7 @@ for i in $(seq 20)
 do
    now=$(date)
    echo "Test number: $i ($now)"
-   python -m unittest test_single_app.TestSingleApp
+   python -m unittest test_multi_app.TestMultiApp
    SECONDS=600
    echo "Sleeping $SECONDS"
    sleep $SECONDS
