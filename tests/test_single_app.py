@@ -44,7 +44,7 @@ class TestSingleApp(unittest.TestCase):
         incidents = LogsightResult(PRIVATE_KEY, APP_NAME)\
             .get_results(self.dt_start, self.dt_end, 'incidents')
         real_incidents = sum([1 if i.total_score > 0 else 0 for i in incidents])
-        self.assertEqual(real_incidents, 1)
+        self.assertGreater(real_incidents, 0)
 
 
 if __name__ == '__main__':

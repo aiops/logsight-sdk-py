@@ -1,6 +1,4 @@
-import sys
 import unittest
-import logging
 import time
 from multiprocessing import Process
 from ddt import ddt, data, unpack
@@ -8,17 +6,16 @@ from ddt import ddt, data, unpack
 from config import PRIVATE_KEY, DELAY_TO_QUERY_BACKEND
 from integration.load_logs import LOG_FILES
 from integration.send_logs import SendLogs
-from logsight.logger import LogsightLogger
 from logsight.result import LogsightResult
 from logsight.utils import now
 from logsight.applications import LogsightApplication
 
 
 N_LOG_MESSAGES_TO_SEND = 500
-MAP_APP_NAME_LOG_FILE = [('hadoop', N_LOG_MESSAGES_TO_SEND, 'hadoop', 0),
+MAP_APP_NAME_LOG_FILE = [('hadoop', N_LOG_MESSAGES_TO_SEND, 'hadoop', 1),
                          ('openstack', N_LOG_MESSAGES_TO_SEND, 'openstack', 0),
                          ('mac', N_LOG_MESSAGES_TO_SEND, 'mac', 1),
-                         ('zookeeper', N_LOG_MESSAGES_TO_SEND, 'zookeeper', 0),
+                         ('zookeeper', N_LOG_MESSAGES_TO_SEND, 'zookeeper', 1),
                          ('openssh', N_LOG_MESSAGES_TO_SEND, 'openssh', 1),
                          ]
 
@@ -84,7 +81,7 @@ class TestMultiApp(unittest.TestCase):
         incidents = LogsightResult(PRIVATE_KEY, app_name)\
             .get_results(self.dt_start, self.dt_end, 'incidents')
         real_incidents = sum([1 if i.total_score > 0 else 0 for i in incidents])
-        self.assertEqual(real_incidents, n_incidents)
+        self.assertGreaterEqual(real_incidents, n_incidents)
 
 
 if __name__ == '__main__':
