@@ -10,7 +10,7 @@ class LogsightApplication:
 
     host = 'https://logsight.ai'
     path_create = '/api/applications/create'
-    path_list = '/api/applications/user'
+    path_lst = '/api/applications/user'
     path_delete = '/api/applications'
 
     def __init__(self, private_key):
@@ -24,7 +24,7 @@ class LogsightApplication:
     def lst(self):
         payload = {}
         query = f'{self.private_key}'
-        return self._get('/'.join([self.path_list, query]), payload)
+        return self._get('/'.join([self.path_lst, query]), payload)
 
     def delete(self, app_id):
         data = {}

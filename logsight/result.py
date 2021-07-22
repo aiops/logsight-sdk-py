@@ -3,6 +3,7 @@ import urllib.parse
 import html
 import json
 
+from logsight.exceptions import HTTP_EXCEPTION_MAP, DataCorruption
 from logsight.template import Templates
 from logsight.incidents import Incidents
 from logsight.quality import LogQuality
@@ -13,7 +14,6 @@ ANOMALIES = {
     "incidents": Incidents,
     "log_quality": LogQuality,
 }
-# it returns a list of logs with 'actual_level' and  'predicted_log_level' (from QLog)
 
 
 class LogsightResult:
@@ -39,14 +39,15 @@ class LogsightResult:
             r = requests.post(url, json=data)
             r.raise_for_status()
         except requests.exceptions.HTTPError as err:
-            err = self._extract_elasticsearch_error(err)
-            raise SystemExit(err)
+            # err = self._extract_elasticsearch_error(err)
+            d = json.loads(err.response.text)
+            description = d['description'] if 'description' in d else d
+            raise HTTP_EXCEPTION_MAP[err.response.status_code](description)
 
         try:
             return json.loads(r.text)
         except json.decoder.JSONDecodeError:
-            print('Content could not be converted to JSON', r.text)
-            return {}
+            raise DataCorruption('Content could not be converted from JSON: %s' % r.text)
 
     @staticmethod
     def _extract_elasticsearch_error(err):

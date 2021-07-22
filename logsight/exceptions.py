@@ -24,7 +24,7 @@ class BadRequest(LogsightException):
 
 class Unauthorized(LogsightException):
     status_code = 401
-    message = "Unauthorized: bad credentials."
+    message = "Unauthorized: wrong credentials."
 
 
 class Forbidden(LogsightException):
@@ -59,45 +59,5 @@ HTTP_EXCEPTION_MAP = {
 }
 
 
-class NetworkNotFoundClient(NotFound):
-    pass
-
-
-class PortNotFoundClient(NotFound):
-    pass
-
-
-class StateInvalidClient(BadRequest):
-    pass
-
-
-class NetworkInUseClient(Conflict):
-    pass
-
-
-class PortInUseClient(Conflict):
-    pass
-
-
-class IpAddressInUseClient(Conflict):
-    pass
-
-
-class InvalidIpForNetworkClient(BadRequest):
-    pass
-
-
-class OverQuotaClient(Conflict):
-    pass
-
-
-class IpAddressGenerationFailureClient(Conflict):
-    pass
-
-
-class MacAddressInUseClient(Conflict):
-    pass
-
-
-class ExternalIpAddressExhaustedClient(BadRequest):
+class DataCorruption(LogsightException):
     pass

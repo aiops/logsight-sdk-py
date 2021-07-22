@@ -5,6 +5,7 @@ import time
 import unittest
 
 from config import PRIVATE_KEY, DELAY_TO_QUERY_BACKEND
+from logsight.exceptions import LogsightException
 from logsight.logger import LogsightLogger
 from logsight.result import LogsightResult
 from logsight.utils import now, create_apps, delete_apps
@@ -39,7 +40,15 @@ class TestHelloApp(unittest.TestCase):
     def setUpClass(cls):
         super(TestHelloApp, cls).setUpClass()
 
-        create_apps(PRIVATE_KEY, [APP_NAME])
+        try:
+            delete_apps(PRIVATE_KEY, [APP_NAME])
+        except LogsightException as e:
+            print(e)
+
+        try:
+            create_apps(PRIVATE_KEY, [APP_NAME])
+        except LogsightException as e:
+            print(e)
 
         cls.dt_start = now()
         print('Starting message sending', cls.dt_start)
