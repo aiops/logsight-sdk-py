@@ -4,13 +4,15 @@ import logging.handlers
 import time
 import unittest
 
-from config import PRIVATE_KEY, APP_NAME, DELAY_TO_QUERY_BACKEND
+from config import PRIVATE_KEY, DELAY_TO_QUERY_BACKEND
 from logsight.logger import LogsightLogger
 from logsight.result import LogsightResult
-from logsight.utils import now
+from logsight.utils import now, create_apps, delete_apps
 
+APP_NAME = 'hello_app'
 NUMBER_LOG_BLOCKS_TO_SEND = 30
 N_LOG_MESSAGES_TO_SEND = NUMBER_LOG_BLOCKS_TO_SEND * 15
+LOGGING_TO_SYS_STDOUT = False
 
 
 def send_logs(logger, i):
@@ -31,11 +33,13 @@ def send_logs(logger, i):
     logger.info(f"{i}.15. Hello World!")
 
 
-class TestApi(unittest.TestCase):
+class TestHelloApp(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        super(TestApi, cls).setUpClass()
+        super(TestHelloApp, cls).setUpClass()
+
+        create_apps(PRIVATE_KEY, [APP_NAME])
 
         cls.dt_start = now()
         print('Starting message sending', cls.dt_start)
@@ -55,28 +59,30 @@ class TestApi(unittest.TestCase):
         print('Sleeping before querying backend:', DELAY_TO_QUERY_BACKEND, 'sec')
         time.sleep(DELAY_TO_QUERY_BACKEND)
 
+    @classmethod
+    def tearDownClass(cls):
+        delete_apps(PRIVATE_KEY, [APP_NAME])
+
     @staticmethod
     def __setup_handler():
         handler = LogsightLogger(PRIVATE_KEY, APP_NAME)
         handler.setLevel(logging.DEBUG)
 
-        stdout_handler = logging.StreamHandler(sys.stdout)
-        stdout_handler.setLevel(logging.DEBUG)
-
         logger = logging.getLogger(__name__)
         logger.setLevel(logging.DEBUG)
         logger.addHandler(handler)
-        logger.addHandler(stdout_handler)
+
+        if LOGGING_TO_SYS_STDOUT:
+            stdout_handler = logging.StreamHandler(sys.stdout)
+            stdout_handler.setLevel(logging.DEBUG)
+            logger.addHandler(stdout_handler)
+
         return logger, handler
 
     @staticmethod
     def __remove_handler(logger, handler):
         handler.close()
         logger.removeHandler(handler)
-
-    @classmethod
-    def tearDownClass(cls):
-        pass
 
     def test_template_count(self):
         templates = LogsightResult(PRIVATE_KEY, APP_NAME).\

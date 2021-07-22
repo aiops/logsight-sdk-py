@@ -7,8 +7,8 @@ from config import PRIVATE_KEY, DELAY_TO_QUERY_BACKEND
 from integration.load_logs import LOG_FILES
 from integration.send_logs import SendLogs
 from logsight.result import LogsightResult
-from logsight.utils import now
-from logsight.applications import LogsightApplication
+from logsight.utils import now, create_apps, delete_apps
+from logsight.exceptions import LogsightException
 
 
 N_LOG_MESSAGES_TO_SEND = 500
@@ -18,6 +18,7 @@ MAP_APP_NAME_LOG_FILE = [('hadoop', N_LOG_MESSAGES_TO_SEND, 'hadoop', 1),
                          ('zookeeper', N_LOG_MESSAGES_TO_SEND, 'zookeeper', 1),
                          ('openssh', N_LOG_MESSAGES_TO_SEND, 'openssh', 1),
                          ]
+APP_NAMES = [i[2] for i in MAP_APP_NAME_LOG_FILE]
 
 
 @ddt
@@ -58,16 +59,19 @@ class TestMultiApp(unittest.TestCase):
 
     @staticmethod
     def __create_apps():
-        app_mng = LogsightApplication(PRIVATE_KEY)
+        try:
+            delete_apps(PRIVATE_KEY, APP_NAMES)
+        except LogsightException as e:
+            print(e)
 
-        for app_name in [i[2] for i in MAP_APP_NAME_LOG_FILE]:
-            try:
-                status_code, content = app_mng.create(app_name)
-                print('Created app_name', app_name)
-                if status_code != 200:
-                    raise SystemExit('Error creating app', app_name)
-            except SystemExit:
-                print('app_name already exists', app_name)
+        try:
+            create_apps(PRIVATE_KEY, APP_NAMES)
+        except LogsightException as e:
+            print(e)
+
+    @classmethod
+    def tearDownClass(cls):
+        delete_apps(PRIVATE_KEY, APP_NAMES)
 
     @data(*MAP_APP_NAME_LOG_FILE)
     @unpack

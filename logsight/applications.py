@@ -3,6 +3,8 @@ import urllib.parse
 import html
 import json
 
+from logsight.exceptions import HTTP_EXCEPTION_MAP
+
 
 class LogsightApplication:
 
@@ -35,8 +37,10 @@ class LogsightApplication:
             r = requests.get(url, params=params or {})
             r.raise_for_status()
         except requests.exceptions.HTTPError as err:
-            err = self._extract_elasticsearch_error(err)
-            raise SystemExit(err)
+            # err = self._extract_elasticsearch_error(err)
+            d = json.loads(err.response.text)
+            description = d['description'] if 'description' in d else d
+            raise HTTP_EXCEPTION_MAP[err.response.status_code](description)
 
         return r.status_code, json.loads(r.text)
 
@@ -46,8 +50,10 @@ class LogsightApplication:
             r = requests.post(url, json=data)
             r.raise_for_status()
         except requests.exceptions.HTTPError as err:
-            err = self._extract_elasticsearch_error(err)
-            raise SystemExit(err)
+            # err = self._extract_elasticsearch_error(err)
+            d = json.loads(err.response.text)
+            description = d['description'] if 'description' in d else d
+            raise HTTP_EXCEPTION_MAP[err.response.status_code](description)
 
         return r.status_code, json.loads(r.text)
 
