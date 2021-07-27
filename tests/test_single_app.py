@@ -9,6 +9,7 @@ from logsight.utils import now, create_apps, delete_apps
 from logsight.exceptions import LogsightException
 
 APP_NAME = 'test_single_app'
+DELAY_TO_SEND_LOG_MESSAGES = 10
 N_LOG_MESSAGES_TO_SEND = 1000
 
 
@@ -18,15 +19,7 @@ class TestSingleApp(unittest.TestCase):
     def setUpClass(cls):
         super(TestSingleApp, cls).setUpClass()
 
-        try:
-            delete_apps(PRIVATE_KEY, [APP_NAME])
-        except LogsightException as e:
-            print(e)
-
-        try:
-            create_apps(PRIVATE_KEY, [APP_NAME])
-        except LogsightException as e:
-            print(e)
+        cls.__create_apps()
 
         cls.dt_start = now()
         print('Starting message sending', cls.dt_start)
@@ -40,6 +33,21 @@ class TestSingleApp(unittest.TestCase):
 
         print('Sleeping before querying backend:', DELAY_TO_QUERY_BACKEND, 'sec')
         time.sleep(DELAY_TO_QUERY_BACKEND)
+
+    @staticmethod
+    def __create_apps():
+        try:
+            delete_apps(PRIVATE_KEY, [APP_NAME])
+        except LogsightException as e:
+            print(e)
+
+        try:
+            create_apps(PRIVATE_KEY, [APP_NAME])
+        except LogsightException as e:
+            print(e)
+
+        print('Sleeping before sending log messages:', DELAY_TO_SEND_LOG_MESSAGES, 'sec')
+        time.sleep(DELAY_TO_SEND_LOG_MESSAGES)
 
     @classmethod
     def tearDownClass(cls):

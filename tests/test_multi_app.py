@@ -11,6 +11,7 @@ from logsight.utils import now, create_apps, delete_apps
 from logsight.exceptions import LogsightException
 
 
+DELAY_TO_SEND_LOG_MESSAGES = 10
 N_LOG_MESSAGES_TO_SEND = 500
 MAP_APP_NAME_LOG_FILE = [('hadoop', N_LOG_MESSAGES_TO_SEND, 'hadoop', 1),
                          ('openstack', N_LOG_MESSAGES_TO_SEND, 'openstack', 0),
@@ -68,6 +69,9 @@ class TestMultiApp(unittest.TestCase):
             create_apps(PRIVATE_KEY, APP_NAMES)
         except LogsightException as e:
             print(e)
+
+        print('Sleeping before sending log messages:', DELAY_TO_SEND_LOG_MESSAGES, 'sec')
+        time.sleep(DELAY_TO_SEND_LOG_MESSAGES)
 
     @classmethod
     def tearDownClass(cls):

@@ -11,6 +11,7 @@ from logsight.result import LogsightResult
 from logsight.utils import now, create_apps, delete_apps
 
 APP_NAME = 'hello_app'
+DELAY_TO_SEND_LOG_MESSAGES = 10
 NUMBER_LOG_BLOCKS_TO_SEND = 30
 N_LOG_MESSAGES_TO_SEND = NUMBER_LOG_BLOCKS_TO_SEND * 15
 LOGGING_TO_SYS_STDOUT = False
@@ -49,6 +50,9 @@ class TestHelloApp(unittest.TestCase):
             create_apps(PRIVATE_KEY, [APP_NAME])
         except LogsightException as e:
             print(e)
+
+        print('Sleeping before sending log messages:', DELAY_TO_SEND_LOG_MESSAGES, 'sec')
+        time.sleep(DELAY_TO_SEND_LOG_MESSAGES)
 
         cls.dt_start = now()
         print('Starting message sending', cls.dt_start)
