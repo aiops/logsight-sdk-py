@@ -3,7 +3,7 @@ import urllib.parse
 import html
 import json
 
-from logsight.exceptions import HTTP_EXCEPTION_MAP, DataCorruption
+from logsight.exceptions import HTTP_EXCEPTION_MAP, DataCorruption, InternalServerError
 from logsight.template import Templates
 from logsight.incidents import Incidents
 from logsight.quality import LogQuality
@@ -40,9 +40,12 @@ class LogsightResult:
             r.raise_for_status()
         except requests.exceptions.HTTPError as err:
             # err = self._extract_elasticsearch_error(err)
-            d = json.loads(err.response.text)
-            description = d['description'] if 'description' in d else d
-            raise HTTP_EXCEPTION_MAP[err.response.status_code](description)
+            try:
+                d = json.loads(err.response.text)
+                description = d['description'] if 'description' in d else d
+                raise HTTP_EXCEPTION_MAP[err.response.status_code](description)
+            except json.decoder.JSONDecodeError:
+                raise HTTP_EXCEPTION_MAP[err.response.status_code](r.text)
 
         try:
             return json.loads(r.text)

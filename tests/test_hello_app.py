@@ -5,7 +5,7 @@ import time
 import unittest
 
 from config import PRIVATE_KEY, DELAY_TO_QUERY_BACKEND
-from logsight.exceptions import LogsightException
+from logsight.exceptions import LogsightException, InternalServerError
 from logsight.logger import LogsightLogger
 from logsight.result import LogsightResult
 from logsight.utils import now, create_apps, delete_apps
@@ -71,6 +71,7 @@ class TestHelloApp(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         delete_apps(PRIVATE_KEY, [APP_NAME])
+        pass
 
     @staticmethod
     def __setup_handler():

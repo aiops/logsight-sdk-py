@@ -6,6 +6,8 @@ import requests
 import urllib.parse
 import json
 
+from logsight.exceptions import HTTP_EXCEPTION_MAP
+
 
 class LogsightLogger(BufferingHandler):
 
@@ -53,7 +55,10 @@ class LogsightLogger(BufferingHandler):
             r = requests.post(urllib.parse.urljoin(self.host, path), json=j)
             r.raise_for_status()
         except requests.exceptions.HTTPError as err:
-            raise SystemExit(err)
+            # raise SystemExit(err)
+            d = json.loads(err.response.text)
+            description = d['description'] if 'description' in d else d
+            raise HTTP_EXCEPTION_MAP[err.response.status_code](description)
 
         try:
             return r.status_code, json.loads(r.text)
