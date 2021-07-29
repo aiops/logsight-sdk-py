@@ -17,6 +17,11 @@ N_LOG_MESSAGES_TO_SEND = NUMBER_LOG_BLOCKS_TO_SEND * 15
 LOGGING_TO_SYS_STDOUT = False
 
 
+def artificial_sleep(text, sleep_time):
+    print(text, sleep_time, 'sec')
+    time.sleep(sleep_time)
+
+
 def send_logs(logger, i):
     logger.info(f"{i}.1. Hello World!")
     logger.debug(f"{i}.2. Hello Debug!")
@@ -51,8 +56,7 @@ class TestHelloApp(unittest.TestCase):
         except LogsightException as e:
             print(e)
 
-        print('Sleeping before sending log messages:', DELAY_TO_SEND_LOG_MESSAGES, 'sec')
-        time.sleep(DELAY_TO_SEND_LOG_MESSAGES)
+        artificial_sleep('Sleeping before sending log messages:', DELAY_TO_SEND_LOG_MESSAGES)
 
         cls.dt_start = now()
         print('Starting message sending', cls.dt_start)
@@ -69,8 +73,7 @@ class TestHelloApp(unittest.TestCase):
         cls.dt_end = now()
         print('Ended message sending', cls.dt_end)
 
-        print('Sleeping before querying backend:', DELAY_TO_QUERY_BACKEND, 'sec')
-        time.sleep(DELAY_TO_QUERY_BACKEND)
+        artificial_sleep('Sleeping before querying backend:', DELAY_TO_QUERY_BACKEND)
 
     @classmethod
     def tearDownClass(cls):
@@ -97,6 +100,12 @@ class TestHelloApp(unittest.TestCase):
     def __remove_handler(logger, handler):
         handler.close()
         logger.removeHandler(handler)
+
+    # def test_wrong_key(self):
+    #     private_key = '27x'
+    #     with self.assertRaises(LogsightException):
+    #         LogsightResult(private_key, APP_NAME).\
+    #             get_results(self.dt_start, self.dt_end, 'log_ad')
 
     def test_template_count(self):
         templates = LogsightResult(PRIVATE_KEY, APP_NAME).\

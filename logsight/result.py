@@ -39,13 +39,13 @@ class LogsightResult:
             r = requests.post(url, json=data)
             r.raise_for_status()
         except requests.exceptions.HTTPError as err:
-            # err = self._extract_elasticsearch_error(err)
             try:
                 d = json.loads(err.response.text)
                 description = d['description'] if 'description' in d else d
                 raise HTTP_EXCEPTION_MAP[err.response.status_code](description)
             except json.decoder.JSONDecodeError:
-                raise HTTP_EXCEPTION_MAP[err.response.status_code](r.text)
+                msg = self._extract_elasticsearch_error(err)
+                raise HTTP_EXCEPTION_MAP[err.response.status_code](msg)
 
         try:
             return json.loads(r.text)
