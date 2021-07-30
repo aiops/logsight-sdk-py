@@ -6,15 +6,13 @@ import requests
 import urllib.parse
 import json
 
+from logsight.config import HOST_API_V1, PATH_DATA
 from logsight.exceptions import HTTP_EXCEPTION_MAP
 
 
 class LogsightLogger(BufferingHandler):
 
     buffer_lifespan_seconds = 1
-
-    host = 'https://logsight.ai'
-    path = '/api_v1/data'
 
     def __init__(self, private_key, app_name):
         BufferingHandler.__init__(self, capacity=128)
@@ -36,7 +34,7 @@ class LogsightLogger(BufferingHandler):
                      'level': record.levelname}
                 )
             j = {"log-messages": messages}
-            self._post(self.path, j)
+            self._post(PATH_DATA, j)
 
             self.buffer = []
         finally:
@@ -52,10 +50,9 @@ class LogsightLogger(BufferingHandler):
 
     def _post(self, path, j):
         try:
-            r = requests.post(urllib.parse.urljoin(self.host, path), json=j)
+            r = requests.post(urllib.parse.urljoin(HOST_API_V1, path), json=j)
             r.raise_for_status()
         except requests.exceptions.HTTPError as err:
-            # raise SystemExit(err)
             d = json.loads(err.response.text)
             description = d['description'] if 'description' in d else d
             raise HTTP_EXCEPTION_MAP[err.response.status_code](description)

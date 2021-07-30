@@ -76,6 +76,9 @@ class TestAppManagement(unittest.TestCase):
         self.assertEqual(status_code, 200)
         self.assertEqual(content, [])
 
+    def test_invalid_key(self):
+        pass
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -3,6 +3,7 @@ import urllib.parse
 import html
 import json
 
+from logsight.config import HOST_API_V1, PATH_RESULTS
 from logsight.exceptions import HTTP_EXCEPTION_MAP, DataCorruption, InternalServerError
 from logsight.template import Templates
 from logsight.incidents import Incidents
@@ -18,9 +19,6 @@ ANOMALIES = {
 
 class LogsightResult:
 
-    host = 'https://logsight.ai'
-    path = '/api_v1/results'
-
     def __init__(self, private_key, app_name):
         self.private_key = private_key
         self.app_name = app_name
@@ -35,7 +33,7 @@ class LogsightResult:
 
     def _post(self, data):
         try:
-            url = urllib.parse.urljoin(self.host, self.path)
+            url = urllib.parse.urljoin(HOST_API_V1, PATH_RESULTS)
             r = requests.post(url, json=data)
             r.raise_for_status()
         except requests.exceptions.HTTPError as err:

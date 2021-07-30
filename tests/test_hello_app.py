@@ -77,7 +77,7 @@ class TestHelloApp(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        delete_apps(PRIVATE_KEY, [APP_NAME])
+        # delete_apps(PRIVATE_KEY, [APP_NAME])
         pass
 
     @staticmethod
@@ -101,7 +101,7 @@ class TestHelloApp(unittest.TestCase):
         handler.close()
         logger.removeHandler(handler)
 
-    # def test_wrong_key(self):
+    # def test_invalid_key(self):
     #     private_key = '27x'
     #     with self.assertRaises(LogsightException):
     #         LogsightResult(private_key, APP_NAME).\
@@ -112,10 +112,16 @@ class TestHelloApp(unittest.TestCase):
             get_results(self.dt_start, self.dt_end, 'log_ad')
         self.assertEqual(len(templates), N_LOG_MESSAGES_TO_SEND)
 
+    def test_template_empty_app(self):
+        pass
+
     def test_incident_count(self):
         incidents = LogsightResult(PRIVATE_KEY, APP_NAME).\
             get_results(self.dt_start, self.dt_end, 'incidents')
         self.assertEqual(len(incidents), 1)
+
+    def test_incident_empty_app(self):
+        pass
 
     def test_log_quality(self):
         quality = LogsightResult(PRIVATE_KEY, APP_NAME).\
@@ -123,6 +129,9 @@ class TestHelloApp(unittest.TestCase):
         self.assertEqual(len(quality), 1)
         self.assertEqual(quality[0].actual_level.upper(),
                          quality[0].predicted_log_level.upper())
+
+    def test_log_quality_empty_app(self):
+        pass
 
 
 if __name__ == '__main__':

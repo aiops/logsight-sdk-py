@@ -3,15 +3,11 @@ import urllib.parse
 import html
 import json
 
+from logsight.config import HOST_API, PATH_APP_CREATE, PATH_APP_LST, PATH_APP_DELETE
 from logsight.exceptions import HTTP_EXCEPTION_MAP
 
 
 class LogsightApplication:
-
-    host = 'https://logsight.ai'
-    path_create = '/api/applications/create'
-    path_lst = '/api/applications/user'
-    path_delete = '/api/applications'
 
     def __init__(self, private_key):
         self.private_key = private_key
@@ -19,21 +15,21 @@ class LogsightApplication:
     def create(self, app_name):
         data = {'key': self.private_key,
                 'name': app_name}
-        return self._post(self.path_create, data)
+        return self._post(PATH_APP_CREATE, data)
 
     def lst(self):
         payload = {}
         query = f'{self.private_key}'
-        return self._get('/'.join([self.path_lst, query]), payload)
+        return self._get('/'.join([PATH_APP_LST, query]), payload)
 
     def delete(self, app_id):
         data = {}
         query = f'{app_id}?key={self.private_key}'
-        return self._post('/'.join([self.path_delete, query]), data)
+        return self._post('/'.join([PATH_APP_DELETE, query]), data)
 
     def _get(self, path, params=None):
         try:
-            url = urllib.parse.urljoin(self.host, path)
+            url = urllib.parse.urljoin(HOST_API, path)
             r = requests.get(url, params=params or {})
             r.raise_for_status()
         except requests.exceptions.HTTPError as err:
@@ -46,7 +42,7 @@ class LogsightApplication:
 
     def _post(self, path, data):
         try:
-            url = urllib.parse.urljoin(self.host, path)
+            url = urllib.parse.urljoin(HOST_API, path)
             r = requests.post(url, json=data)
             r.raise_for_status()
         except requests.exceptions.HTTPError as err:
