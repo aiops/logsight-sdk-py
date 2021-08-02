@@ -14,7 +14,7 @@ APP_NAME = 'hello_app'
 DELAY_TO_SEND_LOG_MESSAGES = 10
 NUMBER_LOG_BLOCKS_TO_SEND = 30
 N_LOG_MESSAGES_TO_SEND = NUMBER_LOG_BLOCKS_TO_SEND * 15
-LOGGING_TO_SYS_STDOUT = False
+LOGGING_TO_SYS_STDOUT = True
 
 
 def artificial_sleep(text, sleep_time):
@@ -46,6 +46,8 @@ class TestHelloApp(unittest.TestCase):
     def setUpClass(cls):
         super(TestHelloApp, cls).setUpClass()
 
+        logger, handler = cls.__setup_handler()
+
         try:
             delete_apps(PRIVATE_KEY, [APP_NAME])
         except LogsightException as e:
@@ -60,8 +62,7 @@ class TestHelloApp(unittest.TestCase):
 
         cls.dt_start = now()
         print('Starting message sending', cls.dt_start)
-
-        logger, handler = cls.__setup_handler()
+        logger.info('Starting message sending: %s' % cls.dt_start)
 
         for i in range(NUMBER_LOG_BLOCKS_TO_SEND):
             send_logs(logger, i)
@@ -82,16 +83,17 @@ class TestHelloApp(unittest.TestCase):
 
     @staticmethod
     def __setup_handler():
+        logger = logging.getLogger(__name__)
+        logger.setLevel(logging.DEBUG)
+
         handler = LogsightLogger(PRIVATE_KEY, APP_NAME)
         handler.setLevel(logging.DEBUG)
 
-        logger = logging.getLogger(__name__)
-        logger.setLevel(logging.DEBUG)
-        logger.addHandler(handler)
+        stdout_handler = logging.StreamHandler(sys.stdout)
+        stdout_handler.setLevel(logging.INFO)
 
+        logger.addHandler(handler)
         if LOGGING_TO_SYS_STDOUT:
-            stdout_handler = logging.StreamHandler(sys.stdout)
-            stdout_handler.setLevel(logging.DEBUG)
             logger.addHandler(stdout_handler)
 
         return logger, handler
