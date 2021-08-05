@@ -38,7 +38,7 @@ class SendLogs:
 
     def send_log_messages(self, log_file_name, n_messages):
         for i, (level, message) in enumerate(load_log_file(log_file_name, n_messages)):
-            # print('Sending messsage', i)
+            print('Sending messsage', i)
             self.send_log_message(i, level, message)
 
     def send_log_message(self, i, level, message):

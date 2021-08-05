@@ -42,7 +42,7 @@ def delete_app(app_mng, app_name):
     app_list = [(d['id'], d['name']) for d in content if app_name in d['name']]
 
     if not app_list:
-        raise LogsightException('Unable to delete app. app_name does not exists: %s' % app_name)
+        raise LogsightException('Unable to delete app_name (it does not exist): %s' % app_name)
 
     app_id = app_list[0][0]
     try:

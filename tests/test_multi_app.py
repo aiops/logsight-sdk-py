@@ -1,9 +1,9 @@
 import unittest
-import time
 from multiprocessing import Process
 from ddt import ddt, data, unpack
 
-from config import PRIVATE_KEY, DELAY_TO_QUERY_BACKEND
+from config import PRIVATE_KEY
+from utils import p_sleep, SLEEP
 from integration.load_logs import LOG_FILES
 from integration.send_logs import SendLogs
 from logsight.result import LogsightResult
@@ -11,14 +11,14 @@ from logsight.utils import now, create_apps, delete_apps
 from logsight.exceptions import LogsightException
 
 
-DELAY_TO_SEND_LOG_MESSAGES = 10
 N_LOG_MESSAGES_TO_SEND = 500
-MAP_APP_NAME_LOG_FILE = [('hadoop', N_LOG_MESSAGES_TO_SEND, 'hadoop', 1),
-                         ('openstack', N_LOG_MESSAGES_TO_SEND, 'openstack', 0),
-                         ('mac', N_LOG_MESSAGES_TO_SEND, 'mac', 1),
-                         ('zookeeper', N_LOG_MESSAGES_TO_SEND, 'zookeeper', 1),
-                         ('openssh', N_LOG_MESSAGES_TO_SEND, 'openssh', 1),
-                         ]
+MAP_APP_NAME_LOG_FILE = [
+    # ('hadoop', N_LOG_MESSAGES_TO_SEND, 'hadoop', 1),
+    # ('openstack', N_LOG_MESSAGES_TO_SEND, 'openstack', 0),
+    ('mac', N_LOG_MESSAGES_TO_SEND, 'mac', 1),
+    ('zookeeper', N_LOG_MESSAGES_TO_SEND, 'zookeeper', 1),
+    ('openssh', N_LOG_MESSAGES_TO_SEND, 'openssh', 1),
+]
 APP_NAMES = [i[2] for i in MAP_APP_NAME_LOG_FILE]
 
 
@@ -55,26 +55,26 @@ class TestMultiApp(unittest.TestCase):
         cls.dt_end = now()
         print('Ended message sending', cls.dt_end)
 
-        print('Sleeping before querying backend:', DELAY_TO_QUERY_BACKEND, 'sec')
-        time.sleep(DELAY_TO_QUERY_BACKEND)
+        p_sleep(SLEEP.BEFORE_QUERY_BACKEND)
 
     @staticmethod
     def __create_apps():
-        try:
-            delete_apps(PRIVATE_KEY, APP_NAMES)
-        except LogsightException as e:
-            print(e)
+        for app in APP_NAMES:
+            try:
+                delete_apps(PRIVATE_KEY, [app])
+            except LogsightException as e:
+                print(e)
 
-        try:
-            create_apps(PRIVATE_KEY, APP_NAMES)
-        except LogsightException as e:
-            print(e)
+            try:
+                create_apps(PRIVATE_KEY, [app])
+            except LogsightException as e:
+                print(e)
 
-        print('Sleeping before sending log messages:', DELAY_TO_SEND_LOG_MESSAGES, 'sec')
-        time.sleep(DELAY_TO_SEND_LOG_MESSAGES)
+        p_sleep(SLEEP.AFTER_CREATE_APP)
 
     @classmethod
     def tearDownClass(cls):
+        p_sleep(SLEEP.BEFORE_DELETE_APP)
         delete_apps(PRIVATE_KEY, APP_NAMES)
 
     @data(*MAP_APP_NAME_LOG_FILE)

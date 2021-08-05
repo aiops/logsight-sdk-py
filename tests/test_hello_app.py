@@ -1,25 +1,19 @@
 import sys
 import logging
 import logging.handlers
-import time
 import unittest
 
-from config import PRIVATE_KEY, DELAY_TO_QUERY_BACKEND
+from config import PRIVATE_KEY
+from utils import p_sleep, SLEEP
 from logsight.exceptions import LogsightException, InternalServerError
 from logsight.logger import LogsightLogger
 from logsight.result import LogsightResult
 from logsight.utils import now, create_apps, delete_apps
 
 APP_NAME = 'hello_app'
-DELAY_TO_SEND_LOG_MESSAGES = 10
 NUMBER_LOG_BLOCKS_TO_SEND = 30
 N_LOG_MESSAGES_TO_SEND = NUMBER_LOG_BLOCKS_TO_SEND * 15
 LOGGING_TO_SYS_STDOUT = True
-
-
-def artificial_sleep(text, sleep_time):
-    print(text, sleep_time, 'sec')
-    time.sleep(sleep_time)
 
 
 def send_logs(logger, i):
@@ -58,11 +52,10 @@ class TestHelloApp(unittest.TestCase):
         except LogsightException as e:
             print(e)
 
-        artificial_sleep('Sleeping before sending log messages:', DELAY_TO_SEND_LOG_MESSAGES)
+        p_sleep(SLEEP.AFTER_CREATE_APP)
 
         cls.dt_start = now()
         print('Starting message sending', cls.dt_start)
-        logger.info('Starting message sending: %s' % cls.dt_start)
 
         for i in range(NUMBER_LOG_BLOCKS_TO_SEND):
             send_logs(logger, i)
@@ -74,29 +67,29 @@ class TestHelloApp(unittest.TestCase):
         cls.dt_end = now()
         print('Ended message sending', cls.dt_end)
 
-        artificial_sleep('Sleeping before querying backend:', DELAY_TO_QUERY_BACKEND)
+        p_sleep(SLEEP.BEFORE_QUERY_BACKEND)
 
     @classmethod
     def tearDownClass(cls):
-        # delete_apps(PRIVATE_KEY, [APP_NAME])
-        pass
+        p_sleep(SLEEP.BEFORE_DELETE_APP)
+        delete_apps(PRIVATE_KEY, [APP_NAME])
 
     @staticmethod
     def __setup_handler():
         logger = logging.getLogger(__name__)
         logger.setLevel(logging.DEBUG)
 
-        handler = LogsightLogger(PRIVATE_KEY, APP_NAME)
-        handler.setLevel(logging.DEBUG)
+        logsight_handler = LogsightLogger(PRIVATE_KEY, APP_NAME)
+        logsight_handler.setLevel(logging.DEBUG)
 
         stdout_handler = logging.StreamHandler(sys.stdout)
         stdout_handler.setLevel(logging.INFO)
 
-        logger.addHandler(handler)
+        logger.addHandler(logsight_handler)
         if LOGGING_TO_SYS_STDOUT:
             logger.addHandler(stdout_handler)
 
-        return logger, handler
+        return logger, logsight_handler
 
     @staticmethod
     def __remove_handler(logger, handler):

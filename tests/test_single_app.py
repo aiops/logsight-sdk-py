@@ -1,16 +1,17 @@
 import unittest
-import time
 
+from config import PRIVATE_KEY
+from utils import p_sleep, SLEEP
 from integration.load_logs import LOG_FILES
 from integration.send_logs import SendLogs
 from logsight.result import LogsightResult
-from config import PRIVATE_KEY, DELAY_TO_QUERY_BACKEND
 from logsight.utils import now, create_apps, delete_apps
 from logsight.exceptions import LogsightException
 
 APP_NAME = 'test_single_app'
 DELAY_TO_SEND_LOG_MESSAGES = 10
 N_LOG_MESSAGES_TO_SEND = 1000
+DELAY_TO_DELETE_APP = 10
 
 
 class TestSingleApp(unittest.TestCase):
@@ -31,8 +32,7 @@ class TestSingleApp(unittest.TestCase):
         cls.dt_end = now()
         print('Ended message sending', cls.dt_end)
 
-        print('Sleeping before querying backend:', DELAY_TO_QUERY_BACKEND, 'sec')
-        time.sleep(DELAY_TO_QUERY_BACKEND)
+        p_sleep(SLEEP.BEFORE_QUERY_BACKEND)
 
     @staticmethod
     def __create_apps():
@@ -46,11 +46,11 @@ class TestSingleApp(unittest.TestCase):
         except LogsightException as e:
             print(e)
 
-        print('Sleeping before sending log messages:', DELAY_TO_SEND_LOG_MESSAGES, 'sec')
-        time.sleep(DELAY_TO_SEND_LOG_MESSAGES)
+        p_sleep(SLEEP.AFTER_CREATE_APP)
 
     @classmethod
     def tearDownClass(cls):
+        p_sleep(SLEEP.BEFORE_DELETE_APP)
         delete_apps(PRIVATE_KEY, [APP_NAME])
 
     def test_template_count(self):

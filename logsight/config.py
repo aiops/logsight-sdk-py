@@ -1,5 +1,5 @@
 HOST_API_V1 = 'http://wally113.cit.tu-berlin.de:5444/'
-PATH_DATA = '/api_v1'
+PATH_DATA = '/api_v1/data'
 PATH_RESULTS = '/api_v1/results'
 
 HOST_API = 'http://wally113.cit.tu-berlin.de:4200/'
