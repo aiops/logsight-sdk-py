@@ -13,8 +13,8 @@ from logsight.exceptions import LogsightException
 
 N_LOG_MESSAGES_TO_SEND = 500
 MAP_APP_NAME_LOG_FILE = [
-    # ('hadoop', N_LOG_MESSAGES_TO_SEND, 'hadoop', 1),
-    # ('openstack', N_LOG_MESSAGES_TO_SEND, 'openstack', 0),
+    ('hadoop', N_LOG_MESSAGES_TO_SEND, 'hadoop', 1),
+    ('openstack', N_LOG_MESSAGES_TO_SEND, 'openstack', 0),
     ('mac', N_LOG_MESSAGES_TO_SEND, 'mac', 1),
     ('zookeeper', N_LOG_MESSAGES_TO_SEND, 'zookeeper', 1),
     ('openssh', N_LOG_MESSAGES_TO_SEND, 'openssh', 1),
@@ -47,7 +47,10 @@ class TestMultiApp(unittest.TestCase):
 
         def send_log_messages(log_file_id, n_log_messages_to_send, app_name, n_incidents):
             s = SendLogs(PRIVATE_KEY, app_name)
-            s.send_log_messages(log_file_name=LOG_FILES[log_file_id], n_messages=n_log_messages_to_send)
+            s.send_log_messages(log_file_name=LOG_FILES[log_file_id],
+                                n_messages=n_log_messages_to_send,
+                                app_name=app_name,
+                                verbose=True)
             s.flush()
 
         run_cpu_tasks_in_parallel([(send_log_messages, *a) for a in MAP_APP_NAME_LOG_FILE])
