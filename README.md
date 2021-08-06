@@ -6,4 +6,8 @@
 + Install [OpenVPN](https://openvpn.net/cloud-docs/openvpn-3-client-for-linux/) or [OpenVPN for Mac](https://openvpn.net/client-connect-vpn-for-mac-os/)
 + sudo openvpn3 session-start --config your_vpn_file.ovpn
 
+To shoutdown the VPN
++ pgrep openvpn | xargs sudo kill -9
+
+ 
 ## Run tests
