@@ -75,10 +75,10 @@ class TestMultiApp(unittest.TestCase):
 
         p_sleep(SLEEP.AFTER_CREATE_APP)
 
-    @classmethod
-    def tearDownClass(cls):
-        p_sleep(SLEEP.BEFORE_DELETE_APP)
-        delete_apps(PRIVATE_KEY, APP_NAMES)
+    # @classmethod
+    # def tearDownClass(cls):
+    #     p_sleep(SLEEP.BEFORE_DELETE_APP)
+    #     delete_apps(PRIVATE_KEY, APP_NAMES)
 
     @data(*MAP_APP_NAME_LOG_FILE)
     @unpack
