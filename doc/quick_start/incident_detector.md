@@ -22,18 +22,17 @@ Use the Incident Detector client library for Python to:
 + You'll paste your key into the code below later in the quickstart.
 
 ## Setting up
+
 ### Create an environment variable
 
-Using the key from your subscription, create two environment variables for authentication:
+Using the key from your subscription, create one environment variables for authentication:
 
-+ `ANOMALY_DETECTOR_KEY` - The resource key for authenticating your requests.
-+ `ANOMALY_DETECTOR_ENDPOINT` - The resource endpoint for sending API requests. It will look like this:
++ `INCIDENT_DETECTOR_KEY` - The resource key for authenticating your requests.
 
 Copy the following text to your bash file:
 
 ```console
-export ANOMALY_DETECTOR_KEY=<replace-with-your-anomaly-detector-key>
-export ANOMALY_DETECTOR_ENDPOINT=<replace-with-your-anomaly-detector-endpoint>
+export INCIDENT_DETECTOR_KEY=<replace-with-your-anomaly-detector-key>
 ```
 
 After you add the environment variable, run source ~/.bashrc from your console window to make the changes effective.
@@ -74,11 +73,11 @@ static void Main(string[] args){
 ```
 
 
-### Object model
+## Object model
 aaa
 
 
-### Code examples
+## Code examples
 
 Code snippets show you how to do the following with the Incident Detector client library for Python:
 
@@ -89,7 +88,7 @@ Code snippets show you how to do the following with the Incident Detector client
 + Detect the change points in the data set (???)
 
 
-#### Authenticate the client
+### Authenticate the client
 
 In a new method, instantiate a client with your endpoint and key.
 Create an ApiKeyServiceClientCredentials object with your key,
@@ -107,19 +106,19 @@ static IAnomalyDetectorClient createClient(string endpoint, string key)
 }
 ```
 
-#### Load log data from a file
+### Load log data from a file
 
 
-#### Detect incident in the entire data set
+### Detect incident in the entire data set
 
 
-#### Detect the anomaly status of the latest data point (???)
+### Detect the anomaly status of the latest data point (???)
 
 
-#### Detect the change points in the data set (???)
+### Detect the change points in the data set (???)
 
 
-### Run the application
+## Run the application
 
 Run the application with the dotnet run command from your application directory.
 
@@ -127,7 +126,7 @@ Run the application with the dotnet run command from your application directory.
 dotnet run
 ```
 
-### Clean up resources
+## Clean up resources
 
 If you want to clean up and remove a Cognitive Services subscription,
 you can delete the resource or resource group.
