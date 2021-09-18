@@ -1,2 +1,3 @@
 requests>=2.25.1        # Apache Software License (Apache 2.0)
 ddt                     # MIT License
+python-dateutil         # Apache Software License, BSD License (Dual License)
