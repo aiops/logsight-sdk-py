@@ -25,7 +25,7 @@ class TestSingleApp(unittest.TestCase):
         cls.dt_start = now()
         print('Starting message sending', cls.dt_start)
 
-        s = SendLogs(PRIVATE_KEY, APP_NAME)
+        s = SendLogs(PRIVATE_KEY, EMAIL, APP_NAME)
         s.send_log_messages(log_file_name=LOG_FILES['hadoop'], n_messages=N_LOG_MESSAGES_TO_SEND)
         s.flush()
 
@@ -37,12 +37,12 @@ class TestSingleApp(unittest.TestCase):
     @staticmethod
     def __create_apps():
         try:
-            delete_apps(PRIVATE_KEY, [APP_NAME])
+            delete_apps(PRIVATE_KEY, EMAIL, [APP_NAME])
         except LogsightException as e:
             print(e)
 
         try:
-            create_apps(PRIVATE_KEY, [APP_NAME])
+            create_apps(PRIVATE_KEY, EMAIL, [APP_NAME])
         except LogsightException as e:
             print(e)
 
@@ -51,20 +51,20 @@ class TestSingleApp(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         p_sleep(SLEEP.BEFORE_DELETE_APP)
-        delete_apps(PRIVATE_KEY, [APP_NAME])
+        delete_apps(PRIVATE_KEY, EMAIL, [APP_NAME])
 
     def test_template_count(self):
-        templates = LogsightResult(PRIVATE_KEY, APP_NAME, EMAIL)\
+        templates = LogsightResult(PRIVATE_KEY, EMAIL, APP_NAME)\
             .get_results(self.dt_start, self.dt_end, 'log_ad')
         self.assertEqual(len(templates), N_LOG_MESSAGES_TO_SEND)
 
     def test_pseudo_incident_count(self):
-        incidents = LogsightResult(PRIVATE_KEY, APP_NAME, EMAIL)\
+        incidents = LogsightResult(PRIVATE_KEY, EMAIL, APP_NAME)\
             .get_results(self.dt_start, self.dt_end, 'incidents')
         self.assertGreaterEqual(len(incidents), 1)
 
     def test_real_incident_count(self):
-        incidents = LogsightResult(PRIVATE_KEY, APP_NAME, EMAIL)\
+        incidents = LogsightResult(PRIVATE_KEY, EMAIL, APP_NAME)\
             .get_results(self.dt_start, self.dt_end, 'incidents')
         real_incidents = sum([1 if i.total_score > 0 else 0 for i in incidents])
         self.assertGreaterEqual(real_incidents, 0)

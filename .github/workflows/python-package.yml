@@ -1,0 +1,50 @@
+name: Publish Python distributions to PyPI and TestPyPI
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  build-n-publish:
+    name: Build and publish Python distribution
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@master
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8
+      - name: Lint with flake8
+        run: |
+          # stop the build if there are Python syntax errors or undefined names
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+      - name: Test with unittest
+        run: |
+          cd tests
+          python -m unittest discover
+          cd ..
+
+      - name: Build binary wheel and a source tarball
+        run: python setup.py sdist
+
+      - name: Publish distribution to Test PyPI
+        # Pro tip: instead of using branch pointers, like master, pin versions of Actions that you use to tagged versions or sha1 commit identifiers.
+        # This will make your workflows more secure and better reproducible, saving you from sudden and unpleasant surprises.
+        uses: pypa/gh-action-pypi-publish@develop
+        with:
+          user: __token__
+          password: ${{ secrets.TEST_PYPI_TOKEN }}
+          repository_url: https://test.pypi.org/legacy/
+
+# Add API token
+# Token for "LOGSIGHT_SDK"
+# pypi-AgENdGVzdC5weXBpLm9yZwIkODU1MjA5YjgtY2Q1NC00MDM2LTgxNDgtNmQyZjNjMDVjY2JiAAIleyJwZXJtaXNzaW9ucyI6ICJ1c2VyIiwgInZlcnNpb24iOiAxfQAABiA6MgIdh0exdzgqV8-94ZWuU7V48f0KzhvkVklP2-Zr2A

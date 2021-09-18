@@ -9,8 +9,9 @@ from logsight.exceptions import HTTP_EXCEPTION_MAP
 
 class LogsightApplication:
 
-    def __init__(self, private_key):
+    def __init__(self, private_key, email):
         self.private_key = private_key
+        self.email = email
 
     def create(self, app_name):
         data = {'key': self.private_key,

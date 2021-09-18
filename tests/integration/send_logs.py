@@ -11,15 +11,16 @@ else:
 
 class SendLogs:
 
-    def __init__(self, private_key, app_name):
+    def __init__(self, private_key, email, app_name):
         self.private_key = private_key
+        self.email = email
         self.app_name = app_name
-        self.logger, self.handler = self.__setup_handler(private_key, app_name)
+        self.logger, self.handler = self.__setup_handler(private_key, email, app_name)
         self.logger.propagate = False
 
     @staticmethod
-    def __setup_handler(private_key, app_name):
-        handler = LogsightLogger(private_key, app_name)
+    def __setup_handler(private_key, email, app_name):
+        handler = LogsightLogger(private_key, email, app_name)
         handler.setLevel(logging.DEBUG)
 
         stdout_handler = logging.StreamHandler(sys.stdout)
@@ -62,8 +63,9 @@ class SendLogs:
 
 if __name__ == '__main__':
     PRIVATE_KEY = 'q1oukwa2hzsoxg4j7arvd6q67ik'
+    EMAIL = 'jorge.cardoso.pt@gmail.com'
     APP_NAME = 'unittest'
 
-    r = SendLogs(APP_NAME)
+    r = SendLogs(PRIVATE_KEY, EMAIL, APP_NAME)
     r.send_log_messages(log_file_name=LOG_FILES['hadoop'], n_messages=200)
     r.flush()

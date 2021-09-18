@@ -44,12 +44,12 @@ class TestHelloApp(unittest.TestCase):
         logger, handler = cls.__setup_handler()
 
         try:
-            delete_apps(PRIVATE_KEY, [APP_NAME])
+            delete_apps(PRIVATE_KEY, EMAIL, [APP_NAME])
         except LogsightException as e:
             print(e)
 
         try:
-            create_apps(PRIVATE_KEY, [APP_NAME])
+            create_apps(PRIVATE_KEY, EMAIL, [APP_NAME])
         except LogsightException as e:
             print(e)
 
@@ -73,14 +73,14 @@ class TestHelloApp(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         p_sleep(SLEEP.BEFORE_DELETE_APP)
-        delete_apps(PRIVATE_KEY, [APP_NAME])
+        delete_apps(PRIVATE_KEY, EMAIL, [APP_NAME])
 
     @staticmethod
     def __setup_handler():
         logger = logging.getLogger(__name__)
         logger.setLevel(logging.DEBUG)
 
-        logsight_handler = LogsightLogger(PRIVATE_KEY, APP_NAME)
+        logsight_handler = LogsightLogger(PRIVATE_KEY, EMAIL, APP_NAME)
         logsight_handler.setLevel(logging.DEBUG)
 
         stdout_handler = logging.StreamHandler(sys.stdout)
@@ -104,7 +104,7 @@ class TestHelloApp(unittest.TestCase):
     #             get_results(self.dt_start, self.dt_end, 'log_ad')
 
     def test_template_count(self):
-        templates = LogsightResult(PRIVATE_KEY, APP_NAME, EMAIL).\
+        templates = LogsightResult(PRIVATE_KEY, EMAIL, APP_NAME).\
             get_results(self.dt_start, self.dt_end, 'log_ad')
         self.assertEqual(len(templates), N_LOG_MESSAGES_TO_SEND)
 
@@ -112,7 +112,7 @@ class TestHelloApp(unittest.TestCase):
         pass
 
     def test_incident_count(self):
-        incidents = LogsightResult(PRIVATE_KEY, APP_NAME, EMAIL).\
+        incidents = LogsightResult(PRIVATE_KEY, EMAIL, APP_NAME).\
             get_results(self.dt_start, self.dt_end, 'incidents')
         self.assertEqual(len(incidents), 1)
 
@@ -120,7 +120,7 @@ class TestHelloApp(unittest.TestCase):
         pass
 
     def test_log_quality(self):
-        quality = LogsightResult(PRIVATE_KEY, APP_NAME, EMAIL).\
+        quality = LogsightResult(PRIVATE_KEY, EMAIL, APP_NAME).\
             get_results(self.dt_start, self.dt_end, 'log_quality')
         self.assertEqual(len(quality), 4)
         self.assertEqual(label2id[quality[0].actual_level.upper()],

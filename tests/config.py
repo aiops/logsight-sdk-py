@@ -3,3 +3,4 @@ MAGIC_LINK = 'http://wally113.cit.tu-berlin.de:4200/auth/activate/jvvggnfy7bh6vw
 MAGIC_LINK = 'http://wally113.cit.tu-berlin.de:4200/auth/activate/vzppoaragimcf738in9qn4klbzi'
 MAGIC_LINK = 'https://demo.logsight.ai/auth/login/2/cryciuuh436ho7i08in3kyt3ym'
 PRIVATE_KEY = 'vrrrjbamjrvfj0cvmujz3dgax2i'
+EMAIL = 'jorge.cardoso.pt@gmail.com'

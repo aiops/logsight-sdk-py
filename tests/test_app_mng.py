@@ -1,6 +1,6 @@
 import unittest
 
-from config import PRIVATE_KEY
+from config import PRIVATE_KEY, EMAIL
 from logsight.applications import LogsightApplication
 from logsight.exceptions import LogsightException
 
@@ -10,7 +10,7 @@ class TestAppManagement(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         super(TestAppManagement, cls).setUpClass()
-        cls.app_mng = LogsightApplication(PRIVATE_KEY)
+        cls.app_mng = LogsightApplication(PRIVATE_KEY, EMAIL)
 
     @classmethod
     def tearDownClass(cls):
@@ -58,8 +58,8 @@ class TestAppManagement(unittest.TestCase):
             self.assertEqual(status_code, 400)
 
     def test_create_list_delete_apps(self):
-        n = 10
-        app_names = [f'test_create_app_{i}' for i in range(n)]
+        n_apps = 5
+        app_names = [f'test_create_app_{i}' for i in range(n_apps)]
         app_ids = [self._create_app(app_name)[1]['id'] for app_name in app_names]
 
         status_code, content = self.app_mng.lst()
@@ -81,5 +81,4 @@ class TestAppManagement(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    #
     unittest.main()

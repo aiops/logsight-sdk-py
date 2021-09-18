@@ -14,10 +14,11 @@ class LogsightLogger(BufferingHandler):
 
     buffer_lifespan_seconds = 1
 
-    def __init__(self, private_key, app_name):
+    def __init__(self, private_key, email, app_name):
         BufferingHandler.__init__(self, capacity=128)
         self.last_emit = None
         self.private_key = private_key
+        self.email = email
         self.app_name = app_name
 
     def flush(self):

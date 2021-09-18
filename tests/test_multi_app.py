@@ -46,7 +46,7 @@ class TestMultiApp(unittest.TestCase):
                 running_task.join()
 
         def send_log_messages(log_file_id, n_log_messages_to_send, app_name, n_incidents):
-            s = SendLogs(PRIVATE_KEY, app_name)
+            s = SendLogs(PRIVATE_KEY, EMAIL, app_name)
             s.send_log_messages(log_file_name=LOG_FILES[log_file_id],
                                 n_messages=n_log_messages_to_send,
                                 app_name=app_name,
@@ -64,12 +64,12 @@ class TestMultiApp(unittest.TestCase):
     def __create_apps():
         for app in APP_NAMES:
             try:
-                delete_apps(PRIVATE_KEY, [app])
+                delete_apps(PRIVATE_KEY, EMAIL, [app])
             except LogsightException as e:
                 print(e)
 
             try:
-                create_apps(PRIVATE_KEY, [app])
+                create_apps(PRIVATE_KEY, EMAIL, [app])
             except LogsightException as e:
                 print(e)
 
@@ -83,13 +83,13 @@ class TestMultiApp(unittest.TestCase):
     @data(*MAP_APP_NAME_LOG_FILE)
     @unpack
     def test_template_count(self, log_file, n_log_messages_to_send, app_name, n_incidents):
-        templates = LogsightResult(PRIVATE_KEY, app_name, EMAIL).get_results(self.dt_start, self.dt_end, 'log_ad')
+        templates = LogsightResult(PRIVATE_KEY, EMAIL, app_name).get_results(self.dt_start, self.dt_end, 'log_ad')
         self.assertEqual(len(templates), n_log_messages_to_send)
 
     @data(*MAP_APP_NAME_LOG_FILE)
     @unpack
     def test_incident_count(self, log_file, n_log_messages_to_send, app_name, n_incidents):
-        incidents = LogsightResult(PRIVATE_KEY, app_name, EMAIL)\
+        incidents = LogsightResult(PRIVATE_KEY, EMAIL, app_name)\
             .get_results(self.dt_start, self.dt_end, 'incidents')
         real_incidents = sum([1 if i.total_score > 0 else 0 for i in incidents])
         self.assertGreaterEqual(real_incidents, n_incidents)

@@ -13,13 +13,13 @@ def now():
     return datetime.datetime.now(tz=tzlocal()).isoformat()
 
 
-def create_apps(private_key, app_names):
-    app_mng = LogsightApplication(private_key)
+def create_apps(private_key, email, app_names):
+    app_mng = LogsightApplication(private_key, email)
     return [create_app(app_mng, app_name) for app_name in app_names]
 
 
-def delete_apps(private_key, app_names):
-    app_mng = LogsightApplication(private_key)
+def delete_apps(private_key, email, app_names):
+    app_mng = LogsightApplication(private_key, email)
     return [delete_app(app_mng, app_name) for app_name in app_names]
 
 
