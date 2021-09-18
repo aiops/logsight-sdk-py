@@ -37,7 +37,7 @@ jobs:
 
       - name: Test with unittest
         run: |
-          echo "PYTHONPATH=/home/runner/work/logsight-python-sdk/logsight-python-sdk" >> $GITHUB_ENV
+          export PYTHONPATH=$PYTHONPATH:/home/runner/work/logsight-python-sdk/logsight-python-sd
           cd tests
           python -m unittest discover
           cd ..
