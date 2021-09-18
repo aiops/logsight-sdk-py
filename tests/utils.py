@@ -5,6 +5,7 @@ from enum import Enum
 class SLEEP(Enum):
     AFTER_CREATE_APP = ("Sleeping after creating app:", 30)
     BEFORE_DELETE_APP = ("Sleeping before deleting app:", 30)
+    AFTER_SENDING_LOGS = ("Sleeping after sending logs:", 30)
     BEFORE_QUERY_BACKEND = ("Sleeping before querying backend:", 75)
 
 

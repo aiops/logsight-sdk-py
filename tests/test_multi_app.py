@@ -14,10 +14,10 @@ from logsight.exceptions import LogsightException
 N_LOG_MESSAGES_TO_SEND = 500
 MAP_APP_NAME_LOG_FILE = [
     ('hadoop', N_LOG_MESSAGES_TO_SEND, 'hadoop', 0),
-    ('openstack', N_LOG_MESSAGES_TO_SEND, 'openstack', 0),
-    ('mac', N_LOG_MESSAGES_TO_SEND, 'mac', 1),
-    ('zookeeper', N_LOG_MESSAGES_TO_SEND, 'zookeeper', 1),
-    ('openssh', N_LOG_MESSAGES_TO_SEND, 'openssh', 1),
+    # ('openstack', N_LOG_MESSAGES_TO_SEND, 'openstack', 0),
+    # ('mac', N_LOG_MESSAGES_TO_SEND, 'mac', 1),
+    # ('zookeeper', N_LOG_MESSAGES_TO_SEND, 'zookeeper', 1),
+    # ('openssh', N_LOG_MESSAGES_TO_SEND, 'openssh', 1),
 ]
 APP_NAMES = [i[2] for i in MAP_APP_NAME_LOG_FILE]
 
@@ -51,6 +51,7 @@ class TestMultiApp(unittest.TestCase):
                                 n_messages=n_log_messages_to_send,
                                 app_name=app_name,
                                 verbose=True)
+            # p_sleep(SLEEP.AFTER_SENDING_LOGS)
             s.flush()
 
         run_cpu_tasks_in_parallel([(send_log_messages, *a) for a in MAP_APP_NAME_LOG_FILE])
@@ -75,10 +76,10 @@ class TestMultiApp(unittest.TestCase):
 
         p_sleep(SLEEP.AFTER_CREATE_APP)
 
-    # @classmethod
-    # def tearDownClass(cls):
-    #     p_sleep(SLEEP.BEFORE_DELETE_APP)
-    #     delete_apps(PRIVATE_KEY, APP_NAMES)
+    @classmethod
+    def tearDownClass(cls):
+        p_sleep(SLEEP.BEFORE_DELETE_APP)
+        delete_apps(PRIVATE_KEY, APP_NAMES)
 
     @data(*MAP_APP_NAME_LOG_FILE)
     @unpack
