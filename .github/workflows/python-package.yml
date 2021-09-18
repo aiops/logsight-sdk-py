@@ -62,7 +62,7 @@ jobs:
         uses: pypa/gh-action-pypi-publish@master
         with:
           user: __token__
-          password: ${{ secrets.TEST_PYPI_TOKEN }}
+          password: ${{ secrets.PYPI_TOKEN }}
 
 # Add API token
 # Token for "LOGSIGHT_SDK"

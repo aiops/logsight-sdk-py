@@ -64,18 +64,3 @@ class LogsightApplication:
             err = str(err) + ' (' + html.unescape(err.response.text[start_idx:end_idx]) + ')'
 
         return err
-
-
-if __name__ == '__main__':
-    PRIVATE_KEY = 'q1oukwa2hzsoxg4j7arvd6q67ik'
-    APP_NAME = 'unittest_7'
-
-    app = LogsightApplication(PRIVATE_KEY)
-    print(app.lst())
-
-    # app_id = app.create(APP_NAME)
-    # print(app_id)
-
-    # result = app.delete(str(app_id['id']))
-    # result = app.delete(str(152))
-    # print(result)
