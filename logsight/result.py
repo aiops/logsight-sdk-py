@@ -19,13 +19,15 @@ ANOMALIES = {
 
 class LogsightResult:
 
-    def __init__(self, private_key, app_name):
+    def __init__(self, private_key, app_name, email):
         self.private_key = private_key
         self.app_name = app_name
+        self.email = email
 
     def get_results(self, start_time, end_time, anomaly_type):
         data = {'private-key': self.private_key,
                 'app': self.app_name,
+                'email': self.email,
                 'start-time': start_time,
                 'end-time': end_time,
                 'anomaly-type': anomaly_type}

@@ -2,7 +2,7 @@ import unittest
 from multiprocessing import Process
 from ddt import ddt, data, unpack
 
-from config import PRIVATE_KEY
+from config import PRIVATE_KEY, EMAIL
 from utils import p_sleep, SLEEP
 from integration.load_logs import LOG_FILES
 from integration.send_logs import SendLogs
@@ -13,7 +13,7 @@ from logsight.exceptions import LogsightException
 
 N_LOG_MESSAGES_TO_SEND = 500
 MAP_APP_NAME_LOG_FILE = [
-    ('hadoop', N_LOG_MESSAGES_TO_SEND, 'hadoop', 1),
+    ('hadoop', N_LOG_MESSAGES_TO_SEND, 'hadoop', 0),
     ('openstack', N_LOG_MESSAGES_TO_SEND, 'openstack', 0),
     ('mac', N_LOG_MESSAGES_TO_SEND, 'mac', 1),
     ('zookeeper', N_LOG_MESSAGES_TO_SEND, 'zookeeper', 1),
@@ -83,13 +83,13 @@ class TestMultiApp(unittest.TestCase):
     @data(*MAP_APP_NAME_LOG_FILE)
     @unpack
     def test_template_count(self, log_file, n_log_messages_to_send, app_name, n_incidents):
-        templates = LogsightResult(PRIVATE_KEY, app_name).get_results(self.dt_start, self.dt_end, 'log_ad')
+        templates = LogsightResult(PRIVATE_KEY, app_name, EMAIL).get_results(self.dt_start, self.dt_end, 'log_ad')
         self.assertEqual(len(templates), n_log_messages_to_send)
 
     @data(*MAP_APP_NAME_LOG_FILE)
     @unpack
     def test_incident_count(self, log_file, n_log_messages_to_send, app_name, n_incidents):
-        incidents = LogsightResult(PRIVATE_KEY, app_name)\
+        incidents = LogsightResult(PRIVATE_KEY, app_name, EMAIL)\
             .get_results(self.dt_start, self.dt_end, 'incidents')
         real_incidents = sum([1 if i.total_score > 0 else 0 for i in incidents])
         self.assertGreaterEqual(real_incidents, n_incidents)

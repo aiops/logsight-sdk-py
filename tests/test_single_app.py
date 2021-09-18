@@ -1,6 +1,6 @@
 import unittest
 
-from config import PRIVATE_KEY
+from config import PRIVATE_KEY, EMAIL
 from utils import p_sleep, SLEEP
 from integration.load_logs import LOG_FILES
 from integration.send_logs import SendLogs
@@ -54,17 +54,17 @@ class TestSingleApp(unittest.TestCase):
         delete_apps(PRIVATE_KEY, [APP_NAME])
 
     def test_template_count(self):
-        templates = LogsightResult(PRIVATE_KEY, APP_NAME)\
+        templates = LogsightResult(PRIVATE_KEY, APP_NAME, EMAIL)\
             .get_results(self.dt_start, self.dt_end, 'log_ad')
         self.assertEqual(len(templates), N_LOG_MESSAGES_TO_SEND)
 
     def test_pseudo_incident_count(self):
-        incidents = LogsightResult(PRIVATE_KEY, APP_NAME)\
+        incidents = LogsightResult(PRIVATE_KEY, APP_NAME, EMAIL)\
             .get_results(self.dt_start, self.dt_end, 'incidents')
         self.assertGreaterEqual(len(incidents), 1)
 
     def test_real_incident_count(self):
-        incidents = LogsightResult(PRIVATE_KEY, APP_NAME)\
+        incidents = LogsightResult(PRIVATE_KEY, APP_NAME, EMAIL)\
             .get_results(self.dt_start, self.dt_end, 'incidents')
         real_incidents = sum([1 if i.total_score > 0 else 0 for i in incidents])
         self.assertGreaterEqual(real_incidents, 0)

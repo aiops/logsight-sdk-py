@@ -3,7 +3,7 @@ import logging
 import logging.handlers
 import unittest
 
-from config import PRIVATE_KEY
+from config import PRIVATE_KEY, EMAIL
 from utils import p_sleep, SLEEP
 from logsight.exceptions import LogsightException, InternalServerError
 from logsight.logger import LogsightLogger
@@ -14,6 +14,7 @@ APP_NAME = 'hello_app'
 NUMBER_LOG_BLOCKS_TO_SEND = 30
 N_LOG_MESSAGES_TO_SEND = NUMBER_LOG_BLOCKS_TO_SEND * 15
 LOGGING_TO_SYS_STDOUT = True
+label2id = {"INFO": 1, "DEBUG": 1, "TRACE": 1, "WARNING": 0, "WARN": 0, "ERROR":0, "EXCEPTION": 0, "CRITICAL": 0}
 
 
 def send_logs(logger, i):
@@ -103,7 +104,7 @@ class TestHelloApp(unittest.TestCase):
     #             get_results(self.dt_start, self.dt_end, 'log_ad')
 
     def test_template_count(self):
-        templates = LogsightResult(PRIVATE_KEY, APP_NAME).\
+        templates = LogsightResult(PRIVATE_KEY, APP_NAME, EMAIL).\
             get_results(self.dt_start, self.dt_end, 'log_ad')
         self.assertEqual(len(templates), N_LOG_MESSAGES_TO_SEND)
 
@@ -111,7 +112,7 @@ class TestHelloApp(unittest.TestCase):
         pass
 
     def test_incident_count(self):
-        incidents = LogsightResult(PRIVATE_KEY, APP_NAME).\
+        incidents = LogsightResult(PRIVATE_KEY, APP_NAME, EMAIL).\
             get_results(self.dt_start, self.dt_end, 'incidents')
         self.assertEqual(len(incidents), 1)
 
@@ -119,11 +120,11 @@ class TestHelloApp(unittest.TestCase):
         pass
 
     def test_log_quality(self):
-        quality = LogsightResult(PRIVATE_KEY, APP_NAME).\
+        quality = LogsightResult(PRIVATE_KEY, APP_NAME, EMAIL).\
             get_results(self.dt_start, self.dt_end, 'log_quality')
-        self.assertEqual(len(quality), 1)
-        self.assertEqual(quality[0].actual_level.upper(),
-                         quality[0].predicted_log_level.upper())
+        self.assertEqual(len(quality), 4)
+        self.assertEqual(label2id[quality[0].actual_level.upper()],
+                         quality[0].predicted_log_level)
 
     def test_log_quality_empty_app(self):
         pass
