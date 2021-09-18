@@ -37,6 +37,7 @@ jobs:
 
       - name: Test with unittest
         run: |
+          echo "PYTHONPATH=." >> $GITHUB_ENV
           cd tests
           python -m unittest discover
           cd ..
