@@ -11,7 +11,7 @@ jobs:
     name: Build and publish Python distribution
     runs-on: ubuntu-18.04
     steps:
-      - uses: actions/checkout@develop
+      - uses: actions/checkout@v0.1-alpha
       - name: Set up Python 3.7
         uses: actions/setup-python@v1
         with:
