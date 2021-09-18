@@ -48,9 +48,17 @@ jobs:
       - name: Build binary wheel and a source tarball
         run: python setup.py sdist
 
-      - name: Publish distribution to Test PyPI
+      - name: Publish distribution 📦 to Test PyPI
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          user: __token__
+          password: ${{ secrets.TEST_PYPI_TOKEN }}
+          repository_url: https://test.pypi.org/legacy/
+
+      - name: Publish distribution 📦 to PyPI
         # Pro tip: instead of using branch pointers, like master, pin versions of Actions that you use to tagged versions or sha1 commit identifiers.
         # This will make your workflows more secure and better reproducible, saving you from sudden and unpleasant surprises.
+        if: startsWith(github.ref, 'refs/tags')
         uses: pypa/gh-action-pypi-publish@master
         with:
           user: __token__

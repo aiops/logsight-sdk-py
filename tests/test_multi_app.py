@@ -14,7 +14,7 @@ from logsight.exceptions import LogsightException
 N_LOG_MESSAGES_TO_SEND = 500
 MAP_APP_NAME_LOG_FILE = [
     ('hadoop', N_LOG_MESSAGES_TO_SEND, 'hadoop', 0),
-    # ('openstack', N_LOG_MESSAGES_TO_SEND, 'openstack', 0),
+    ('openstack', N_LOG_MESSAGES_TO_SEND, 'openstack', 0),
     # ('mac', N_LOG_MESSAGES_TO_SEND, 'mac', 1),
     # ('zookeeper', N_LOG_MESSAGES_TO_SEND, 'zookeeper', 1),
     # ('openssh', N_LOG_MESSAGES_TO_SEND, 'openssh', 1),
@@ -79,7 +79,7 @@ class TestMultiApp(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         p_sleep(SLEEP.BEFORE_DELETE_APP)
-        delete_apps(PRIVATE_KEY, APP_NAMES)
+        delete_apps(PRIVATE_KEY, EMAIL, APP_NAMES)
 
     @data(*MAP_APP_NAME_LOG_FILE)
     @unpack

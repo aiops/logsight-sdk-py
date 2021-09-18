@@ -71,13 +71,10 @@ class TestAppManagement(unittest.TestCase):
         for _id in app_ids:
             self._delete_app(str(_id))
 
-    def test_list_apps_empty(self):
-        status_code, content = self.app_mng.lst()
-        self.assertEqual(status_code, 200)
-        self.assertEqual(content, [])
-
     def test_invalid_key(self):
-        pass
+        private_key = '27x'
+        with self.assertRaises(LogsightException):
+            LogsightApplication(private_key, EMAIL).lst()
 
 
 if __name__ == '__main__':

@@ -14,7 +14,7 @@ APP_NAME = 'hello_app'
 NUMBER_LOG_BLOCKS_TO_SEND = 30
 N_LOG_MESSAGES_TO_SEND = NUMBER_LOG_BLOCKS_TO_SEND * 15
 LOGGING_TO_SYS_STDOUT = True
-label2id = {"INFO": 1, "DEBUG": 1, "TRACE": 1, "WARNING": 0, "WARN": 0, "ERROR":0, "EXCEPTION": 0, "CRITICAL": 0}
+label2id = {"INFO": 1, "DEBUG": 1, "TRACE": 1, "WARNING": 0, "WARN": 0, "ERROR": 0, "EXCEPTION": 0, "CRITICAL": 0}
 
 
 def send_logs(logger, i):
@@ -97,27 +97,21 @@ class TestHelloApp(unittest.TestCase):
         handler.close()
         logger.removeHandler(handler)
 
-    # def test_invalid_key(self):
-    #     private_key = '27x'
-    #     with self.assertRaises(LogsightException):
-    #         LogsightResult(private_key, APP_NAME).\
-    #             get_results(self.dt_start, self.dt_end, 'log_ad')
+    def test_invalid_key(self):
+        private_key = '27x'
+        with self.assertRaises(LogsightException):
+            LogsightResult(private_key, EMAIL, APP_NAME).\
+                get_results(self.dt_start, self.dt_end, 'log_ad')
 
     def test_template_count(self):
         templates = LogsightResult(PRIVATE_KEY, EMAIL, APP_NAME).\
             get_results(self.dt_start, self.dt_end, 'log_ad')
         self.assertEqual(len(templates), N_LOG_MESSAGES_TO_SEND)
 
-    def test_template_empty_app(self):
-        pass
-
     def test_incident_count(self):
         incidents = LogsightResult(PRIVATE_KEY, EMAIL, APP_NAME).\
             get_results(self.dt_start, self.dt_end, 'incidents')
         self.assertEqual(len(incidents), 1)
-
-    def test_incident_empty_app(self):
-        pass
 
     def test_log_quality(self):
         quality = LogsightResult(PRIVATE_KEY, EMAIL, APP_NAME).\
@@ -125,9 +119,6 @@ class TestHelloApp(unittest.TestCase):
         self.assertEqual(len(quality), 4)
         self.assertEqual(label2id[quality[0].actual_level.upper()],
                          quality[0].predicted_log_level)
-
-    def test_log_quality_empty_app(self):
-        pass
 
 
 if __name__ == '__main__':
