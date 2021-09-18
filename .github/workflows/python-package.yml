@@ -11,7 +11,7 @@ jobs:
     name: Build and publish Python distribution
     runs-on: ubuntu-18.04
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@develop
       - name: Set up Python 3.7
         uses: actions/setup-python@v1
         with:
@@ -33,17 +33,19 @@ jobs:
           python -m unittest discover
           cd ..
 
+      - name: Install build dependencies
+        run: python -m pip install build wheel
+
       - name: Build binary wheel and a source tarball
         run: python setup.py sdist
 
       - name: Publish distribution to Test PyPI
         # Pro tip: instead of using branch pointers, like master, pin versions of Actions that you use to tagged versions or sha1 commit identifiers.
         # This will make your workflows more secure and better reproducible, saving you from sudden and unpleasant surprises.
-        uses: pypa/gh-action-pypi-publish@develop
+        uses: pypa/gh-action-pypi-publish@master
         with:
           user: __token__
           password: ${{ secrets.TEST_PYPI_TOKEN }}
-          repository_url: https://test.pypi.org/legacy/
 
 # Add API token
 # Token for "LOGSIGHT_SDK"
