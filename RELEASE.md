@@ -45,7 +45,7 @@ Workflow
 5. Commit all those changes with consistent comment
 
     + `git commit -a -m "Prep for v$(python setup.py --version) release"`
-    + `git push`
+    + `git push origin develop`
 
 6. Created release branch
 
