@@ -70,7 +70,7 @@ Workflow
 
 5. Commit all those changes with consistent comment
 
-    + `git commit -m "Prep for v1.2.3-rc1 release candidate"`
+    + `git commit -a -m "Prep for v$(python setup.py --version)-rc1 release candidate"`
     + `git push`
 
 6. Branching and Merging
