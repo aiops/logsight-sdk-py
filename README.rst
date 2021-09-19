@@ -87,13 +87,13 @@ Workflow
     + This will be reflected in the "releases" page of your GitHub repository.
 
     + `git tag -a v1.2.3-rc1 -m "Tag description v1.2.3-rc1"` or
-    + `git tag -a v$(python setup.py --version) -m 'description'`
+    + `git tag -a v$(python setup.py --version) -m "Prep for v$(python setup.py --version)-rc1 release candidate"`
     + Show list of the existing tags
     + `git tag`
 
 7. Push tag to remote
 
-    + `git push origin v1.2.3-rc1` or
+    + `git push origin v$(python setup.py --version)` or
     + `git push --tags origin develop`
 
 8. Confirm that GitHub has generated the release file
@@ -101,23 +101,27 @@ Workflow
     + Browse to releases page and make sure the new version has a release entry
     + https://github.com/aiops/logsight-python-sdk/releases
 
-9. Release testing
+9. Build locally
 
-    + `python setup.py register -r pypitest` (register the package with PyPI testpypi.python.org)
-    + `python setup.py sdist upload -r pypitest` (upload the stuff to PyPI Test)
+    + `rm -rf build`
+    + `rm -rf dist`
+    + `python3 setup.py sdist bdist_wheel`
 
-10. Test the test release
+10. Release testing
+
+    + Make sure you have a correct ~/.pypirc with your credentials from https://pypi.python.org/pypi
+    + `twine upload --repository testpypi dist/*` (upload dist to PyPI Test)
+
+11. Test the test release
 
     + `python3 -m pip install -i https://testpypi.python.org/pypi logsight` (attempt to install from PyPI test server)
     + When download packages from TestPyPI, you can specify --extra-index-url to point to PyPI
     + This is useful when the package you're testing has dependencies
     + `python3 -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ logsight`
-    + `pip uninstall logsight`
+    + `python3 -m pip uninstall logsight`
 
-11. Release
+12. Release
 
-    + `rm -rf build; rm -rf dist;`
-    + `python setup.py register -r pypi`
-    + `python setup.py sdist upload -r pypi`
-    + `pip install logsight`
+    + `twine upload dist/*`
+    + `python3 -m pip install logsight`
     
