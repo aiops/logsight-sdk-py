@@ -4,7 +4,6 @@ Release process with GitHub and PyPI
 
 How to release logsight
 
-+ https://sherif.io/2016/09/30/Python-package-with-GitHub-PyPI.html
 
 Project Stages
 --------------
