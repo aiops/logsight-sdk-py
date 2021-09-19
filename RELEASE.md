@@ -134,4 +134,16 @@ git push origin develop
 
 git branch -D release/$version
 git push origin :release/$version
+
+rm -rf build
+rm -rf dist
+python3 setup.py sdist bdist_wheel
+twine check dist/*
+
+twine upload --repository testpypi dist/*
+python3 -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ logsight
+python3 -m pip uninstall logsight
+
+twine upload dist/*
+python3 -m pip install logsight
 ```
