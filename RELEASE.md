@@ -62,7 +62,6 @@ Workflow
 8. Tagging
     + Once the project is in the state for creating the release, add a git tag with the release number
     + This will be reflected in the "releases" page of your GitHub repository.
-    
     + `git tag -a v$(python setup.py --version) -m "Prep for v$(python setup.py --version) release"`
 
 9. Push tag to remote
