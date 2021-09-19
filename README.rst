@@ -27,7 +27,29 @@ Endpoint
 
 Release process with GitHub and PyPI
 ====================================
+
+How to release logsight
+
 + https://sherif.io/2016/09/30/Python-package-with-GitHub-PyPI.html
+
+Project Stages
+--------------
+
+This project has three stages of release:
+
++ Unstable
+    + The tip or HEAD of the master branch is referred to as unstable
++ Staged
+    + A commit tagged with the suffix `-rc\d+` is a staged release/release candidate (e.g., `v0.3.1-rc2`)
++ Stable
+    + A commit tagged without suffix `-rc\d+` is a stable release (e.g., `v0.3.1`)
+
+There are no steps necessary to create an unstable release as that happens automatically whenever an untagged commit is pushed to `develop`.
+However, the following workflow should be used when tagging a `staged release candidate` or `stable release`.
+
+
+Workflow
+--------
 
 1. Checkout
 
@@ -36,13 +58,19 @@ Release process with GitHub and PyPI
 
 1. Ensure unit tests are passing
 
-   + `python -m unittest discover tests`
+    + `python -m unittest discover tests`
 
 3. Ensure `CHANGES.md` (or changelog.txt?) is up to date with latest
+
+    + This file is the project's authoritative change log and should reflect new features, fixes, and any significant changes.
+
 4. Increment version number in `setup.py`
+
+    + `python setup.py --version`
+
 5. Commit all those changes with consistent comment
 
-    + `git commit -m "Prep for v1.2.3 release"`
+    + `git commit -m "Prep for v1.2.3-rc1 release candidate"`
     + `git push`
 
 6. Branching and Merging
@@ -58,14 +86,14 @@ Release process with GitHub and PyPI
     + Once you have the project in the state you want for creating the release, you add a git tag with the version number of the release.
     + This will be reflected in the "releases" page of your GitHub repository.
 
-    + `git tag -a v1.2.3 -m "Tag description v1.2.3"` or
+    + `git tag -a v1.2.3-rc1 -m "Tag description v1.2.3-rc1"` or
     + `git tag -a v$(python setup.py --version) -m 'description'`
     + Show list of the existing tags
     + `git tag`
 
 7. Push tag to remote
 
-    + `git push origin v1.2.3` or
+    + `git push origin v1.2.3-rc1` or
     + `git push --tags origin develop`
 
 8. Confirm that GitHub has generated the release file
