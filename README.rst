@@ -21,7 +21,8 @@ Endpoint
 + http://wally113.cit.tu-berlin.de:4200/
 
 
-## Release process with GitHub and PyPI
+Release process with GitHub and PyPI
+====================================
 + https://sherif.io/2016/09/30/Python-package-with-GitHub-PyPI.html
 
 1. Ensure unit tests are passing
