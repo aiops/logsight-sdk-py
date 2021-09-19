@@ -44,25 +44,25 @@ Workflow
 
 5. Commit all those changes with consistent comment
 
-    + `git commit -a -m "Prep for v$(python setup.py --version) release"`
+    + `git commit -a -m "Prep for $(python setup.py --version) release"`
     + `git push origin develop`
 
 6. Created release branch
 
-    + `git checkout -b release/v$(python setup.py --version) origin/develop`
-    + `git push origin release/v$(python setup.py --version)` 
+    + `git checkout -b release/$(python setup.py --version) origin/develop`
+    + `git push origin release/$(python setup.py --version)` 
 
 7. Branching and Merging
 
     + Once your branch is complete, i.e. you finished your new feature and are ready to add it to your main branch for a new release, simply merge your feature branch back into the main branch.
     + `git checkout main`
     + `git pull origin main` (update local main branch)
-    + `git merge release/v$(python setup.py --version)` (merge in your feature branch) or
+    + `git merge release/$(python setup.py --version)` (merge in your feature branch) or
 
 8. Tagging
     + Once the project is in the state for creating the release, add a git tag with the release number
     + This will be reflected in the "releases" page of your GitHub repository.
-    + `git tag -a v$(python setup.py --version) -m "Prep for v$(python setup.py --version) release"`
+    + `git tag -a $(python setup.py --version) -m "Prep for $(python setup.py --version) release"`
 
 9. Push tag to remote
 
