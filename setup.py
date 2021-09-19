@@ -2,13 +2,17 @@ from setuptools import setup
 
 version = '0.0.7'
 
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
 
 setup(
     name='logsight',
     version=version,
     description='Python logging sender for logsight',
-    author='Florian Schmidt',
-    author_email='florian.schmidt@tu-berlin.de',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
+    author='Jorge Cardoso',
+    author_email='jorge.cardoso.pt@gmail.com',
     url="https://github.com/aiops/logsight-python-sdk",
     project_urls={
         "Documentation": "http://logsight.readthedocs.io/en/latest/",
