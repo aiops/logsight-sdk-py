@@ -1,7 +1,6 @@
 ![log-quality](https://img.shields.io/badge/log%20quality-70-brightgreen)
 
 |PyPI version shields.io|
-
 |PyPI license|
 
 .. |PyPI version shields.io| image:: https://img.shields.io/pypi/v/ansicolortags.svg
