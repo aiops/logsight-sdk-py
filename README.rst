@@ -59,9 +59,9 @@ Release process with GitHub and PyPI
 
 9. Release testing
 
-    + Register and upload to testpypi.python.org
-    + `python setup.py register -r pypitest`
-    + `python setup.py sdist upload -r pypitest`
+   + Register and upload to testpypi.python.org
+   + `python setup.py register -r pypitest`
+   + `python setup.py sdist upload -r pypitest`
 
 10. Test the test release
 
