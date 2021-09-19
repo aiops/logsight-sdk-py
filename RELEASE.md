@@ -79,12 +79,7 @@ Workflow
 
     + `git branch -D release/$(python setup.py --version)`
     + `git push origin :release/$(python setup.py --version)`
-
-12. Confirm that GitHub has generated the release file
-
-     + Browse to releases page and make sure the new version has a release entry
-     + https://github.com/aiops/logsight-python-sdk/releases
-
+    
 13. Build locally
 
      + `rm -rf build`
@@ -109,3 +104,33 @@ Workflow
     + `twine upload dist/*`
     + `python3 -m pip install logsight`
     
+
+Consolidated instructions
+
+```console
+git checkout develop
+git pull origin develop --rebase
+# python -m unittest discover tests`
+# Update `CHANGES.md` 
+# Update the version in setup.py
+version=$(python setup.py --version)
+git commit -a -m "Prep for $version release"
+git push origin develop
+git checkout -b release/$version origin/develop
+git push origin release/$version
+
+git checkout main
+git pull origin main
+git merge release/$version
+
+git tag -a $version -m "Prep for $version release"
+git push origin main
+git push origin --tags
+   
+git checkout develop
+git merge release/$version
+git push origin develop
+
+git branch -D release/$version
+git push origin :release/$version
+```
