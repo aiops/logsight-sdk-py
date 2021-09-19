@@ -2,7 +2,7 @@ from setuptools import setup
 
 version = '0.0.10'
 
-with open("README.md", "r", encoding="utf-8") as fh:
+with open("README.rst", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
@@ -10,7 +10,7 @@ setup(
     version=version,
     description='Python logging sender for logsight',
     long_description=long_description,
-    long_description_content_type='text/markdown',
+    long_description_content_type='text/x-rst',
     author='Jorge Cardoso',
     author_email='jorge.cardoso.pt@gmail.com',
     url="https://github.com/aiops/logsight-python-sdk",

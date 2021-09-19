@@ -85,6 +85,7 @@ Workflow
      + `rm -rf build`
      + `rm -rf dist`
      + `python3 setup.py sdist bdist_wheel`
+     + `twine check dist/*` (report any problems rendering your README)
 
 14. Release testing
 
