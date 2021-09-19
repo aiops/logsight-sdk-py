@@ -1,6 +1,6 @@
 from setuptools import setup
 
-version = '0.0.2'
+version = '0.0.3'
 
 
 setup(
@@ -28,7 +28,7 @@ setup(
     ],
     python_requires=">=3.6",
     install_requires=[
-        "requests>=2.25.1",
+        "requests",
     ],
     zip_safe=False
 )

@@ -18,3 +18,10 @@ To shoutdown the VPN
 ## Running all the tests
 
 + python -m unittest discover tests
+
+
+## 
+
+When download packages from TestPyPI, you can specify --extra-index-url to point to PyPI. This is useful when the package you're testing has dependencies:
+
++ python3 -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ logsight
