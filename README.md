@@ -19,9 +19,34 @@ To shoutdown the VPN
 
 + python -m unittest discover tests
 
+## Tagging
 
-## 
+git tag -a v$(python setup.py --version) -m 'description of version v$(python setup.py --version)'
+
+
+## TestPyPi
 
 When download packages from TestPyPI, you can specify --extra-index-url to point to PyPI. This is useful when the package you're testing has dependencies:
 
 + python3 -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ logsight
+
+## Development process
+
++ https://sherif.io/2016/09/30/Python-package-with-GitHub-PyPI.html
+
+
+Nothing novel here, just want these instructions all in one place for my own use.
+
+1.) Ensure everything is pushed to master and is working
+
+2.) Ensure `CHANGES.md` is up to date with latest
+
+3.) Ensure version in `setup.py` is incremented
+
+4.) Tag the repo - e.g., `git tag 0.2 && git push origin 0.2`
+
+5.) Draft a release with the latest tag and the content from `CHANGES.md`
+
+6.) Create the build - `rm -rf build; rm -rf dist; python setup.py sdist bdist_wheel`
+
+7.) Upload to Pypi using Twine - `twine upload dist/*`
