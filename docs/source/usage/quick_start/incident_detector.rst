@@ -1,11 +1,7 @@
-ABC
-============
-
-Quickstart: Use the Incident Detector client library
-****************************************************
-16/09/2021, 23 minutes to read
-
 Reference https://docs.microsoft.com/en-us/azure/cognitive-services/anomaly-detector/quickstarts/client-libraries?tabs=windows&pivots=programming-language-csharp
+
+# Quickstart: Use the Incident Detector client library
+16/09/2021, 23 minutes to read
 
 Get started with the Incident Detector client library for Python.
 Follow these steps to install the package and start using the algorithms provided by logsight.ai service.
