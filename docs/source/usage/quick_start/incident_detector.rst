@@ -1,83 +1,79 @@
-Reference https://docs.microsoft.com/en-us/azure/cognitive-services/anomaly-detector/quickstarts/client-libraries?tabs=windows&pivots=programming-language-csharp
 
-# Quickstart: Use the Incident Detector client library
-16/09/2021, 23 minutes to read
+Prerequisites
+*************
++ logsight.ai_ subscription (create one for free to get your private key)
++ Once you have your subscription, create an application_ resource in the portal
++ You will need the `private key`_ to connect your application to the Incident Detector API
++ You'll paste your private key into the code below later
 
-Get started with the Incident Detector client library for Python.
-Follow these steps to install the package and start using the algorithms provided by logsight.ai service.
-The Incident Detector service enables you to find incidents in your logs 
-by automatically using deep learning models trained on millions lines of code, regardless of the underlying IT system, failure scenario, or data volume.
+.. _logsight.ai: https://logsight.ai/
+.. _application: https://demo.logsight.ai/pages/integration
+.. _private key: https://demo.logsight.ai/pages/integration
 
-Use the Incident Detector client library for Python to:
 
-+ Send data logs to your account workspace (???) 
-+ Detect incidents throughout your data logs, as a batch request (???)
-+ Detect the incident status of the latest data point in your time series
-+ Detect (???) trend change points in your data set.
+Setting up
+**********
 
-## Prerequisites
-+ Logsight.ai subscription (create one for free to get your private key)
-+ Once you have your subscription, create an App resource in the portal.
-+ You will need the key to connect your App to the Incident Detector API.
-+ You'll paste your key into the code below later in the quickstart.
+Create a directory
+==================
 
-## Setting up
+Create a directory to store your quick guide exercise:
 
-### Create an environment variable
+.. code-block:: console
 
-Using the key from your subscription, create one environment variables for authentication:
+    $ mkdir quick_guide
+    $ cd quick_guide
 
-+ `INCIDENT_DETECTOR_KEY` - The resource key for authenticating your requests.
+You can start with an empty Python file:
+
+.. code-block:: console
+
+    $ touch quick_guide.py
+
+Alternatively, you can download the Python file directly from git:
+
+.. code-block:: console
+
+    $ wget full_url_to_raw_file_on_github
+
+
+Create an environment variable
+==============================
+
+Using the private key from your subscription, create one environment variables for authentication:
+
++ PRIVATE_KEY - The private key for authenticating your requests.
 
 Copy the following text to your bash file:
 
-```console
-export INCIDENT_DETECTOR_KEY=<replace-with-your-anomaly-detector-key>
-```
+.. code-block:: console
+
+    $ export PRIVATE_KEY=<replace-with-your-anomaly-detector-key>
+
 
 After you add the environment variable, run source ~/.bashrc from your console window to make the changes effective.
 
 
-### Install the client library
+Install the client library
+==========================
 
-Within the application directory, 
-install the Incident Detector client library for python with the following command:
+Install the Incident Detector client library for python with pip:
 
-```console
-dotnet add package Microsoft.Azure.CognitiveServices.AnomalyDetector
-```
+.. code-block:: console
 
-In the application's main() method, create variables for your resource's Azure location,
-and your key as an environment variable. 
-If you created the environment variable after application is launched,
-the editor, IDE, or shell running it will need to be closed and reloaded to access the variable.
+    $ pip install logsight_sdk
 
-```python
-static void Main(string[] args){
-    //This sample assumes you have created an environment variable for your key and endpoint
-    string endpoint = Environment.GetEnvironmentVariable("ANOMALY_DETECTOR_ENDPOINT");
-    string key = Environment.GetEnvironmentVariable("ANOMALY_DETECTOR_KEY");
-    string datapath = "request-data.csv";
+or directly from the sources:
 
-    IAnomalyDetectorClient client = createClient(endpoint, key); //Anomaly Detector client
+.. code-block:: console
 
-    Request request = GetSeriesFromFile(datapath); // The request payload with points from the data file
-
-    EntireDetectSampleAsync(client, request).Wait(); // Async method for batch anomaly detection
-    LastDetectSampleAsync(client, request).Wait(); // Async method for analyzing the latest data point in the set
-    DetectChangePoint(client, request).Wait(); // Async method for change point detection
-
-    Console.WriteLine("\nPress ENTER to exit.");
-    Console.ReadLine();
-} 
-```
+    $ git clone https://github.com/logsight/python-logsight-sdk.git
+    $ cd sdk-python
+    $ python setup.py install
 
 
-## Object model
-aaa
-
-
-## Code examples
+Code examples
+*************
 
 Code snippets show you how to do the following with the Incident Detector client library for Python:
 
@@ -88,46 +84,167 @@ Code snippets show you how to do the following with the Incident Detector client
 + Detect the change points in the data set (???)
 
 
-### Authenticate the client
+Load packages
+=============
 
-In a new method, instantiate a client with your endpoint and key.
-Create an ApiKeyServiceClientCredentials object with your key,
-and use it with your endpoint to create an AnomalyDetectorClient object.
+Load the various packages used in this quick guide.
 
+.. code:: python
 
-```python
-static IAnomalyDetectorClient createClient(string endpoint, string key)
-{
-    IAnomalyDetectorClient client = new AnomalyDetectorClient(new ApiKeyServiceClientCredentials(key))
-    {
-        Endpoint = endpoint
-    };
-    return client;
-}
-```
+    import sys
+    import os
+    import time
+    import logging
 
-### Load log data from a file
+    from logsight.exceptions import LogsightException
+    from logsight.applications import LogsightApplication
+    from logsight.logger import LogsightLogger
+    from logsight.result import LogsightResult
+    from logsight.utils import now, create_apps, delete_apps
 
 
-### Detect incident in the entire data set
+Authenticate the client
+=======================
+
+To enable client authentication, access the PRIVATE_KEY environment variable (or enter the string directly as a value) and indicate your e-mail.
+
+.. code:: python
+
+    PRIVATE_KEY = os.getenv('PRIVATE_KEY') or 'xteitdidb0xd32thtt35ccruy'
+    EMAIL = 'jorge.cardoso.pt@gmail.com'
 
 
-### Detect the anomaly status of the latest data point (???)
+Create application
+==================
+
+Indicate the name of the application to which you will send log data.
+For example, apache_server, kafka, website or backend.
+Create your new application in your subscription (an exception is raised in case it already exists)
+
+.. code:: python
+
+    APP_NAME = 'quick_start_app'
+
+    app_mng = LogsightApplication(PRIVATE_KEY, EMAIL)
+    try:
+        app_mng.create(APP_NAME)
+    except LogsightException as e:
+        print(e)
 
 
-### Detect the change points in the data set (???)
+Attached your logger
+====================
+
+Adding logsight.ai logging handler in your logging system:
+
+.. code:: python
+
+    handler = LogsightLogger(PRIVATE_KEY, EMAIL, APP_NAME)
+    handler.setLevel(logging.DEBUG)
+
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.DEBUG)
+    logger.addHandler(handler)
 
 
-## Run the application
 
-Run the application with the dotnet run command from your application directory.
+Load log data from a file
+=========================
 
-```console
-dotnet run
-```
+.. code:: python
 
-## Clean up resources
+    filename = os.path.join(os.path.dirname(os.path.abspath(__file__)), './OpenStack_2k.log')
+    log_records = []
+    try:
+        f = open(filename, 'r')
 
-If you want to clean up and remove a Cognitive Services subscription,
-you can delete the resource or resource group.
+        level_idx, msg_idx = 4, 5
+        for i, line in enumerate(f.readlines()):
+            tokens = line.split()
+            log_records.append((tokens[level_idx], ' '.join(tokens[msg_idx:])))
+
+    except OSError:
+        sys.exit("Could not open/read file: %s" % filename)
+
+
+
+Send log records
+================
+
+.. code:: python
+
+    dt_start = now()
+    print('Starting message sending', dt_start)
+
+    for i, m in enumerate(log_records):
+        level, message = m[0].upper(), m[1]
+        print(i, level, message)
+
+        mapping = {'INFO': logger.info, 'WARNING': logger.warning, 'ERROR': logger.error, 'DEBUG': logger.debug, 'CRITICAL': logger.critical}
+
+        if level in mapping:
+            mapping[level](message)
+        else:
+            sys.exit('Error parsing level for log message number %d: %s %s' % (i, level, message))
+
+    dt_end = now()
+    print('Ended message sending', dt_end)
+
+
+Detect the anomaly status of the latest data point
+==================================================
+
+.. code:: python
+
+    time.sleep(60)
+    delete_apps(PRIVATE_KEY, EMAIL, [APP_NAME])
+
+    incidents = LogsightResult(PRIVATE_KEY, EMAIL, APP_NAME)\
+        .get_results(dt_start, dt_end, 'incidents')
+    real_incidents = sum([1 if i.total_score > 0 else 0 for i in incidents])
+
+
+Show incident
+=============
+
+.. code:: python
+
+    for i in incidents:
+        print('Incident', i)
+
+
+Run the application
+*******************
+
+Run the application with python run command from your quickguide directory.
+
+.. code-block:: console
+
+    $ python quick_guide.py
+
+
+Clean up resources
+*******************
+
 Deleting the resource group also deletes any other resources associated with the resource group.
+
+Remove handler
+==============
+
+If need to remove the handler to force any log record in the buffer to be flushed to logsight.ai.
+
+.. code:: python
+
+    handler.close()
+    logger.removeHandler(handler)
+
+
+If you want to clean up, you can remove the application from your subscription.
+
+Delete your application
+=======================
+
+.. code:: python
+
+    time.sleep(60)
+    delete_apps(PRIVATE_KEY, EMAIL, [APP_NAME])
