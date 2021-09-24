@@ -25,9 +25,16 @@ Use the Incident Detector client library for Python to:
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Contents
 
    usage/quick_start/incident_detector
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Website
+
+   usage/look_feel/look_feel
 
 
 Indices and tables
