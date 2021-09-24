@@ -6,24 +6,14 @@ import logging
 sys.path.insert(0, '/Users/jcardoso/GitHub/logsight-python-sdk/')
 
 from logsight.exceptions import LogsightException
-from logsight.applications import LogsightApplication
 from logsight.logger import LogsightLogger
 from logsight.result import LogsightResult
-from logsight.utils import now, create_apps, delete_apps
+from logsight.utils import now
 
 
 PRIVATE_KEY = os.getenv('PRIVATE_KEY') or 'xteitdidb0xd32thtt35ccruy'
 APP_NAME = 'quick_start_app'
 EMAIL = 'jorge.cardoso.pt@gmail.com'
-
-app_mng = LogsightApplication(PRIVATE_KEY, EMAIL)
-try:
-    app_mng.create(APP_NAME)
-except LogsightException as e:
-    print(e)
-
-print('Sleeping 60 seconds')
-# time.sleep(60)
 
 handler = LogsightLogger(PRIVATE_KEY, EMAIL, APP_NAME)
 handler.setLevel(logging.DEBUG)
@@ -66,7 +56,7 @@ handler.close()
 logger.removeHandler(handler)
 
 print('Sleeping 60 seconds')
-time.sleep(60)
+time.sleep(15)
 
 incidents = LogsightResult(PRIVATE_KEY, EMAIL, APP_NAME)\
     .get_results(dt_start, dt_end, 'incidents')
@@ -76,4 +66,3 @@ print('Number incidents found:', real_incidents)
 for i in incidents:
     print('Incident', i)
 
-# delete_apps(PRIVATE_KEY, EMAIL, [APP_NAME])

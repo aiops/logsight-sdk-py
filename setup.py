@@ -1,14 +1,14 @@
 from setuptools import setup
 
-version = '0.0.10'
+version = '0.0.12'
 
 with open("README.rst", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
-    name='logsight',
+    name='logsight-logger',
     version=version,
-    description='Python logging sender for logsight',
+    description='Logsight Python SDK',
     long_description=long_description,
     long_description_content_type='text/x-rst',
     author='Jorge Cardoso',

@@ -2,7 +2,7 @@
 Prerequisites
 *************
 + logsight.ai_ subscription (create one for free to get your private key)
-+ Once you have your subscription, create an application_ resource in the portal
++ Once you have your subscription, create an application_ named quick_start_app in the integration tab
 + You will need the `private key`_ to connect your application to the Incident Detector API
 + You'll paste your private key into the code below later
 
@@ -34,7 +34,7 @@ Alternatively, you can download the Python file directly from git:
 
 .. code-block:: console
 
-    $ wget full_url_to_raw_file_on_github
+    $ wget https://github.com/aiops/logsight-python-sdk/blob/main/LICENSE
 
 
 Create an environment variable
@@ -78,10 +78,10 @@ Code examples
 Code snippets show you how to do the following with the Incident Detector client library for Python:
 
 + Authenticate the client
-+ Load log data from a file
-+ Detect incident in the entire data set
-+ Detect the anomaly status of the latest data point (???)
-+ Detect the change points in the data set (???)
++ Attach you logger
++ Send log data loaded from a file
++ Detect incident in the entire log data set
++ Show the details of the incident
 
 
 Load packages
@@ -97,10 +97,9 @@ Load the various packages used in this quick guide.
     import logging
 
     from logsight.exceptions import LogsightException
-    from logsight.applications import LogsightApplication
     from logsight.logger import LogsightLogger
     from logsight.result import LogsightResult
-    from logsight.utils import now, create_apps, delete_apps
+    from logsight.utils import now
 
 
 Authenticate the client
@@ -113,23 +112,13 @@ To enable client authentication, access the PRIVATE_KEY environment variable (or
     PRIVATE_KEY = os.getenv('PRIVATE_KEY') or 'xteitdidb0xd32thtt35ccruy'
     EMAIL = 'jorge.cardoso.pt@gmail.com'
 
-
-Create application
-==================
-
 Indicate the name of the application to which you will send log data.
 For example, apache_server, kafka, website or backend.
-Create your new application in your subscription (an exception is raised in case it already exists)
+This quick guide sends log data to the application quick_start_app.
 
 .. code:: python
 
     APP_NAME = 'quick_start_app'
-
-    app_mng = LogsightApplication(PRIVATE_KEY, EMAIL)
-    try:
-        app_mng.create(APP_NAME)
-    except LogsightException as e:
-        print(e)
 
 
 Attached your logger
