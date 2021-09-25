@@ -1,23 +1,23 @@
 from setuptools import setup
 
-version = '0.0.10'
+version = '0.0.13'
 
-with open("README.md", "r", encoding="utf-8") as fh:
+with open("README.rst", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
-    name='logsight',
+    name='logsight-sdk-py',
     version=version,
-    description='Python logging sender for logsight',
+    description='Logsight SDK Python',
     long_description=long_description,
-    long_description_content_type='text/markdown',
+    long_description_content_type='text/x-rst',
     author='Jorge Cardoso',
     author_email='jorge.cardoso.pt@gmail.com',
-    url="https://github.com/aiops/logsight-python-sdk",
+    url="https://github.com/aiops/logsight-sdk-py",
     project_urls={
         "Documentation": "http://logsight.readthedocs.io/en/latest/",
-        "Source": "https://github.com/aiops/logsight-python-sdk",
-        "Tracker": "https://github.com/aiops/logsight-python-sdk/issues",
+        "Source": "https://github.com/aiops/logsight-sdk-py",
+        "Tracker": "https://github.com/aiops/logsight-sdk-py/issues",
     },
     license='unlicense',
     packages=['logsight'],

@@ -2,9 +2,8 @@
 Release process with GitHub and PyPI
 ====================================
 
-How to release logsight
+How to release logsight SDK for Python
 
-+ https://sherif.io/2016/09/30/Python-package-with-GitHub-PyPI.html
 
 Project Stages
 --------------
@@ -85,6 +84,7 @@ Workflow
      + `rm -rf build`
      + `rm -rf dist`
      + `python3 setup.py sdist bdist_wheel`
+     + `twine check dist/*` (report any problems rendering your README)
 
 14. Release testing
 
@@ -133,4 +133,16 @@ git push origin develop
 
 git branch -D release/$version
 git push origin :release/$version
+
+rm -rf build
+rm -rf dist
+python3 setup.py sdist bdist_wheel
+twine check dist/*
+
+twine upload --repository testpypi dist/*
+python3 -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ logsight
+python3 -m pip uninstall logsight
+
+twine upload dist/*
+python3 -m pip install logsight
 ```
