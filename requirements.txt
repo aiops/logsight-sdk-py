@@ -1,3 +1,4 @@
 python-dateutil         # Apache Software License, BSD License (Dual License)
 requests                # Apache Software License (Apache 2.0)
 sphinx_rtd_theme        # MIT License
+twine                   # Apache Software License
