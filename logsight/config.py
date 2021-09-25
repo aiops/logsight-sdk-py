@@ -1,5 +1,5 @@
 HOST_API_V1 = 'http://wally113.cit.tu-berlin.de:5444/'
-HOST_API_V1 = 'https://demo.logsight.ai/'
+HOST_API_V1 = 'https://demo.logsight.ai/api_v1/'
 PATH_DATA = '/api_v1/data'
 PATH_RESULTS = '/api_v1/results'
 

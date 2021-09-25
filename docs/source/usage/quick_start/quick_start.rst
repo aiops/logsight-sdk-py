@@ -21,20 +21,20 @@ Create a directory to store your quick guide exercise:
 
 .. code-block:: console
 
-    $ mkdir quick_guide
-    $ cd quick_guide
+    $ mkdir quick_start
+    $ cd quick_start
 
 You can start with an empty Python file:
 
 .. code-block:: console
 
-    $ touch quick_guide.py
+    $ touch quick_start.py
 
 Alternatively, you can download the Python file directly from git:
 
 .. code-block:: console
 
-    $ wget https://github.com/aiops/logsight-python-sdk/blob/main/LICENSE
+    $ wget https://github.com/aiops/logsight-sdk-py/blob/main/quick_start.py
 
 
 Create an environment variable
@@ -61,13 +61,13 @@ Install the Incident Detector client library for python with pip:
 
 .. code-block:: console
 
-    $ pip install logsight_sdk
+    $ pip install logsight_sdk_py
 
 or directly from the sources:
 
 .. code-block:: console
 
-    $ git clone https://github.com/logsight/python-logsight-sdk.git
+    $ git clone https://github.com/logsight/python-sdk-py.git
     $ cd sdk-python
     $ python setup.py install
 
@@ -87,7 +87,7 @@ Code snippets show you how to do the following with the Incident Detector client
 Load packages
 =============
 
-Load the various packages used in this quick guide.
+Load the various packages used in this quick start guide.
 
 .. code:: python
 
@@ -96,7 +96,6 @@ Load the various packages used in this quick guide.
     import time
     import logging
 
-    from logsight.exceptions import LogsightException
     from logsight.logger import LogsightLogger
     from logsight.result import LogsightResult
     from logsight.utils import now
@@ -121,8 +120,8 @@ This quick guide sends log data to the application quick_start_app.
     APP_NAME = 'quick_start_app'
 
 
-Attached your logger
-====================
+Attached the logger
+===================
 
 Adding logsight.ai logging handler in your logging system:
 
@@ -140,100 +139,102 @@ Adding logsight.ai logging handler in your logging system:
 Load log data from a file
 =========================
 
++ open file with your logs (many logs are available at loghub_)
++ read all the log records from the file
++ split log messages and remove the timestamp
++ the list log_records contains tuples of the form (log level, log message)
+
+.. _loghub: https://github.com/logpai/loghub
+
+
 .. code:: python
 
-    filename = os.path.join(os.path.dirname(os.path.abspath(__file__)), './OpenStack_2k.log')
     log_records = []
     try:
-        f = open(filename, 'r')
+        f = open('./Hadoop_2k.log', 'r')
 
-        level_idx, msg_idx = 4, 5
         for i, line in enumerate(f.readlines()):
             tokens = line.split()
+            level_idx, msg_idx = 2, 3
             log_records.append((tokens[level_idx], ' '.join(tokens[msg_idx:])))
 
     except OSError:
-        sys.exit("Could not open/read file: %s" % filename)
+        sys.exit("Could not open/read file")
 
 
 
 Send log records
 ================
 
++ store a timestamp indicating when log records started to be sent
++ iterate over the log records, extract the log level and log message
++ send the log level and message using the logger and the appropriate log function
++ once all records have been sent, flush the log handler to force buffered records to be sent
++ store a timestamp indicating when the last log records were sent
+
 .. code:: python
 
     dt_start = now()
-    print('Starting message sending', dt_start)
+    print('Starting log records sending', dt_start)
+
+    mapping = {'INFO': logger.info, 'WARNING': logger.warning, 'WARN': logger.warning,
+               'ERROR': logger.error, 'DEBUG': logger.debug, 'CRITICAL': logger.critical,
+               'FATAL': logger.critical}
 
     for i, m in enumerate(log_records):
         level, message = m[0].upper(), m[1]
         print(i, level, message)
 
-        mapping = {'INFO': logger.info, 'WARNING': logger.warning, 'ERROR': logger.error, 'DEBUG': logger.debug, 'CRITICAL': logger.critical}
-
         if level in mapping:
             mapping[level](message)
         else:
-            sys.exit('Error parsing level for log message number %d: %s %s' % (i, level, message))
+            sys.exit('Unknown log level. Log record number %d: %s %s' % (i, level, message))
+
+    handler.flush()
 
     dt_end = now()
-    print('Ended message sending', dt_end)
+    print('Ended log records sending', dt_end)
 
 
 Detect the anomaly status of the latest data point
 ==================================================
 
++ wait 60 seconds after sending the log records to allow logsight.ai to process the log records
++ query logsight.ai for incidents within the time window when log records were sent
+
 .. code:: python
 
-    time.sleep(60)
-    delete_apps(PRIVATE_KEY, EMAIL, [APP_NAME])
+    sleep_time = 60
+    print(f'Sleeping {sleep_time} seconds')
+    time.sleep(sleep_time)
 
     incidents = LogsightResult(PRIVATE_KEY, EMAIL, APP_NAME)\
         .get_results(dt_start, dt_end, 'incidents')
-    real_incidents = sum([1 if i.total_score > 0 else 0 for i in incidents])
 
 
-Show incident
-=============
+
+Show incidents
+==============
+
++ iterate over the list of incidents received and print the incidents' properties
 
 .. code:: python
 
-    for i in incidents:
-        print('Incident', i)
+    for j, i in enumerate(incidents):
+        print('Incident:', j + 1, 'Score:', i.total_score, '(', i.timestamp_start, i.timestamp_end, ')')
 
 
 Run the application
 *******************
 
-Run the application with python run command from your quickguide directory.
+Run the Python code from your quick_start directory.
 
 .. code-block:: console
 
-    $ python quick_guide.py
+    $ python quick_start.py
 
 
 Clean up resources
 *******************
 
-Deleting the resource group also deletes any other resources associated with the resource group.
-
-Remove handler
-==============
-
-If need to remove the handler to force any log record in the buffer to be flushed to logsight.ai.
-
-.. code:: python
-
-    handler.close()
-    logger.removeHandler(handler)
-
-
-If you want to clean up, you can remove the application from your subscription.
-
-Delete your application
-=======================
-
-.. code:: python
-
-    time.sleep(60)
-    delete_apps(PRIVATE_KEY, EMAIL, [APP_NAME])
++ delete the application_ quick_start_app from your subscription.

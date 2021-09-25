@@ -2,7 +2,7 @@
 Release process with GitHub and PyPI
 ====================================
 
-How to release logsight
+How to release logsight SDK for Python
 
 
 Project Stages

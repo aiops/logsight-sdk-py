@@ -6,18 +6,18 @@ with open("README.rst", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
-    name='logsight-logger',
+    name='logsight-sdk-py',
     version=version,
-    description='Logsight Python SDK',
+    description='Logsight SDK Python',
     long_description=long_description,
     long_description_content_type='text/x-rst',
     author='Jorge Cardoso',
     author_email='jorge.cardoso.pt@gmail.com',
-    url="https://github.com/aiops/logsight-python-sdk",
+    url="https://github.com/aiops/logsight-sdk-py",
     project_urls={
         "Documentation": "http://logsight.readthedocs.io/en/latest/",
-        "Source": "https://github.com/aiops/logsight-python-sdk",
-        "Tracker": "https://github.com/aiops/logsight-python-sdk/issues",
+        "Source": "https://github.com/aiops/logsight-sdk-py",
+        "Tracker": "https://github.com/aiops/logsight-sdk-py/issues",
     },
     license='unlicense',
     packages=['logsight'],
