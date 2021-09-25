@@ -17,7 +17,7 @@ sys.path.insert(0, os.path.abspath('../../logsight/'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'Logsight Python SDK'
+project = 'Logsight SDK Python'
 copyright = '2021, logsight.ai, GmbH'
 author = 'Jorge Cardoso'
 

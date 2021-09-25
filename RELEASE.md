@@ -93,16 +93,16 @@ Workflow
 
 15. Test the test release
 
-    + `python3 -m pip install -i https://testpypi.python.org/pypi logsight` (attempt to install from PyPI test server)
+    + `python3 -m pip install -i https://testpypi.python.org/pypi logsight-sdk-py` (attempt to install from PyPI test server)
     + When download packages from TestPyPI, you can specify --extra-index-url to point to PyPI
     + This is useful when the package you're testing has dependencies
-    + `python3 -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ logsight`
-    + `python3 -m pip uninstall logsight`
+    + `python3 -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ logsight-sdk-py`
+    + `python3 -m pip uninstall logsight-sdk-py`
 
 16. Release
 
     + `twine upload dist/*`
-    + `python3 -m pip install logsight`
+    + `python3 -m pip install logsight-sdk-py`
     
 
 Consolidated instructions
@@ -140,9 +140,9 @@ python3 setup.py sdist bdist_wheel
 twine check dist/*
 
 twine upload --repository testpypi dist/*
-python3 -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ logsight
-python3 -m pip uninstall logsight
+python3 -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ logsight-sdk-py
+python3 -m pip uninstall logsight-sdk-py
 
 twine upload dist/*
-python3 -m pip install logsight
+python3 -m pip install logsight-sdk-py
 ```

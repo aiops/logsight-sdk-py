@@ -1,5 +1,5 @@
-.. image:: https://readthedocs.org/projects/logsight-python-sdk/badge/?version=latest
-    :target: https://logsight-python-sdk.readthedocs.io/en/latest/?badge=latest
+.. image:: https://readthedocs.org/projects/logsight-sdk-py/badge/?version=latest
+    :target: https://logsight-sdk-py.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
 
 logsight SDK
