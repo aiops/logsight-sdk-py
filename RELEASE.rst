@@ -154,6 +154,7 @@ Bash workflow
     git tag -a $version -m "Release $version"
     # git push origin $version
     # git push origin --tags
+    # git push --follow-tags
     git push --atomic origin main $version
 
     git checkout develop
