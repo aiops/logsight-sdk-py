@@ -20,7 +20,7 @@ logger.addHandler(handler)
 
 log_records = []
 try:
-    f = open('./Hadoop_2k.log', 'r')
+    f = open('Hadoop_2k.log', 'r')
 
     for i, line in enumerate(f.readlines()):
         tokens = line.split()

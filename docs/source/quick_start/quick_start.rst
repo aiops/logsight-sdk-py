@@ -34,7 +34,17 @@ Alternatively, you can download the Python file directly from git:
 
 .. code-block:: console
 
-    $ wget https://github.com/aiops/logsight-sdk-py/blob/main/quick_start.py
+    $ curl https://raw.githubusercontent.com/aiops/logsight-sdk-py/main/docs/source/usage/quick_start/quick_start.py --output quick_start.py
+
+
+Download a log data file
+========================
+
+As a example, we will use a sample log data file from Apache Hadoop platform:
+
+.. code-block:: console
+
+    $ curl https://raw.githubusercontent.com/aiops/logsight-sdk-py/main/docs/source/usage/quick_start/Hadoop_2k.log --output Hadoop_2k.log
 
 
 Create an environment variable
@@ -61,14 +71,14 @@ Install the Incident Detector client library for python with pip:
 
 .. code-block:: console
 
-    $ pip install logsight_sdk_py
+    $ pip install python-sdk-py
 
 or directly from the sources:
 
 .. code-block:: console
 
     $ git clone https://github.com/logsight/python-sdk-py.git
-    $ cd sdk-python
+    $ cd python-sdk-py
     $ python setup.py install
 
 
@@ -151,7 +161,7 @@ Load log data from a file
 
     log_records = []
     try:
-        f = open('./Hadoop_2k.log', 'r')
+        f = open('Hadoop_2k.log', 'r')
 
         for i, line in enumerate(f.readlines()):
             tokens = line.split()

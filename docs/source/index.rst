@@ -27,14 +27,14 @@ Use the Incident Detector client library for Python to:
    :maxdepth: 2
    :caption: Quick Start
 
-   usage/quick_start/quick_start
+   quick_start/quick_start
 
 
 .. toctree::
    :maxdepth: 2
    :caption: Website
 
-   usage/look_feel/look_feel
+   look_feel/look_feel
 
 
 Indices and tables
