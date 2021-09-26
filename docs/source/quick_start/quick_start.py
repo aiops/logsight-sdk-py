@@ -1,3 +1,4 @@
+import os
 import sys
 import time
 import logging
@@ -6,9 +7,11 @@ from logsight.logger import LogsightLogger
 from logsight.result import LogsightResult
 from logsight.utils import now
 
-PRIVATE_KEY = 'mgewxky59zm1euavowtjon9igc'
+
+PRIVATE_KEY = os.getenv('LOGSIGHT_PRIVATE_KEY') or 'mgewxky59zm1euavowtjon9igc'
+EMAIL = os.getenv('LOGSIGHT_EMAIL') or 'jorge.cardoso.pt@gmail.com'
+
 APP_NAME = 'quick_start_app'
-EMAIL = 'jorge.cardoso.pt@gmail.com'
 
 handler = LogsightLogger(PRIVATE_KEY, EMAIL, APP_NAME)
 handler.setLevel(logging.DEBUG)

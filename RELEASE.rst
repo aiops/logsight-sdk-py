@@ -138,7 +138,8 @@ Bash workflow
     git checkout develop
     git pull origin develop --rebase
 
-    # python -m unittest discover tests`
+    # Warning: The following commands should be executed manually
+    # Execute tests python -m unittest discover tests`
     # Update `CHANGES.md`
     # Update the version in setup.py
 
@@ -161,6 +162,9 @@ Bash workflow
 
     git branch -D release/$version
     git push origin :release/$version
+
+    # Warning: The following commands are implemented using Github actions
+    # They should not be executed manually
 
     rm -rf build
     rm -rf dist

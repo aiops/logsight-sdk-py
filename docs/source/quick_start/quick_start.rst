@@ -80,6 +80,24 @@ or directly from the sources:
     $ python setup.py install
 
 
+Create environment variables
+=============================
+
+Using the private key from your subscription, create one environment variables for authentication:
+
++ LOGSIGHT_PRIVATE_KEY - The private key for authenticating your requests
++ LOGSIGHT_EMAIL - The email associated with your subscription
+
+Copy the following text to your bash file:
+
+.. code-block:: console
+
+    $ export LOGSIGHT_PRIVATE_KEY=<replace-with-your-anomaly-detector-key>
+    $ export LOGSIGHT_EMAIL=<replace-with-your-email>
+
+After you add the environment variable, run source ~/.bashrc from your console window to make the changes effective.
+
+
 For the impatient
 =================
 
@@ -92,6 +110,9 @@ For the impatient
     curl https://raw.githubusercontent.com/aiops/logsight-sdk-py/main/docs/source/quick_start/quick_start.py --output quick_start.py
     curl https://raw.githubusercontent.com/aiops/logsight-sdk-py/main/docs/source/quick_start/Hadoop_2k.log --output Hadoop_2k.log
     pip install logsight-sdk-py
+    unset LOGSIGHT_PRIVATE_KEY LOGSIGHT_EMAIL
+    export LOGSIGHT_PRIVATE_KEY='mgewxky59zm1euavowtjon9igc'
+    export LOGSIGHT_EMAIL='jorge.cardoso.pt@gmail.com'
     python quick_start.py
 
 
@@ -130,8 +151,8 @@ To enable client authentication, set your PRIVATE_KEY and e-mail.
 
 .. code:: python
 
-    PRIVATE_KEY = 'xteitdidb0xd32thtt35ccruy'
-    EMAIL = 'jorge.cardoso.pt@gmail.com'
+    PRIVATE_KEY = os.getenv('LOGSIGHT_PRIVATE_KEY') or 'mgewxky59zm1euavowtjon9igc'
+    EMAIL = os.getenv('LOGSIGHT_EMAIL') or 'jorge.cardoso.pt@gmail.com'
 
 Indicate the name of the application to which you will send log data.
 For example, apache_server, kafka, website or backend.
