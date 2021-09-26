@@ -84,6 +84,7 @@ Workflow
 #. Tagging
 
     + Once the project is in the state for creating the release, add a git tag with the release number
+    + The tag will be used by github actions to trigger the release
     + This will be reflected in the "releases" page of your GitHub repository.
     + `git tag -a $(python setup.py --version) -m "Release $(python setup.py --version)"`
 
