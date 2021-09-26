@@ -1,6 +1,6 @@
 from setuptools import setup
 
-version = '0.0.28'
+version = '0.0.29'
 
 with open("README.rst", "r", encoding="utf-8") as fh:
     long_description = fh.read()
@@ -33,6 +33,7 @@ setup(
     python_requires=">=3.6",
     install_requires=[
         "requests",
+        "python-dateutil",
     ],
     zip_safe=False
 )
