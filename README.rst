@@ -24,4 +24,4 @@ Main functionalities:
 
 Documentation can be found here: docs_
 
-.. _docs: https://readthedocs.org/projects/logsight-sdk-py/badge/?version=latest
+.. _docs: https://readthedocs.org/projects/logsight-sdk-py/?version=latest
