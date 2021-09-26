@@ -24,9 +24,9 @@ Main functionalities:
 
 The Logsight SDK Python package is deployed to the following external platforms:
 
-+ Test Python Package Index (TestPyPI) `Test PyPI`_
-+ Python Package Index (PyPI). PyPI_
-+ Documentation. docs_
++ Test Python Package Index (TestPyPI): `Test PyPI`_
++ Python Package Index (PyPI): PyPI_
++ Documentation: docs_
 
 .. _test pypi: https://test.pypi.org/search/?q=%22logsight-sdk-py%22&o=
 .. _pypi: https://pypi.org/search/?q=%22logsight-sdk-py%22&o=
