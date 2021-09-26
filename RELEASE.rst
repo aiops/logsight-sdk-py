@@ -85,12 +85,12 @@ Workflow
 
     + Once the project is in the state for creating the release, add a git tag with the release number
     + This will be reflected in the "releases" page of your GitHub repository.
-    + `git tag -a $(python setup.py --version) -m "Prep for $(python setup.py --version) release"`
+    + `git tag -a $(python setup.py --version) -m "Release $(python setup.py --version)"`
 
 #. Push tag to remote
 
-    + `git push origin main` (push main branch to remote repository)
-    + `git push origin --tags` (push tags to remote repository)
+    + Push the commits to origin main branch together with tag reference tag-name
+    + `git push --atomic origin main $version`
    
 #. Update develop branch
 
@@ -152,9 +152,6 @@ Bash workflow
     git merge release/$version
 
     git tag -a $version -m "Release $version"
-    # git push origin $version
-    # git push origin --tags
-    # git push --follow-tags
     git push --atomic origin main $version
 
     git checkout develop
