@@ -47,74 +47,75 @@ To test the SDK with a preproduction server, install OpenVPN_ and point the VPN 
 Workflow
 --------
 
-1. Checkout
+#. Checkout
 
     + `git checkout develop` (checked out into develop branch)
     + `git pull origin develop --rebase` (update and merge any remote changes of the current branch)
 
-2. Ensure unit tests are passing
+#. Ensure unit tests are passing
 
     + `python -m unittest discover tests`
 
-3. Ensure `CHANGES.md` (or changelog.txt?) is up to date with latest
+#. Ensure `CHANGES.md` (or changelog.txt?) is up to date with latest
 
     + This file is the project's authoritative change log and should reflect new features, fixes, and any significant changes.
 
-4. Increment version number in `setup.py`
+#. Increment version number in `setup.py`
 
     + `python setup.py --version`
 
-5. Commit all those changes with consistent comment
+#. Commit all those changes with consistent comment
 
     + `git commit -a -m "Prep for $(python setup.py --version) release"`
     + `git push origin develop`
 
-6. Created release branch
+#. Created release branch
 
     + `git checkout -b release/$(python setup.py --version) origin/develop`
     + `git push origin release/$(python setup.py --version)` 
 
-7. Branching and Merging
+#. Branching and Merging
 
     + Once your branch is complete, i.e. you finished your new feature and are ready to add it to your main branch for a new release, simply merge your feature branch back into the main branch.
     + `git checkout main`
     + `git pull origin main` (update local main branch)
     + `git merge release/$(python setup.py --version)` (merge in your feature branch) or
 
-8. Tagging
+#. Tagging
+
     + Once the project is in the state for creating the release, add a git tag with the release number
     + This will be reflected in the "releases" page of your GitHub repository.
     + `git tag -a $(python setup.py --version) -m "Prep for $(python setup.py --version) release"`
 
-9. Push tag to remote
+#. Push tag to remote
 
     + `git push origin main` (push main branch to remote repository)
     + `git push origin --tags` (push tags to remote repository)
    
-10. Update develop branch
+#. Update develop branch
 
     + `git checkout develop`
     + `git merge release/$(python setup.py --version)`
     + `git push origin develop`
 
-11. Remove release branch
+#. Remove release branch
 
     + `git branch -D release/$(python setup.py --version)`
     + `git push origin :release/$(python setup.py --version)`
     
-13. Build locally
+#. Build locally
 
     + `rm -rf build`
     + `rm -rf dist`
     + `python3 setup.py sdist bdist_wheel`
     + `twine check dist/*` (report any problems rendering your README)
 
-14. Release testing
+#. Release testing
 
     + Make sure you have a correct ~/.pypirc with your credentials from https://pypi.python.org/pypi
     + `twine upload --repository testpypi dist/*` (upload dist to PyPI Test)
 
-15. Test the test release
+#. Test the test release
 
     + `python3 -m pip install -i https://testpypi.python.org/pypi logsight-sdk-py` (attempt to install from PyPI test server)
     + When download packages from TestPyPI, you can specify --extra-index-url to point to PyPI
@@ -122,7 +123,7 @@ Workflow
     + `python3 -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ logsight-sdk-py`
     + `python3 -m pip uninstall logsight-sdk-py`
 
-16. Release
+#. Release
 
     + `twine upload dist/*`
     + `python3 -m pip install logsight-sdk-py`
