@@ -1,14 +1,14 @@
-name: Publish
+name: publish
 
 on:
   workflow_run:
-    workflows: ["Build"]
+    workflows: ["build"]
     types:
       - completed
 
 jobs:
   publish:
-    name: Publish Python distributions to PyPI and TestPyPI
+    name: Publish to PyPI and TestPyPI
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2

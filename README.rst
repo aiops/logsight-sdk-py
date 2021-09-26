@@ -1,12 +1,13 @@
-.. image:: https://readthedocs.org/projects/logsight-sdk-py/badge/?version=latest
-    :target: https://logsight-sdk-py.readthedocs.io/en/latest/?badge=latest
-    :alt: Documentation Status
-
 .. image:: https://github.com/aiops/logsight-sdk-py/workflows/Build/badge.svg
         :target: https://github.com/aiops/logsight-sdk-py/
 
 .. image:: https://img.shields.io/pypi/v/logsight-sdk-py
         :target: https://pypi.python.org/pypi/logsight-sdk-py/
+
+.. image:: https://readthedocs.org/projects/logsight-sdk-py/badge/?version=latest
+    :target: https://logsight-sdk-py.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
+
 
 Logsight SDK Python
 ===================
