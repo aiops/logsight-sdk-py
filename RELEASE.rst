@@ -151,7 +151,7 @@ Bash workflow
     git pull origin main
     git merge release/$version
 
-    git tag -a $version -m "Prep for $version release"
+    git tag -a $version -m "Release $version"
     git push origin main
     git push origin --tags
 
