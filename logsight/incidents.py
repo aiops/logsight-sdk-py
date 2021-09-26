@@ -26,51 +26,53 @@ class Incidents(MutableSequence):
 
 class Incident:
     """
-    This class represents an Incident.
-    The reference can be found here https://docs.logsight.ai/en/rest/reference/objects#incident
+     This class represents an Incident.
+     The reference can be found here:
+        - https://docs.logsight.ai/en/rest/reference/objects#incident
 
-    Example of the structure returned
-    [
-    {
-      "@timestamp":"2021-07-11T09:30:19",
-      "count_ads":[],
-      "new_templates":[],
-      "semantic_ad":[
-         [
-            {
-               "@timestamp":"2021-07-11T11:29:28.105741",
-               "actual_level":"INFO",
-               "app_name":"unittest_8",
-               "index":4,
-               "message":"[main] org.apache.hadoop.mapreduce.v2.app.MRAppMaster: OutputCommitter set in config null",
-               "name":"log",
-               "param_0":"org.apache.hadoop.mapreduce.v2.app.MRAppMaster:",
-               "prediction":1,
-               "template":"[main] <*> OutputCommitter set in config null"
-            }
-         ],
-         [
-            {
-               "@timestamp":"2021-07-11T11:29:32.934900",
-               "actual_level":"INFO",
-               "app_name":"unittest_8",
-               "index":23,
-               "message":"[main] org.apache.hadoop.mapreduce.v2.app.job.impl.JobImpl",
-               "name":"log",
-               "param_0":"org.apache.hadoop.mapreduce.v2.app.job.impl.JobImpl:",
-               "param_1":"job_1445144423722_0020",
-               "prediction":1,
-               "template":"[main] <*> Not uberizing <*> because: not enabled; too many maps; too much input;"
-            }
-         ],
-      ],
-      "semantic_count_ads":[],
-      "timestamp_end":"2021-07-11T11:30:08.661874",
-      "timestamp_start":"2021-07-11T11:29:27.077735",
-      "total_score":7
-   }
-   ]
+     Example of the structure returned
+     [
+     {
+       "@timestamp":"2021-07-11T09:30:19",
+       "count_ads":[],
+       "new_templates":[],
+       "semantic_ad":[
+          [
+             {
+                "@timestamp":"2021-07-11T11:29:28.105741",
+                "actual_level":"INFO",
+                "app_name":"unittest_8",
+                "index":4,
+                "message":"[main] org.apache.hadoop.mapreduce.v2.app.MR....",
+                "name":"log",
+                "param_0":"org.apache.hadoop.mapreduce.v2.app.MRAppMaster:",
+                "prediction":1,
+                "template":"[main] <*> OutputCommitter set in config null"
+             }
+          ],
+          [
+             {
+                "@timestamp":"2021-07-11T11:29:32.934900",
+                "actual_level":"INFO",
+                "app_name":"unittest_8",
+                "index":23,
+                "message":"[main] org.apache.hadoop.mapreduce.v2.app.j...",
+                "name":"log",
+                "param_0":"org.apache.hadoop.mapreduce.v2.app.job.impl...:",
+                "param_1":"job_1445144423722_0020",
+                "prediction":1,
+                "template":"[main] <*> Not uberizing <*> because: not enab...;"
+             }
+          ],
+       ],
+       "semantic_count_ads":[],
+       "timestamp_end":"2021-07-11T11:30:08.661874",
+       "timestamp_start":"2021-07-11T11:29:27.077735",
+       "total_score":7
+    }
+    ]
     """
+
     def __init__(self, data):
         self._timestamp = data.get("@timestamp", None)
         self._count_ads = data.get("count_ads", None)

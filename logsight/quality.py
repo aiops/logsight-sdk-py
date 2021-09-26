@@ -29,7 +29,8 @@ class LogQuality(MutableSequence):
 class Quality(Template):
     """
     This class represents an Quality.
-    The reference can be found here https://docs.logsight.ai/en/rest/reference/objects#quality
+    The reference can be found here:
+        - https://docs.logsight.ai/en/rest/reference/objects#quality
 
     Example of the structure returned
     {
@@ -50,7 +51,10 @@ class Quality(Template):
         self._predicted_log_level = data.get("predicted_log_level", None)
 
     def __repr__(self):
-        return {"app_name": self._app_name, "predicted_log_level": self._predicted_log_level}
+        return {
+            "app_name": self._app_name,
+            "predicted_log_level": self._predicted_log_level,
+        }
 
     @property
     def predicted_log_level(self):

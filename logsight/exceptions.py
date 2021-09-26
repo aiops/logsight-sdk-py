@@ -1,5 +1,3 @@
-
-
 class LogsightException(Exception):
     """Base Logsight Exception"""
 
@@ -29,7 +27,8 @@ class Unauthorized(LogsightException):
 
 class Forbidden(LogsightException):
     status_code = 403
-    message = "Forbidden: your credentials don't give you access to this resource."
+    message = """Forbidden: your credentials
+    don't give you access to this resource."""
 
 
 class NotFound(LogsightException):

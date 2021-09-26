@@ -27,12 +27,15 @@ class LogsightLogger(BufferingHandler):
             messages = []
             for record in self.buffer:
                 msg = self.format(record)
+                timestamp = datetime.datetime.now(tz=tzlocal()).isoformat()
                 messages.append(
-                    {'private-key': self.private_key,
-                     'app': self.app_name,
-                     'timestamp': datetime.datetime.now(tz=tzlocal()).isoformat(),
-                     'message': msg,
-                     'level': record.levelname}
+                    {
+                        "private-key": self.private_key,
+                        "app": self.app_name,
+                        "timestamp": timestamp,
+                        "message": msg,
+                        "level": record.levelname,
+                    }
                 )
             j = {"log-messages": messages}
             self._post(PATH_DATA, j)
@@ -46,8 +49,12 @@ class LogsightLogger(BufferingHandler):
         super().emit(record)
 
     def shouldFlush(self, record):
-        return True if super().shouldFlush(record) or \
-                       time.time() - self.last_emit > self.buffer_lifespan_seconds else False
+        return (
+            True
+            if super().shouldFlush(record)
+            or time.time() - self.last_emit > self.buffer_lifespan_seconds
+            else False
+        )
 
     def _post(self, path, j):
         try:
@@ -55,11 +62,11 @@ class LogsightLogger(BufferingHandler):
             r.raise_for_status()
         except requests.exceptions.HTTPError as err:
             d = json.loads(err.response.text)
-            description = d['description'] if 'description' in d else d
+            description = d["description"] if "description" in d else d
             raise HTTP_EXCEPTION_MAP[err.response.status_code](description)
 
         try:
             return r.status_code, json.loads(r.text)
         except json.decoder.JSONDecodeError:
-            print('Content could not be converted to JSON', r.text)
+            print("Content could not be converted to JSON", r.text)
             return {}

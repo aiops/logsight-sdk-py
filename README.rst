@@ -2,6 +2,12 @@
     :target: https://logsight-sdk-py.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
 
+.. image:: https://github.com/aiops/logsight-sdk-py/actions/workflows/python-package.yml/badge.svg?event=release
+        :target: https://github.com/aiops/logsight-sdk-py/
+
+.. image:: https://img.shields.io/pypi/v/logsight-sdk-py
+        :target: https://pypi.python.org/pypi/logsight-sdk-py/
+
 Logsight SDK Python
 ===================
 

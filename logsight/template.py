@@ -27,20 +27,21 @@ class Templates(MutableSequence):
 class Template:
     """
     This class represents an Template.
-    The reference can be found here https://docs.logsight.ai/en/rest/reference/objects#template
+    The reference can be found here:
+        - https://docs.logsight.ai/en/rest/reference/objects#template
 
     Example of the structure returned
     {
        "@timestamp":"2021-07-11T07:27:55.478091",
        "actual_level":"WARNING",
        "app_name":"unittest_6",
-       "message":"nova.virt.libvirt.imagecache [req-addc1839-2ed5-4778-b57e-5854eb7b8b09 - - - - -]",
+       "message":"nova.virt.libvirt.imagecache [req-addc183 - - - -]",
        "name":"log",
        "param_0":"[req-addc1839-2ed5-4778-b57e-5854eb7b8b09",
        "param_1":"Unknown",
        "param_2":"file:",
-       "param_3":"/var/lib/nova/instances/_base/a489c868f0c37da93b76227c91bb03908ac0e742",
-       "template":"nova.virt.libvirt.imagecache <*> - - - - -] <*> base <*> <*>"
+       "param_3":"/var/lib/nova/instances/_base/a489c868...",
+       "template":"nova.virt.libvirt.imagecache <*> ] <*> base <*> <*>"
     }
     """
 

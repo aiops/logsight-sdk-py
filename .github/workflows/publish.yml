@@ -1,45 +1,31 @@
-name: Publish Python distributions to PyPI and TestPyPI
+name: Publish
 
 on:
-  push:
-    tags:
-      - '*.*.*'
+  workflow_run:
+    workflows: ["Build"]
+    types:
+      - completed
 
 jobs:
-  build-n-publish:
-    name: Build and publish Python distribution
+  publish:
+    name: Publish Python distributions to PyPI and TestPyPI
     runs-on: ubuntu-18.04
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
 
       - name: Set up Python 3.8
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v2
         with:
           python-version: 3.8
 
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install flake8
 
       - name: Install Python dependencies
         uses: py-actions/py-dependency-install@v2
         with:
           path: "requirements.txt"
-
-      - name: Lint with flake8
-        run: |
-          # stop the build if there are Python syntax errors or undefined names
-          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-
-#      - name: Test with unittest
-#        run: |
-#          export PYTHONPATH=$PYTHONPATH:/home/runner/work/logsight-python-sdk/logsight-python-sdk
-#          cd tests
-#          python -m unittest discover
-#          cd ..
 
       - name: Install build dependencies
         run: python -m pip install build wheel
