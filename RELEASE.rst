@@ -1,8 +1,15 @@
 
-Release process with GitHub and PyPI
-====================================
+Release process
+===============
 
-How to release logsight SDK for Python
+Releases logsight SDK for Python to the following external systems:
+
++ GitHub_
++ `Test PyPI`_ and PyPI_
+
+.. _github: https://github.com/aiops/logsight-sdk-py
+.. _test pypi: https://test.pypi.org/search/?q=%22logsight-sdk-py%22&o=
+.. _pypi: https://pypi.org/search/?q=%22logsight-sdk-py%22&o=
 
 
 Project Stages
@@ -11,14 +18,30 @@ Project Stages
 This project has three stages of release:
 
 + Unstable
-    + The tip or HEAD of the master branch is referred to as unstable
+    + The tip or HEAD of the `develop` branch is referred to as unstable
 + Staged
-    + A commit tagged with the suffix `-rc\d+` is a staged release/release candidate (e.g., `v0.3.1-rc2`)
+    + A commit tagged with the suffix `-rc\d+` is a release candidate (e.g., `0.3.1-rc2`)
 + Stable
-    + A commit tagged without suffix `-rc\d+` is a stable release (e.g., `v0.3.1`)
+    + A commit tagged without suffix `-rc\d+` is a stable release (e.g., `0.3.1`)
 
+Tags follow `Semantic Versioning`_.
 There are no steps necessary to create an unstable release as that happens automatically whenever an untagged commit is pushed to `develop`.
 However, the following workflow should be used when tagging a `staged release candidate` or `stable release`.
+
+.. _Semantic Versioning: https://semver.org
+
+
+Preproduction
+-------------
+
+To test the SDK with a preproduction server, install OpenVPN_ and point the VPN to the running testbed_ using your config file `your_vpn_file.ovpn`.
+
+.. _openvpn: https://openvpn.net/cloud-docs/openvpn-3-client-for-linux/
+.. _testbed: http://wally113.cit.tu-berlin.de:4200/
+
+.. code-block:: console
+
+    sudo openvpn3 session-start --config your_vpn_file.ovpn
 
 
 Workflow
@@ -81,10 +104,10 @@ Workflow
     
 13. Build locally
 
-     + `rm -rf build`
-     + `rm -rf dist`
-     + `python3 setup.py sdist bdist_wheel`
-     + `twine check dist/*` (report any problems rendering your README)
+    + `rm -rf build`
+    + `rm -rf dist`
+    + `python3 setup.py sdist bdist_wheel`
+    + `twine check dist/*` (report any problems rendering your README)
 
 14. Release testing
 
@@ -105,44 +128,47 @@ Workflow
     + `python3 -m pip install logsight-sdk-py`
     
 
-Consolidated instructions
+Bash workflow
+-------------
 
-```console
-git checkout develop
-git pull origin develop --rebase
-# python -m unittest discover tests`
-# Update `CHANGES.md` 
-# Update the version in setup.py
-version=$(python setup.py --version)
-git commit -a -m "Prep for $version release"
-git push origin develop
-git checkout -b release/$version origin/develop
-git push origin release/$version
+.. code-block:: console
 
-git checkout main
-git pull origin main
-git merge release/$version
+    git checkout develop
+    git pull origin develop --rebase
 
-git tag -a $version -m "Prep for $version release"
-git push origin main
-git push origin --tags
-   
-git checkout develop
-git merge release/$version
-git push origin develop
+    # python -m unittest discover tests`
+    # Update `CHANGES.md`
+    # Update the version in setup.py
 
-git branch -D release/$version
-git push origin :release/$version
+    version=$(python setup.py --version)
+    git commit -a -m "Prep for $version release"
+    git push origin develop
+    git checkout -b release/$version origin/develop
+    git push origin release/$version
 
-rm -rf build
-rm -rf dist
-python3 setup.py sdist bdist_wheel
-twine check dist/*
+    git checkout main
+    git pull origin main
+    git merge release/$version
 
-twine upload --repository testpypi dist/*
-python3 -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ logsight-sdk-py
-python3 -m pip uninstall logsight-sdk-py
+    git tag -a $version -m "Prep for $version release"
+    git push origin main
+    git push origin --tags
 
-twine upload dist/*
-python3 -m pip install logsight-sdk-py
-```
+    git checkout develop
+    git merge release/$version
+    git push origin develop
+
+    git branch -D release/$version
+    git push origin :release/$version
+
+    rm -rf build
+    rm -rf dist
+    python3 setup.py sdist bdist_wheel
+    twine check dist/*
+
+    twine upload --repository testpypi dist/*
+    python3 -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ logsight-sdk-py
+    python3 -m pip uninstall logsight-sdk-py
+
+    twine upload dist/*
+    python3 -m pip install logsight-sdk-py

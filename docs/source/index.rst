@@ -25,7 +25,7 @@ Use the Incident Detector client library for Python to:
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents
+   :caption: Quick Start
 
    usage/quick_start/quick_start
 
