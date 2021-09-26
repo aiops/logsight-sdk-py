@@ -152,8 +152,8 @@ Bash workflow
     git merge release/$version
 
     git tag -a $version -m "Release $version"
-    git push origin main
-    git push origin --tags
+    git push origin $version
+    # git push origin --tags
 
     git checkout develop
     git merge release/$version
