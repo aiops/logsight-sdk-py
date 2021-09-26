@@ -17,12 +17,23 @@ Setting up
 Create a directory
 ==================
 
-Create a directory to store your quick guide exercise:
+Create a directory to store your quick start exercise:
 
 .. code-block:: console
 
-    $ mkdir quick_start
-    $ cd quick_start
+    $ mkdir logsight_quick_start
+    $ cd logsight_quick_start
+
+
+Create a virtual env
+====================
+
+Create a Python virtual environment to decouple and isolate the packages we will install from you environment.
+
+.. code-block:: console
+
+    $ python3 -m venv venv
+    $ source venv/bin/activate
 
 
 Prepare code file
@@ -69,13 +80,28 @@ or directly from the sources:
     $ python setup.py install
 
 
-Code examples
-*************
+For the impatient
+=================
 
-Code snippets show you how to do the following with the Incident Detector client library for Python:
+.. code-block:: console
+
+    mkdir logsight_quick_start
+    cd logsight_quick_start
+    python3 -m venv venv
+    source venv/bin/activate
+    curl https://raw.githubusercontent.com/aiops/logsight-sdk-py/main/docs/source/quick_start/quick_start.py --output quick_start.py
+    curl https://raw.githubusercontent.com/aiops/logsight-sdk-py/main/docs/source/quick_start/Hadoop_2k.log --output Hadoop_2k.log
+    pip install logsight-sdk-py
+    python quick_start.py
+
+
+Code example
+************
+
+The following code snippets show what can be achieved with the Logsight SDK client library for Python:
 
 + Authenticate the client
-+ Attach you logger
++ Attach the logger
 + Send log data loaded from a file
 + Detect incident in the entire log data set
 + Show the details of the incident
@@ -89,7 +115,6 @@ Load the various packages used in this quick start guide.
 .. code:: python
 
     import sys
-    import os
     import time
     import logging
 
@@ -101,7 +126,7 @@ Load the various packages used in this quick start guide.
 Authenticate the client
 =======================
 
-To enable client authentication, access the PRIVATE_KEY environment variable (or enter the string directly as a value) and indicate your e-mail.
+To enable client authentication, set your PRIVATE_KEY and e-mail.
 
 .. code:: python
 
@@ -117,10 +142,10 @@ This quick guide sends log data to the application quick_start_app.
     APP_NAME = 'quick_start_app'
 
 
-Attached the logger
-===================
+Attach the logger
+=================
 
-Adding logsight.ai logging handler in your logging system:
+Add logsight.ai logging handler to your logging system:
 
 .. code:: python
 
@@ -132,14 +157,13 @@ Adding logsight.ai logging handler in your logging system:
     logger.addHandler(handler)
 
 
-
 Load log data from a file
 =========================
 
-+ open file with your logs (many logs are available at loghub_)
-+ read all the log records from the file
-+ split log messages and remove the timestamp
-+ the list log_records contains tuples of the form (log level, log message)
++ Open a file with your log data (logs file samples from several systems are available at loghub_)
++ Read all the log records from the file
++ Split log messages and remove the timestamp
++ Store log_records with tuples of the form: (log level, log message)
 
 .. _loghub: https://github.com/logpai/loghub
 
@@ -156,18 +180,18 @@ Load log data from a file
             log_records.append((tokens[level_idx], ' '.join(tokens[msg_idx:])))
 
     except OSError:
-        sys.exit("Could not open/read file")
+        sys.exit('Could not open/read file')
 
 
 
 Send log records
 ================
 
-+ store a timestamp indicating when log records started to be sent
-+ iterate over the log records, extract the log level and log message
-+ send the log level and message using the logger and the appropriate log function
-+ once all records have been sent, flush the log handler to force buffered records to be sent
-+ store a timestamp indicating when the last log records were sent
++ Store a timestamp indicating when log records started to be sent
++ Iterate over the log records, extract the log level and log message
++ Send the log level and message using the logger and the appropriate log function
++ Once all records have been sent, flush the log handler to force buffered records to be sent
++ Store a timestamp indicating when the last log record was sent
 
 .. code:: python
 
@@ -196,8 +220,8 @@ Send log records
 Detect the anomaly status of the latest data point
 ==================================================
 
-+ wait 60 seconds after sending the log records to allow logsight.ai to process the log records
-+ query logsight.ai for incidents within the time window when log records were sent
++ Wait 60 seconds after sending the last log record to allow logsight.ai AI-driven processing to finish
++ Query logsight.ai for possible incidents
 
 .. code:: python
 
@@ -209,11 +233,10 @@ Detect the anomaly status of the latest data point
         .get_results(dt_start, dt_end, 'incidents')
 
 
-
 Show incidents
 ==============
 
-+ iterate over the list of incidents received and print the incidents' properties
+Iterate over the list of incidents received and print the incidents' properties
 
 .. code:: python
 
@@ -234,4 +257,4 @@ Run the Python code from your quick_start directory.
 Clean up resources
 *******************
 
-+ delete the application_ quick_start_app from your subscription.
+Delete the application_ `quick_start_app` from your subscription.

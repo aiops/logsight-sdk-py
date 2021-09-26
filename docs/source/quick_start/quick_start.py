@@ -1,5 +1,4 @@
 import sys
-import os
 import time
 import logging
 
@@ -28,7 +27,7 @@ try:
         log_records.append((tokens[level_idx], ' '.join(tokens[msg_idx:])))
 
 except OSError:
-    sys.exit("Could not open/read file")
+    sys.exit('Could not open/read file')
 
 dt_start = now()
 print('Starting log records sending', dt_start)
