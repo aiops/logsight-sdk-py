@@ -7,7 +7,7 @@ from logsight.logger import LogsightLogger
 from logsight.result import LogsightResult
 from logsight.utils import now
 
-PRIVATE_KEY = os.getenv('PRIVATE_KEY') or 'mgewxky59zm1euavowtjon9igc'
+PRIVATE_KEY = 'mgewxky59zm1euavowtjon9igc'
 APP_NAME = 'quick_start_app'
 EMAIL = 'jorge.cardoso.pt@gmail.com'
 

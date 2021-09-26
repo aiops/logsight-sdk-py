@@ -24,6 +24,10 @@ Create a directory to store your quick guide exercise:
     $ mkdir quick_start
     $ cd quick_start
 
+
+Prepare code file
+=================
+
 You can start with an empty Python file:
 
 .. code-block:: console
@@ -34,7 +38,7 @@ Alternatively, you can download the Python file directly from git:
 
 .. code-block:: console
 
-    $ curl https://raw.githubusercontent.com/aiops/logsight-sdk-py/main/docs/source/usage/quick_start/quick_start.py --output quick_start.py
+    $ curl https://raw.githubusercontent.com/aiops/logsight-sdk-py/main/docs/source/quick_start/quick_start.py --output quick_start.py
 
 
 Download a log data file
@@ -44,24 +48,7 @@ As a example, we will use a sample log data file from Apache Hadoop platform:
 
 .. code-block:: console
 
-    $ curl https://raw.githubusercontent.com/aiops/logsight-sdk-py/main/docs/source/usage/quick_start/Hadoop_2k.log --output Hadoop_2k.log
-
-
-Create an environment variable
-==============================
-
-Using the private key from your subscription, create one environment variables for authentication:
-
-+ PRIVATE_KEY - The private key for authenticating your requests.
-
-Copy the following text to your bash file:
-
-.. code-block:: console
-
-    $ export PRIVATE_KEY=<replace-with-your-anomaly-detector-key>
-
-
-After you add the environment variable, run source ~/.bashrc from your console window to make the changes effective.
+    $ curl https://raw.githubusercontent.com/aiops/logsight-sdk-py/main/docs/source/quick_start/Hadoop_2k.log --output Hadoop_2k.log
 
 
 Install the client library
@@ -71,14 +58,14 @@ Install the Incident Detector client library for python with pip:
 
 .. code-block:: console
 
-    $ pip install python-sdk-py
+    $ pip install logsight-sdk-py
 
 or directly from the sources:
 
 .. code-block:: console
 
-    $ git clone https://github.com/logsight/python-sdk-py.git
-    $ cd python-sdk-py
+    $ git clone https://github.com/aiops/logsight-sdk-py.git
+    $ cd logsight-sdk-py
     $ python setup.py install
 
 
@@ -118,7 +105,7 @@ To enable client authentication, access the PRIVATE_KEY environment variable (or
 
 .. code:: python
 
-    PRIVATE_KEY = os.getenv('PRIVATE_KEY') or 'xteitdidb0xd32thtt35ccruy'
+    PRIVATE_KEY = 'xteitdidb0xd32thtt35ccruy'
     EMAIL = 'jorge.cardoso.pt@gmail.com'
 
 Indicate the name of the application to which you will send log data.
