@@ -53,8 +53,10 @@ jobs:
           password: ${{ secrets.LOGSIGHT_SDK_TEST_PYPI_TOKEN }}
           repository_url: https://test.pypi.org/legacy/
 
-      - name: Publish distribution 📦 to PyPI
+      - name: Debug
         run: echo "Hello tag ${{ github.ref }}"
+
+      - name: Publish distribution 📦 to PyPI
         if: startsWith(github.ref, 'refs/tags')
         uses: pypa/gh-action-pypi-publish@master
         with:
