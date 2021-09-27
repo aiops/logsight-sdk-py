@@ -25,8 +25,13 @@
 Logsight SDK Python
 ===================
 
-Logsight SDK Python is a set of open source libraries, tools, documentation, and code samples that provides an easy, lightweight solution to instrument the source code of custom applications so that you can monitor their behavior and performance with logsight.ai.
-Logsight SDK uses a client/server architecture and communicates via HTTP.
+Logsight SDK Python is a set of open source libraries, tools, documentation,
+and code samples that provides an easy, lightweight solution to instrument
+the source code of custom applications so that you can monitor their behavior
+and performance with logsight.ai.
+
+Logsight SDK uses a client/server architecture and communicates via HTTP with
+the AI-driven log analytics platform logsight.ai_.
 
 Main advantages:
 
@@ -48,6 +53,7 @@ The Logsight SDK Python package is deployed to the following external platforms:
 + Python Package Index (PyPI): PyPI_
 + Documentation: docs_
 
+.. _logsight.ai: https://logsight.ai
 .. _test pypi: https://test.pypi.org/search/?q=%22logsight-sdk-py%22&o=
 .. _pypi: https://pypi.org/search/?q=%22logsight-sdk-py%22&o=
 .. _docs: https://logsight-sdk-py.readthedocs.io
