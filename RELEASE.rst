@@ -143,6 +143,12 @@ Bash workflow
     # Update `CHANGES.md`
     # Update the version in setup.py
 
+    # Make the documentation
+    # cd docs ; make clean ; make html ; cd ..
+
+    # Execute tests
+    # tox
+
     version=$(python setup.py --version)
     git commit -a -m "Prep for $version release"
     git push origin develop
