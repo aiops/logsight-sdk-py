@@ -1,12 +1,25 @@
-.. image:: https://github.com/aiops/logsight-sdk-py/workflows/Build/badge.svg
-        :target: https://github.com/aiops/logsight-sdk-py/
+.. image:: https://github.com/aiops/logsight-sdk-py/actions/workflows/build.yml/badge.svg
+    :target: https://github.com/aiops/logsight-sdk-py/actions/workflows/build.yml
+    :alt: Build
 
 .. image:: https://img.shields.io/pypi/v/logsight-sdk-py
-        :target: https://pypi.python.org/pypi/logsight-sdk-py/
+    :target: https://pypi.python.org/pypi/logsight-sdk-py/
+    :alt: Package version
+
+.. image:: https://img.shields.io/pypi/pyversions/logsight-sdk-py.svg
+    :target: https://pypi.org/project/pytest/
 
 .. image:: https://readthedocs.org/projects/logsight-sdk-py/badge/?version=latest
     :target: https://logsight-sdk-py.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
+
+.. image:: https://img.shields.io/pypi/dw/logsight-sdk-py.svg
+    :target: https://pypi.org/project/logsight-sdk-py/
+    :alt: Weekly PyPI downloads
+
+..  image:: https://img.shields.io/twitter/follow/logsight.svg?label=logsight&style=flat&logo=twitter&logoColor=4FADFF
+    :target: https://twitter.com/logsight
+    :alt: logsight.ai on Twitter
 
 
 Logsight SDK Python
