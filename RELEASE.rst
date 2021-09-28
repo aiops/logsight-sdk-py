@@ -96,92 +96,119 @@ Once ready, the release branch is merged into main and tagged with a version num
 It is also merged back into develop, since it may have diverged since the release was initiated.
 
 
-#. Increment version number in `setup.py`
-
-    + `python setup.py --version`
-
 #. Created release branch
 
-    + `version=$(python setup.py --version)`
-    + `git checkout -b release/$(python setup.py --version) develop`
+.. code-block:: console
+
+    version=$(python setup.py --version)
+    echo $version
+
+    # update manually release version
+    ? version=$version+1
+
+    git checkout -b release/$version develop
+
 
 #. Ensure unit tests are passing
     + Apply bug fixes (rather than on the develop branch)
     + Adding large new features is not allowed
-    + `python -m unittest discover tests`
+
+.. code-block:: console
+
+    python -m unittest discover tests
+
 
 #. Ensure `CHANGES.md` (or changelog.txt?) is up to date with latest
 
     + This file is the project's authoritative change log and should reflect new features, fixes, and any significant changes.
 
+
 #. Commit all those changes with consistent comment
 
-    + `git commit -a -m "Prep for $(python setup.py --version) release"`
+.. code-block:: console
 
-#. Tagging
+    git commit -a -m "Prep for $(python setup.py --version) release"
 
-    + Once the project is in the state for creating the release, add a git tag with the release number
-    + The tag will be used by github actions to trigger the release
-    + This will be reflected in the "releases" page of your GitHub repository.
-
-#. Push tag to remote
-
-    + Push the commits to origin main branch together with tag reference tag-name
-    + `git push --atomic origin main $version`
 
 #. Update main branch
 
-    + Tag commit on master for easy future reference to this version
-    + `git checkout main`
-    + `git merge --no-ff release/$(python setup.py --version)`
-    + `git push origin main`
-    + `git tag -a $(python setup.py --version) -m "Release $(python setup.py --version)"`
-    + `git push --tags`
+.. code-block:: console
+
+    git checkout main
+    git merge --no-ff release/$version -m "$version release"
+    git push origin main
+    git tag -a $version -m "Release $version"
+    git push --tags
+
 
 #. Update develop branch
 
-    + `git checkout develop`
-    + `git merge --no-ff release/$(python setup.py --version)`
-    + `git push origin develop`
+.. code-block:: console
+
+    git checkout develop
+    git merge --no-ff release/$version -m "$version release"
+    git push origin develop
+
 
 #. Remove release branch
 
-    + `git branch -d release/$(python setup.py --version)`
+.. code-block:: console
+
+    git branch -D release/$version
 
     
 #. Build locally
 
-    + `rm -rf build`
-    + `rm -rf dist`
-    + `python3 setup.py sdist bdist_wheel`
-    + `twine check dist/*` (report any problems rendering your README)
+.. code-block:: console
+
+    rm -rf build
+    rm -rf dist
+    python3 setup.py sdist bdist_wheel
+    twine check dist/* # (report any problems rendering your README)
+
 
 #. Release testing
 
     + Make sure you have a correct ~/.pypirc with your credentials from https://pypi.python.org/pypi
-    + `twine upload --repository testpypi dist/*` (upload dist to PyPI Test)
+
+.. code-block:: console
+
+    twine upload --repository testpypi dist/* # (upload dist to PyPI Test)
+
 
 #. Test the test release
 
-    + `python3 -m pip install -i https://testpypi.python.org/pypi logsight-sdk-py` (attempt to install from PyPI test server)
     + When download packages from TestPyPI, you can specify --extra-index-url to point to PyPI
     + This is useful when the package you're testing has dependencies
-    + `python3 -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ logsight-sdk-py`
-    + `python3 -m pip uninstall logsight-sdk-py`
+
+.. code-block:: console
+
+    python3 -m pip install -i https://testpypi.python.org/pypi logsight-sdk-py # (attempt to install from PyPI test server)
+    python3 -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ logsight-sdk-py
+    python3 -m pip uninstall logsight-sdk-py
+
 
 #. Release
 
-    + `twine upload dist/*`
-    + `python3 -m pip install logsight-sdk-py`
+.. code-block:: console
+
+    twine upload dist/*
+    python3 -m pip install logsight-sdk-py
     
+
 
 Bash workflow
 -------------
 
 .. code-block:: console
 
-    git checkout develop
-    git pull origin develop --rebase
+    #. Created release branch
+    version=$(python setup.py --version)
+    echo $version
+    # update release version
+    ? version=$version+1
+
+    git checkout -b release/$version develop
 
     # Warning: The following commands should be executed manually
     # Execute tests python -m unittest discover tests`
@@ -194,25 +221,22 @@ Bash workflow
     # Execute tests
     # tox
 
-    version=$(python setup.py --version)
-    git commit -a -m "Prep for $version release"
-    git push origin develop
-    git checkout -b release/$version origin/develop
-    git push origin release/$version
+    git commit -a -m "Preparation for $version release"
 
+    #. Update main branch
     git checkout main
-    git pull origin main
-    git merge release/$version
-
+    git merge --no-ff release/$version -m "$version release"
+    git push origin main
     git tag -a $version -m "Release $version"
-    git push --atomic origin main $version
+    git push --tags
 
+    #. Update develop branch
     git checkout develop
-    git merge release/$version
+    git merge --no-ff release/$version -m "$version release"
     git push origin develop
 
+    #. Remove release branch
     git branch -D release/$version
-    git push origin :release/$version
 
     # Warning: The following commands are implemented using Github actions
     # They should not be executed manually

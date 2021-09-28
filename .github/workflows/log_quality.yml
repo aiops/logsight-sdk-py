@@ -2,7 +2,7 @@ name: Log Quality
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ develop ]
 
 jobs:
   check-log-quality:
