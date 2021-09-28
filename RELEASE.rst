@@ -44,65 +44,110 @@ To test the SDK with a preproduction server, install OpenVPN_ and point the VPN 
     sudo openvpn3 session-start --config your_vpn_file.ovpn
 
 
-Workflow
---------
+Feature Workflow
+----------------
+The workflow uses two branches:
 
-#. Checkout
++ main branch. Stores the production-ready state.
++ develop branch. Contains the complete history of the project with new
+  features. Create an empty develop branch locally and push it to the server:
 
-    + `git checkout develop` (checked out into develop branch)
-    + `git pull origin develop --rebase` (update and merge any remote changes of the current branch)
+.. code-block:: console
+
+    git branch develop
+    git push -u origin develop
+
+
+#. Create feature branch
+
++ Feature branches are created off the latest develop branch.
+
+.. code-block:: console
+
+    git checkout develop
+    git checkout -b feature_branch
+    git push origin feature_branch
+    # work happens on feature branch
+    # Periodically merge changes on the develop branch to avoid conflicts
+
+
+#. Include features on develop
+
++ When the feature is finished, merge the feature_branch into develop.
+
+.. code-block:: console
+
+    git checkout develop
+    git merge --no-ff feature_branch
+    git branch -d feature_branch
+    git push origin develop
+
+The --no-ff flag causes the merge to always create a new commit object,
+even if the merge could be performed with a fast-forward.
+
+
+Release Workflow
+----------------
+
+Once several features have been implemented, a release is created by forking a release branch off of develop.
+The release branch starts a new release cycle.
+Only bug fixes, documentation, and other release-oriented tasks go in the branch.
+Once ready, the release branch is merged into main and tagged with a version number.
+It is also merged back into develop, since it may have diverged since the release was initiated.
+
+
+#. Increment version number in `setup.py`
+
+    + `python setup.py --version`
+
+#. Created release branch
+
+    + `version=$(python setup.py --version)`
+    + `git checkout -b release/$(python setup.py --version) develop`
 
 #. Ensure unit tests are passing
-
+    + Apply bug fixes (rather than on the develop branch)
+    + Adding large new features is not allowed
     + `python -m unittest discover tests`
 
 #. Ensure `CHANGES.md` (or changelog.txt?) is up to date with latest
 
     + This file is the project's authoritative change log and should reflect new features, fixes, and any significant changes.
 
-#. Increment version number in `setup.py`
-
-    + `python setup.py --version`
-
 #. Commit all those changes with consistent comment
 
     + `git commit -a -m "Prep for $(python setup.py --version) release"`
-    + `git push origin develop`
-
-#. Created release branch
-
-    + `git checkout -b release/$(python setup.py --version) origin/develop`
-    + `git push origin release/$(python setup.py --version)` 
-
-#. Branching and Merging
-
-    + Once your branch is complete, i.e. you finished your new feature and are ready to add it to your main branch for a new release, simply merge your feature branch back into the main branch.
-    + `git checkout main`
-    + `git pull origin main` (update local main branch)
-    + `git merge release/$(python setup.py --version)` (merge in your feature branch) or
 
 #. Tagging
 
     + Once the project is in the state for creating the release, add a git tag with the release number
     + The tag will be used by github actions to trigger the release
     + This will be reflected in the "releases" page of your GitHub repository.
-    + `git tag -a $(python setup.py --version) -m "Release $(python setup.py --version)"`
 
 #. Push tag to remote
 
     + Push the commits to origin main branch together with tag reference tag-name
     + `git push --atomic origin main $version`
-   
+
+#. Update main branch
+
+    + Tag commit on master for easy future reference to this version
+    + `git checkout main`
+    + `git merge --no-ff release/$(python setup.py --version)`
+    + `git push origin main`
+    + `git tag -a $(python setup.py --version) -m "Release $(python setup.py --version)"`
+    + `git push --tags`
+
 #. Update develop branch
 
     + `git checkout develop`
-    + `git merge release/$(python setup.py --version)`
+    + `git merge --no-ff release/$(python setup.py --version)`
     + `git push origin develop`
 
 #. Remove release branch
 
-    + `git branch -D release/$(python setup.py --version)`
-    + `git push origin :release/$(python setup.py --version)`
+    + `git branch -d release/$(python setup.py --version)`
+
     
 #. Build locally
 
