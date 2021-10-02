@@ -5,9 +5,9 @@ import json
 
 from logsight.config import HOST_API_V1, PATH_RESULTS
 from logsight.exceptions import HTTP_EXCEPTION_MAP, DataCorruption
-from logsight.template import Templates
-from logsight.incidents import Incidents
-from logsight.quality import LogQuality
+from logsight.result.template import Templates
+from logsight.result.incidents import Incidents
+from logsight.result.quality import LogQuality
 
 
 ANOMALIES = {

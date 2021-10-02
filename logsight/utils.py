@@ -2,7 +2,7 @@ import datetime
 from dateutil.tz import tzlocal
 
 from logsight.exceptions import LogsightException
-from logsight.applications import LogsightApplication
+from logsight.application.application import LogsightApplication
 
 
 def n_seconds_ago(seconds=60):

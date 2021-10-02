@@ -3,8 +3,8 @@ import sys
 import time
 import logging
 
-from logsight.logger import LogsightLogger
-from logsight.result import LogsightResult
+from logsight.logger.logger import LogsightLogger
+from logsight.result.result import LogsightResult
 from logsight.utils import now
 
 
