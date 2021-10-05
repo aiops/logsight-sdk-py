@@ -6,35 +6,26 @@
 Logsight SDK Python
 ===================
 
-Quickstart: Detecting Incidents
-*******************************
+.. toctree::
+   :maxdepth: 2
+   :caption: Readme
 
-*27/09/2021, 30 minutes to complete*
-
-Get started with the Logsight SDK for Python and client library to detect incidents.
-Follow these steps to install the package and start using the algorithms provided by logsight.ai service.
-The incident detector client library enables you to find incidents in your logs
-by automatically using deep learning models trained on millions lines of code, regardless of the underlying IT system, failure scenario, or data volume.
-
-Use the Logsight SDK for Python to:
-
-+ Send data logs to your logsight.ai account
-+ Detect incidents in your data logs
-+ Retrieve and display the log records associated with an incident
+   readme
+   changelog
 
 
 .. toctree::
    :maxdepth: 2
-   :caption: Quick Start
+   :caption: Detecting Incidents
 
-   quick_start/quick_start
+   detecting_incidents/detecting_incidents
 
 
 .. toctree::
    :maxdepth: 2
-   :caption: Website
+   :caption: API Reference
 
-   look_feel/look_feel
+   logsight
 
 
 Indices and tables
