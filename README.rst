@@ -1,3 +1,6 @@
+Logsight SDK Python
+===================
+
 .. image:: https://github.com/aiops/logsight-sdk-py/actions/workflows/build.yml/badge.svg
     :target: https://github.com/aiops/logsight-sdk-py/actions/workflows/build.yml
     :alt: Build
@@ -21,9 +24,6 @@
     :target: https://twitter.com/logsight
     :alt: logsight.ai on Twitter
 
-
-Logsight SDK Python
-===================
 
 Logsight SDK Python is a set of open source libraries, tools, documentation,
 and code samples that provides an easy, lightweight solution to instrument
