@@ -30,6 +30,21 @@ class LogsightCompare(APIClient):
         return self._get(HOST_API, PATH_COMPARE, data)
 
     def compare_tags(self, baseline_tag, test_tag):
+        """Compare two log segments of an application using tags to identify
+        the segments.
+
+        Args:
+            baseline_tag (str): Name of the baseline tag.
+            test_tag (str): Name of the test tag.
+
+        Returns:
+            dict: ???.
+
+        Raises:
+            Unauthorized: If the private_key is invalid.
+            Conflict: If the app_name already exists.
+
+        """
         data = {
             "private-key": self.private_key,
             "email": self.email,

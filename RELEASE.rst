@@ -208,14 +208,21 @@ Bash workflow
     # update release version
     ? version=$version+1
 
+    # Create a branch from the current HEAD (does not touch local changes)
     git checkout -b release/$version develop
 
     # Warning: The following commands should be executed manually
-    # Execute tests python -m unittest discover tests`
-    # Update `CHANGES.md`
+    # Execute tests
+    # $ python -m unittest discover tests`
+    # Update the changelog
+    # $ git log --pretty="- %s" > CHANGELOG.rst
     # Update the version in setup.py
+    # $ vi setup.py
 
     # Make the documentation
+    # Documentation is at:
+    # - https://www.sphinx-doc.org/en/master/tutorial/
+    # - https://www.sphinx-doc.org/_/downloads/en/master/pdf/
     # cd docs ; make clean ; make html ; cd ..
 
     # Execute tests
