@@ -39,7 +39,7 @@ def create_app(app_mng, app_name):
 
 def delete_app(app_mng, app_name):
 
-    content = app_mng.lst()
+    status_code, content = app_mng.lst()
     app_list = [(d["id"], d["name"]) for d in content if app_name in d["name"]]
 
     if not app_list:
@@ -50,8 +50,12 @@ def delete_app(app_mng, app_name):
     app_id = app_list[0][0]
     try:
         print("Deleting app_name", app_name)
-        content = app_mng.delete(app_id)
-    except LogsightException:
-        print("app_name does not exists: %s, %d" % (app_name, app_id))
+        status_code, content = app_mng.delete(app_id)
+        if status_code != 200:
+            msg = "Error deleting app: %s, %d" % (app_name, app_id)
+            raise LogsightException(msg)
+    except Exception:
+        msg = "app_name does not exists: %s, %d" % (app_name, app_id)
+        raise LogsightException(msg)
 
-    return content
+    return status_code, content

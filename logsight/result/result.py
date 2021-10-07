@@ -20,21 +20,6 @@ class LogsightResult(APIClient):
         self.app_name = app_name
 
     def get_results(self, start_time, end_time, anomaly_type):
-        """Obtains the results from processing.
-
-        Args:
-            start_time (str): ???.
-            end_time (str): ???.
-            anomaly_type (str): ???.
-
-        Returns:
-            dict: ???.
-
-        Raises:
-            Unauthorized: If the private_key is invalid.
-            Conflict: If the app_name already exists.
-
-        """
         data = {
             "private-key": self.private_key,
             "email": self.email,
