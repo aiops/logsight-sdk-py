@@ -95,6 +95,12 @@ Only bug fixes, documentation, and other release-oriented tasks go in the branch
 Once ready, the release branch is merged into main and tagged with a version number.
 It is also merged back into develop, since it may have diverged since the release was initiated.
 
+#. Update develop branch in case someone made changes
+
+.. code-block:: console
+
+    git checkout develop
+    git pull --rebase
 
 #. Created release branch
 
@@ -156,7 +162,7 @@ It is also merged back into develop, since it may have diverged since the releas
 
     git branch -D release/$version
 
-    
+
 #. Build locally
 
 .. code-block:: console
@@ -194,13 +200,17 @@ It is also merged back into develop, since it may have diverged since the releas
 
     twine upload dist/*
     python3 -m pip install logsight-sdk-py
-    
+
 
 
 Bash workflow
 -------------
 
 .. code-block:: console
+
+    #. Update develop branch in case someone made changes
+    git checkout develop
+    git pull --rebase
 
     #. Created release branch
     version=$(python setup.py --version)
