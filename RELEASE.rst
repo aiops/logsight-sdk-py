@@ -208,6 +208,7 @@ Bash workflow
     # update release version
     ? version=$version+1
 
+    # Create a branch from the current HEAD (does not touch local changes)
     git checkout -b release/$version develop
 
     # Warning: The following commands should be executed manually
