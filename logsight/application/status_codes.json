@@ -1,0 +1,66 @@
+{'type': 'Error',
+                                        "'title': 'Incorrect auth settings', "
+                                        "'status': 401, "
+                                        "'detail': 'Authentication failed due to incorrect private-key or/and app.', "
+                                        "'instance': '/data'}", status=401, mimetype='application/json'}
+
+
+
+return Response("{'type': 'Error',"
+                                        "'title': 'JSON formatting error', "
+                                        "'status': 400, "
+                                        "'detail': 'The call failed due to invalid JSON structure.', "
+                                        "'instance': '/data'}",
+status=400, mimetype='application/json')
+
+
+return Response("{'type': 'Error',"
+                                        "'title': 'Requested resource is not found', "
+                                        "'status': 404, "
+                                        "'detail':" + result['status'] +", "
+                                        "'instance': '/results/log-quality'}",
+status=404, mimetype='application/json')
+
+
+  ApplicationResponse(
+      type = "Error",
+      title = "Application limit is reached, please contact support!",
+      status = HttpStatus.INTERNAL_SERVER_ERROR.toString(),
+      detail = "Maximum 5 applications are allowed",
+      instance = "api/applications/create"
+  ),
+  HttpStatus.INTERNAL_SERVER_ERROR
+
+
+  ApplicationResponse(
+      type = "Error",
+      title = "Application already exists.",
+      status = HttpStatus.BAD_REQUEST.toString(),
+      detail =  "Please choose another name. The application already exists or incorrect name. " +
+              "The name of the application should contain only numbers and lowercase letters. " +
+              "Special signs are not allowed(except underscore)!",
+      instance = "api/applications/create"
+  ), HttpStatus.BAD_REQUEST
+
+
+  ApplicationResponse(
+      type = "Error",
+      title = "User does not exist or not authenticated",
+      status = HttpStatus.BAD_REQUEST.toString(),
+      detail =  "User is not authenticated or the user does not exist!",
+      instance = "api/applications/delete"
+  )
+ , HttpStatus.BAD_REQUEST
+
+
+ApplicationResponse(
+    type = "Error",
+    title = "Application does not exist.",
+    status = HttpStatus.NOT_FOUND.toString(),
+    detail =  "Application with the provided ID does not exists.",
+    instance = "api/applications/delete"
+)
+, HttpStatus.NOT_FOUND
+)
+
+
