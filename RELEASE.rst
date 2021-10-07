@@ -238,18 +238,18 @@ Bash workflow
     # Execute tests
     # tox
 
-    git commit -a -m "Preparation for $version release"
+    git commit -a -m "Preparation for release $version"
 
     #. Update main branch
     git checkout main
-    git merge --no-ff release/$version -m "$version release"
+    git merge --no-ff release/$version -m "Release $version"
     git push origin main
     git tag -a $version -m "Release $version"
     git push --tags
 
     #. Update develop branch
     git checkout develop
-    git merge --no-ff release/$version -m "$version release"
+    git merge --no-ff release/$version -m "Release $version"
     git push origin develop
 
     #. Remove release branch
