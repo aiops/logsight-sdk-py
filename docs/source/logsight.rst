@@ -1,85 +1,36 @@
-logsight package
-================
 
-Submodules
-----------
+Applications
+-------------------
 
-logsight.applications module
-----------------------------
-
-.. automodule:: logsight.applications
+.. automodule:: logsight.application.application
    :members:
    :undoc-members:
    :show-inheritance:
 
-logsight.config module
-----------------------
 
-.. automodule:: logsight.config
+Logger
+-------------
+
+.. automodule:: logsight.logger.logger
    :members:
    :undoc-members:
    :show-inheritance:
 
-logsight.exceptions module
---------------------------
+
+Result
+-------------
+
+.. automodule:: logsight.result.result
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Exceptions
+-----------------
 
 .. automodule:: logsight.exceptions
    :members:
    :undoc-members:
    :show-inheritance:
 
-logsight.incidents module
--------------------------
-
-.. automodule:: logsight.incidents
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-logsight.logger module
-----------------------
-
-.. automodule:: logsight.logger
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-logsight.quality module
------------------------
-
-.. automodule:: logsight.quality
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-logsight.result module
-----------------------
-
-.. automodule:: logsight.result
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-logsight.template module
-------------------------
-
-.. automodule:: logsight.template
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-logsight.utils module
----------------------
-
-.. automodule:: logsight.utils
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: logsight
-   :members:
-   :undoc-members:
-   :show-inheritance:

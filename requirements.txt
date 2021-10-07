@@ -1,3 +1,4 @@
 python-dateutil         # Apache Software License, BSD License (Dual License)
+pyparsing               # MIT License
 requests                # Apache Software License (Apache 2.0)
 twine                   # Apache Software License

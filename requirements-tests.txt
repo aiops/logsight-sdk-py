@@ -1,3 +1,4 @@
+testfixtures              # MIT License
 black                     # MIT License
 coverage                  # Apache Software License (Apache 2.0)
 flake8                    # Apache Software License (Apache 2.0)

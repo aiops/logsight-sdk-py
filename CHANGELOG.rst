@@ -1,0 +1,3 @@
+- Improved the documentation and added look and feel
+- Impl. Log Compare function
+- Refactoring

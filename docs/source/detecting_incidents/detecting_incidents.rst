@@ -1,8 +1,25 @@
 
+Quickstart
+**********
+
+*27/09/2021, 30 minutes to complete*
+
+Get started with the Logsight SDK for Python and client library to detect incidents.
+Follow these steps to install the package and start using the algorithms provided by logsight.ai service.
+The incident detector client library enables you to find incidents in your logs
+by automatically using deep learning models trained on millions lines of code, regardless of the underlying IT system, failure scenario, or data volume.
+
+Use the Logsight SDK for Python to:
+
++ Send data logs to your logsight.ai account
++ Detect incidents in your data logs
++ Retrieve and display the log records associated with an incident
+
+
 Prerequisites
 *************
 + logsight.ai_ subscription (create one for free to get your private key)
-+ Once you have your subscription, create an application_ named quick_start_app in the integration tab
++ Once you have your subscription, create an application_ named detecting_incidents_app in the integration tab
 + You will need the `private key`_ to connect your application to the Incident Detector API
 + You'll paste your private key into the code below later
 
@@ -17,12 +34,12 @@ Setting up
 Create a directory
 ==================
 
-Create a directory to store your quick start exercise:
+Create a directory to store your exercise:
 
 .. code-block:: console
 
-    $ mkdir logsight_quick_start
-    $ cd logsight_quick_start
+    $ mkdir detecting_incidents
+    $ cd detecting_incidents
 
 
 Create a virtual env
@@ -43,13 +60,13 @@ You can start with an empty Python file:
 
 .. code-block:: console
 
-    $ touch quick_start.py
+    $ touch detecting_incidents.py
 
 Alternatively, you can download the Python file directly from git:
 
 .. code-block:: console
 
-    $ curl https://raw.githubusercontent.com/aiops/logsight-sdk-py/main/docs/source/quick_start/quick_start.py --output quick_start.py
+    $ curl https://raw.githubusercontent.com/aiops/logsight-sdk-py/main/docs/source/detecting_incidents_app/detecting_incidents_app.py --output detecting_incidents.py
 
 
 Download a log data file
@@ -59,7 +76,7 @@ As a example, we will use a sample log data file from Apache Hadoop platform:
 
 .. code-block:: console
 
-    $ curl https://raw.githubusercontent.com/aiops/logsight-sdk-py/main/docs/source/quick_start/Hadoop_2k.log --output Hadoop_2k.log
+    $ curl https://raw.githubusercontent.com/aiops/logsight-sdk-py/main/docs/source/detecting_incidents_app/Hadoop_2k.log --output Hadoop_2k.log
 
 
 Install the client library
@@ -103,17 +120,17 @@ For the impatient
 
 .. code-block:: console
 
-    mkdir logsight_quick_start
-    cd logsight_quick_start
+    mkdir detecting_incidents
+    cd detecting_incidents
     python3 -m venv venv
     source venv/bin/activate
-    curl https://raw.githubusercontent.com/aiops/logsight-sdk-py/main/docs/source/quick_start/quick_start.py --output quick_start.py
-    curl https://raw.githubusercontent.com/aiops/logsight-sdk-py/main/docs/source/quick_start/Hadoop_2k.log --output Hadoop_2k.log
+    curl https://raw.githubusercontent.com/aiops/logsight-sdk-py/main/docs/source/detecting_incidents/detecting_incidents.py --output detecting_incidents_app.py
+    curl https://raw.githubusercontent.com/aiops/logsight-sdk-py/main/docs/source/detecting_incidents/Hadoop_2k.log --output Hadoop_2k.log
     pip install logsight-sdk-py
     unset LOGSIGHT_PRIVATE_KEY LOGSIGHT_EMAIL
     export LOGSIGHT_PRIVATE_KEY='mgewxky59zm1euavowtjon9igc'
     export LOGSIGHT_EMAIL='jorge.cardoso.pt@gmail.com'
-    python quick_start.py
+    python detecting_incidents.py
 
 
 Code example
@@ -131,7 +148,7 @@ The following code snippets show what can be achieved with the Logsight SDK clie
 Load packages
 =============
 
-Load the various packages used in this quick start guide.
+Load the various packages used in this detecting incidents guide.
 
 .. code:: python
 
@@ -139,8 +156,8 @@ Load the various packages used in this quick start guide.
     import time
     import logging
 
-    from logsight.logger import LogsightLogger
-    from logsight.result import LogsightResult
+    from logsight.logger.logger import LogsightLogger
+    from logsight.result.result import LogsightResult
     from logsight.utils import now
 
 
@@ -156,11 +173,11 @@ To enable client authentication, set your PRIVATE_KEY and e-mail.
 
 Indicate the name of the application to which you will send log data.
 For example, apache_server, kafka, website or backend.
-This quick guide sends log data to the application quick_start_app.
+This guide sends log data to the application detecting_incidents_app.
 
 .. code:: python
 
-    APP_NAME = 'quick_start_app'
+    APP_NAME = 'detecting_incidents_app'
 
 
 Attach the logger
@@ -268,14 +285,14 @@ Iterate over the list of incidents received and print the incidents' properties
 Run the application
 *******************
 
-Run the Python code from your quick_start directory.
+Run the Python code from your detecting_incidents_app directory.
 
 .. code-block:: console
 
-    $ python quick_start.py
+    $ python detecting_incidents_app.py
 
 
 Clean up resources
 *******************
 
-Delete the application_ `quick_start_app` from your subscription.
+Delete the application_ `detecting_incidents_app` from your subscription.

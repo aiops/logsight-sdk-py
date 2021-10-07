@@ -8,3 +8,5 @@ HOST_API = "https://demo.logsight.ai/api_v1/"
 PATH_APP_CREATE = "/api/applications/create"
 PATH_APP_LST = "/api/applications/user"
 PATH_APP_DELETE = "/api/applications"
+
+PATH_COMPARE = "/api_v1/compare"
