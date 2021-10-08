@@ -25,7 +25,7 @@ Logsight SDK Python
    :maxdepth: 2
    :caption: API Reference
 
-   logsight
+   api/description.rst
 
 
 Indices and tables
