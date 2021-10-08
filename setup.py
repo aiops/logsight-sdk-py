@@ -1,6 +1,6 @@
 from setuptools import setup
 
-version = '0.1.9'
+version = '0.1.10'
 
 
 with open("README.rst", "r", encoding="utf-8") as fh:

@@ -1,0 +1,40 @@
+on:
+  push:
+    # Patterns matched against refs/tags
+    tags:
+      # Push events to matching a release: 1.4.12
+      - '*.*.*'
+
+name: Release
+
+jobs:
+  build:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: "Get latest tag"
+        id: latest_tag
+        run: echo "::set-output name=name::$(git tag --sort=-creatordate | head -1)"
+      - name: "Get second latest tag"
+        id: second_latest_tag
+        run: echo "::set-output name=name::$(git tag --sort=-creatordate | head -2 | tail -1)"
+      - name: "Get changelog"
+        id: changelog
+        run: echo "::set-output name=changelog::$(echo $(git log --pretty=format:'- %s\n' ${{ steps.second_latest_tag.outputs.name }}..${{ steps.latest_tag.outputs.name }}))"
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@latest
+        env:
+          # This token is provided by Actions, you do not need to create your own token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          body: |
+            ${{ steps.changelog.outputs.changelog }}
+          draft: false
+          prerelease: false

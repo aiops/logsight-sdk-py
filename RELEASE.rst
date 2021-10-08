@@ -1,6 +1,6 @@
 
-Release process
-===============
+Release workflow
+================
 
 Releases logsight SDK for Python to the following external systems:
 
@@ -22,11 +22,15 @@ This project has three stages of release:
 + Staged
     + A commit tagged with the suffix `-rc\d+` is a release candidate (e.g., `0.3.1-rc2`)
 + Stable
-    + A commit tagged without suffix `-rc\d+` is a stable release (e.g., `0.3.1`)
+    + A commit tagged `without` suffix `-rc\d+` is a stable release (e.g., `0.3.1`)
 
-Tags follow `Semantic Versioning`_.
+Tags follow `Semantic Versioning`_: Major, Minor, Patch.
 There are no steps necessary to create an unstable release as that happens automatically whenever an untagged commit is pushed to `develop`.
 However, the following workflow should be used when tagging a `staged release candidate` or `stable release`.
+
++ `Major`: incremented when you add breaking changes, e.g. an incompatible API change
++ `Minor`: incremented when you add backward compatible functionality
++ `Patch`: incremented when you add backward compatible bug fixes
 
 .. _Semantic Versioning: https://semver.org
 
@@ -214,9 +218,10 @@ Bash workflow
 
     #. Created release branch
     version=$(python setup.py --version)
-    echo $version
+    echo "Current release: $version"
     # update release version
-    ? version=$version+1
+    version=$(echo $version | perl -pe 's/^((\d+\.)*)(\d+)(.*)$/$1.($3+1).$4/e')
+    echo "New release: $version"
 
     # Create a branch from the current HEAD (does not touch local changes)
     git checkout -b release/$version develop
@@ -238,18 +243,18 @@ Bash workflow
     # Execute tests
     # tox
 
-    git commit -a -m "Preparation for $version release"
+    git commit -a -m "Preparation for release $version"
 
     #. Update main branch
     git checkout main
-    git merge --no-ff release/$version -m "$version release"
+    git merge --no-ff release/$version -m "Release $version"
     git push origin main
     git tag -a $version -m "Release $version"
     git push --tags
 
     #. Update develop branch
     git checkout develop
-    git merge --no-ff release/$version -m "$version release"
+    git merge --no-ff release/$version -m "Release $version"
     git push origin develop
 
     #. Remove release branch
