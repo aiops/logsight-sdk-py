@@ -232,7 +232,8 @@ Bash workflow
     # Update the changelog
     # $ git log --pretty="- %s" > CHANGELOG.rst
     # Update the version in setup.py
-    # $ vi setup.py
+    # $ vi setup.py or
+    sed "/^version/s;[^ ]*$;'$version';" "setup.py"
 
     # Make the documentation
     # Documentation is at:
