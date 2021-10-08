@@ -216,11 +216,11 @@ Bash workflow
     git checkout develop
     git pull --rebase
 
-    #. Created release branch
-    version=$(python setup.py --version)
-    echo "Current release: $version"
+    #. Created a new release id
+    prev_version=$(python setup.py --version)
+    echo "Previous release: $prev_version"
     # update release version
-    version=$(echo $version | perl -pe 's/^((\d+\.)*)(\d+)(.*)$/$1.($3+1).$4/e')
+    version=$(echo $prev_version | perl -pe 's/^((\d+\.)*)(\d+)(.*)$/$1.($3+1).$4/e')
     echo "New release: $version"
 
     # Create a branch from the current HEAD (does not touch local changes)
@@ -229,8 +229,11 @@ Bash workflow
     # Warning: The following commands should be executed manually
     # Execute tests
     # $ python -m unittest discover tests`
+
     # Update the changelog
-    # $ git log --pretty="- %s" > CHANGELOG.rst
+    # add commit message from HEAD to the previous tag
+    echo -e "$(git log --pretty='- %s' $prev_version..HEAD)\n\n$(cat CHANGELOG.rst)" > CHANGELOG.rst
+
     # Update the version in setup.py
     # $ vi setup.py or
     sed -i "/^version/s;[^ ]*$;'$version';" setup.py
