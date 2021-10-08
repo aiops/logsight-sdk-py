@@ -232,13 +232,14 @@ Bash workflow
     # Update the changelog
     # $ git log --pretty="- %s" > CHANGELOG.rst
     # Update the version in setup.py
-    # $ vi setup.py
+    # $ vi setup.py or
+    sed "/^version/s;[^ ]*$;'$version';" "setup.py"
 
     # Make the documentation
     # Documentation is at:
     # - https://www.sphinx-doc.org/en/master/tutorial/
     # - https://www.sphinx-doc.org/_/downloads/en/master/pdf/
-    # cd docs ; make clean ; make html ; cd ..
+    cd docs ; make clean ; make html ; cd ..
 
     # Execute tests
     # tox
