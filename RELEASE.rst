@@ -218,9 +218,10 @@ Bash workflow
 
     #. Created release branch
     version=$(python setup.py --version)
-    echo $version
+    echo "Current release: $version"
     # update release version
-    ? version=$version+1
+    version=$(echo $version | perl -pe 's/^((\d+\.)*)(\d+)(.*)$/$1.($3+1).$4/e')
+    echo "New release: $version"
 
     # Create a branch from the current HEAD (does not touch local changes)
     git checkout -b release/$version develop
