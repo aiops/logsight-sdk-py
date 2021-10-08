@@ -34,6 +34,12 @@ However, the following workflow should be used when tagging a `staged release ca
 
 .. _Semantic Versioning: https://semver.org
 
+Commit messages should be tagged to enable a detailed automated changelog generation:
+
++ 'chg' is for refactor, small improvement, cosmetic changes...
++ 'fix' is for bug fixes
++ 'new' is for new features, big improvement
+
 
 Preproduction
 -------------

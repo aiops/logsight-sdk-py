@@ -2,7 +2,7 @@
 ##
 ## Format
 ##
-##   ACTION: [AUDIENCE:] COMMIT_MSG [!TAG ...]
+##   qq: [AUDIENCE:] COMMIT_MSG [!TAG ...]
 ##
 ## Description
 ##
