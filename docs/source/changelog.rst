@@ -1,5 +1,3 @@
-CHANGELOG
-*********
 
 .. include:: ../../CHANGELOG.rst
 
