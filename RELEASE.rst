@@ -239,7 +239,7 @@ Bash workflow
     # Documentation is at:
     # - https://www.sphinx-doc.org/en/master/tutorial/
     # - https://www.sphinx-doc.org/_/downloads/en/master/pdf/
-    # cd docs ; make clean ; make html ; cd ..
+    cd docs ; make clean ; make html ; cd ..
 
     # Execute tests
     # tox
