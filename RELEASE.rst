@@ -1,6 +1,6 @@
 
-Release process
-===============
+Release workflow
+================
 
 Releases logsight SDK for Python to the following external systems:
 
@@ -22,11 +22,15 @@ This project has three stages of release:
 + Staged
     + A commit tagged with the suffix `-rc\d+` is a release candidate (e.g., `0.3.1-rc2`)
 + Stable
-    + A commit tagged without suffix `-rc\d+` is a stable release (e.g., `0.3.1`)
+    + A commit tagged `without` suffix `-rc\d+` is a stable release (e.g., `0.3.1`)
 
-Tags follow `Semantic Versioning`_.
+Tags follow `Semantic Versioning`_: Major, Minor, Patch.
 There are no steps necessary to create an unstable release as that happens automatically whenever an untagged commit is pushed to `develop`.
 However, the following workflow should be used when tagging a `staged release candidate` or `stable release`.
+
++ `Major`: incremented when you add breaking changes, e.g. an incompatible API change
++ `Minor`: incremented when you add backward compatible functionality
++ `Patch`: incremented when you add backward compatible bug fixes
 
 .. _Semantic Versioning: https://semver.org
 
