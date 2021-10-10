@@ -1,19 +1,37 @@
 from logsight.config import HOST_API_V1, PATH_RESULTS
 from logsight.api_client import APIClient
 from logsight.result.template import Templates
-from logsight.result.incidents import Incidents
+from logsight.result.incident import Incidents
 from logsight.result.quality import LogQuality
 
 
-ANOMALIES = {
-    "log_ad": Templates,
-    "incidents": Incidents,
-    "log_quality": LogQuality,
-}
+def _object_factory(anomaly_type, data):
+
+    mapping = {
+        "log_ad": Templates,
+        "incidents": Incidents,
+        "log_quality": LogQuality,
+    }
+
+    try:
+        klass = mapping[anomaly_type.lower()]
+    except KeyError as e:
+        raise RuntimeError(f"No class found: {e}")
+    except Exception as e:
+        raise RuntimeError(f"Unknown error: {e}")
+
+    return klass(data)
 
 
 class LogsightResult(APIClient):
     def __init__(self, private_key, email, app_name):
+        """Class representing results returned from the server.
+
+        Note:
+            Timestamps are represented in ISO format with timezone information.
+            e.g, 2021-10-07T13:18:09.178477+02:00.
+
+        """
         super().__init__()
         self.private_key = private_key
         self.email = email
@@ -23,16 +41,16 @@ class LogsightResult(APIClient):
         """Obtains the results from processing.
 
         Args:
-            start_time (str): ???.
-            end_time (str): ???.
-            anomaly_type (str): ???.
+            start_time (str): Timestamp of the start time of the interval requested.
+            end_time (str): Timestamp of end time of the interval requested.
+            anomaly_type (str): One of: incidents, log_quality, log_ad
 
         Returns:
-            dict: ???.
+            Union[Template, Incident, Quality]: Object that encapsulates the response.
 
         Raises:
             Unauthorized: If the private_key is invalid.
-            Conflict: If the app_name already exists.
+            BadRequest: If timestamp format or anomaly_type is incorrect.
 
         """
         data = {
@@ -43,14 +61,5 @@ class LogsightResult(APIClient):
             "end-time": end_time,
             "anomaly-type": anomaly_type,
         }
-        return self._build_object(anomaly_type, self._post(HOST_API_V1, PATH_RESULTS, data))
-
-    def _build_object(self, anomaly_type, data):
-        try:
-            klass = ANOMALIES[anomaly_type.lower()]
-        except KeyError as e:
-            raise RuntimeError(f"No class found: {e}")
-        except Exception as e:
-            raise RuntimeError(f"Unknown error: {e}")
-
-        return klass(data)
+        return _object_factory(anomaly_type,
+                               self._post(HOST_API_V1, PATH_RESULTS, data))

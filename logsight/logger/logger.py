@@ -12,6 +12,14 @@ class LogsightLogger(BufferingHandler, APIClient):
     buffer_lifespan_seconds = 1
 
     def __init__(self, private_key, email, app_name, tag=''):
+        """Deletes an existing  application.
+
+        Args:
+            private_key (str): Private key.
+            email (str): E-mail.
+            tag (str): Tag added to the log message dict.
+
+        """
         BufferingHandler.__init__(self, capacity=128)
         self.last_emit = None
         self.private_key = private_key

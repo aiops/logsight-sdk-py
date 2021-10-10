@@ -16,25 +16,12 @@ def now():
 
 def create_apps(private_key, email, app_names):
     app_mng = LogsightApplication(private_key, email)
-    return [create_app(app_mng, app_name) for app_name in app_names]
+    return [app_mng.create(app_name) for app_name in app_names]
 
 
 def delete_apps(private_key, email, app_names):
     app_mng = LogsightApplication(private_key, email)
     return [delete_app(app_mng, app_name) for app_name in app_names]
-
-
-def create_app(app_mng, app_name):
-
-    try:
-        print("Creating app_name:", app_name)
-        status_code, content = app_mng.create(app_name)
-        if status_code != 200:
-            raise LogsightException("Error creating app: %s" % app_name)
-    except Exception:
-        raise LogsightException("app_name already exists: %s" % app_name)
-
-    return status_code, content
 
 
 def delete_app(app_mng, app_name):
