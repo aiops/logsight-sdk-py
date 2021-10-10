@@ -29,10 +29,9 @@ class LogsightApplication(APIClient):
             dict: ???.
 
         Raises:
-            Unauthorized: If the private_key is invalid.
             BadRequest: if the app_name is invalid, it is duplicated, or
                 too the maximum number of applications has been reached
-            Conflict: If the app_name already exists.
+            Unauthorized: If the private_key is invalid.
 
         """
         data = {"key": self.private_key, "name": app_name}
@@ -62,8 +61,8 @@ class LogsightApplication(APIClient):
             dict: xxxx.
 
         Raises:
+            NotFound: if the app_name does not exist.
             Unauthorized: If the private_key is invalid.
-            NotFound: if the app_name does not exist
 
         """
         data = {}

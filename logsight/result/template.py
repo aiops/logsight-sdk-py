@@ -25,27 +25,15 @@ class Templates(MutableSequence):
 
 
 class Template:
-    """
-    This class represents an Template.
-    The reference can be found here:
-        - https://docs.logsight.ai/en/rest/reference/objects#template
-
-    Example of the structure returned
-    {
-       "@timestamp":"2021-07-11T07:27:55.478091",
-       "actual_level":"WARNING",
-       "app_name":"unittest_6",
-       "message":"nova.virt.libvirt.imagecache [req-addc183 - - - -]",
-       "name":"log",
-       "param_0":"[req-addc1839-2ed5-4778-b57e-5854eb7b8b09",
-       "param_1":"Unknown",
-       "param_2":"file:",
-       "param_3":"/var/lib/nova/instances/_base/a489c868...",
-       "template":"nova.virt.libvirt.imagecache <*> ] <*> base <*> <*>"
-    }
-    """
 
     def __init__(self, data):
+        """Class representing log templates.
+
+        Note:
+            Timestamps are represented in ISO format with timezone information.
+            e.g, 2021-10-07T13:18:09.178477+02:00.
+
+        """
         self._timestamp = data.get("@timestamp", None)
         self._actual_level = data.get("actual_level", None)
         self._app_name = data.get("app_name", None)
@@ -59,28 +47,51 @@ class Template:
 
     @property
     def timestamp(self):
+        """str: Timestamp when the log message was generated."""
         return self._timestamp
 
     @property
     def actual_level(self):
+        """str: Log level of the message (e.g., WARNING)."""
         return self._actual_level
 
     @property
     def app_name(self):
+        """str: Application name."""
         return self._app_name
 
     @property
     def message(self):
+        """str: Log message."""
         return self._message
 
     @property
     def name(self):
+        """str: Name."""
         return self._name
 
     @property
-    def params(self):
-        return self._params
+    def template(self):
+        """str: Template generated from log message.
+
+        Examples:
+            nova.virt.libvirt.imagecache <*> ] <*> base <*> <*>
+
+        """
+        return self._template
 
     @property
-    def template(self):
-        return self._template
+    def params(self):
+        """(:obj:`list` of :obj:`str`): Parameters extracted from log message.
+
+        Examples:
+            "param_0":"[req-addc1839-2ed5-4778-b57e-5854eb7b8b09"
+
+            "param_1":"Unknown"
+
+            "param_2":"file:"
+
+            "param_3":"/var/lib/nova/instances/_base/a489c868..."
+
+        """
+        return self._params
