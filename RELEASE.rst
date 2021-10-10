@@ -249,6 +249,7 @@ Bash workflow
     # Update the version in setup.py
     # $ vi setup.py or
     sed -i "/^version/s;[^ ]*$;'$version';" setup.py
+    # BSD/MacOS: sed -i "" "/^version/s;[^ ]*$;'$version';" setup.py
 
     # Make the documentation
     # Documentation is at:
