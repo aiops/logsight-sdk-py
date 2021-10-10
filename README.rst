@@ -1,5 +1,5 @@
-Logsight SDK Python
-===================
+README
+******
 
 .. image:: https://github.com/aiops/logsight-sdk-py/actions/workflows/build.yml/badge.svg
     :target: https://github.com/aiops/logsight-sdk-py/actions/workflows/build.yml

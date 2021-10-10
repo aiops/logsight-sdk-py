@@ -37,24 +37,6 @@ class APIException(Exception):
         self.kwargs = kwargs
 
 
-class LogsightException(Exception):
-    """Base Logsight Exception"""
-
-    message = "An unknown exception occurred."
-
-    def __init__(self, message=None, **kwargs):
-        # super().__init__(message)
-        if message:
-            self.message = message
-        try:
-            self._error_string = self.message % kwargs
-        except Exception:
-            self._error_string = self.message
-
-    def __str__(self):
-        return self._error_string
-
-
 class BadRequest(APIException):
     message = """BadRequest: the server cannot or will not process the request 
     due to something that is perceived to be a client error."""
@@ -137,3 +119,21 @@ def from_dict(data: Dict[str, Any]) -> APIException:
         A new APIException instance populated from the dictionary fields.
     """
     return HTTP_EXCEPTION_MAP[data['status']](**data)
+
+
+class LogsightException(Exception):
+    """Base Logsight Exception"""
+
+    message = "An unknown exception occurred."
+
+    def __init__(self, message=None, **kwargs):
+        # super().__init__(message)
+        if message:
+            self.message = message
+        try:
+            self._error_string = self.message % kwargs
+        except Exception:
+            self._error_string = self.message
+
+    def __str__(self):
+        return self._error_string

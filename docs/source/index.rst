@@ -7,8 +7,8 @@ Logsight SDK Python
 ===================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Readme
+   :maxdepth: 1
+   :caption: Overview
 
    readme
    changelog
@@ -18,14 +18,14 @@ Logsight SDK Python
    :maxdepth: 2
    :caption: Detecting Incidents
 
-   detecting_incidents/detecting_incidents
+   detecting_incidents/quick_guide
 
 
 .. toctree::
    :maxdepth: 2
    :caption: API Reference
 
-   logsight
+   api/description.rst
 
 
 Indices and tables
