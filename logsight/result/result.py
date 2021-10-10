@@ -1,16 +1,17 @@
 from logsight.config import HOST_API_V1, PATH_RESULTS
 from logsight.api_client import APIClient
-from logsight.result.template import Templates
-from logsight.result.incident import Incidents
-from logsight.result.quality import LogQuality
+from logsight.result.result_seq import ResultSeq
+from logsight.result.template import Template
+from logsight.result.incident import Incident
+from logsight.result.quality import Quality
 
 
 def _object_factory(anomaly_type, data):
 
     mapping = {
-        "log_ad": Templates,
-        "incidents": Incidents,
-        "log_quality": LogQuality,
+        "log_ad": Template,
+        "incidents": Incident,
+        "log_quality": Quality,
     }
 
     try:
@@ -20,7 +21,7 @@ def _object_factory(anomaly_type, data):
     except Exception as e:
         raise RuntimeError(f"Unknown error: {e}")
 
-    return klass(data)
+    return ResultSeq(data, klass)
 
 
 class LogsightResult(APIClient):
