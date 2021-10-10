@@ -241,6 +241,7 @@ Bash workflow
     # add commit message from HEAD to the previous tag
     # echo -e "$(git log --pretty='- %s' $prev_version..HEAD)\n\n$(cat CHANGELOG.rst)" > CHANGELOG.rst
     # Run gitchangelog to manually add changelog entries
+    gitchangelog ^$prev_version HEAD
 
     # Update the version in setup.py
     # $ vi setup.py or
