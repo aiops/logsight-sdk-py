@@ -1,10 +1,11 @@
 CHANGELOG
 *********
 
-Release 0.1.15
+Release 0.1.16
 
 Changes
 ~~~~~~~
+- Improved release workflow. [Jorge Cardoso]
 - Improved documentation. [Jorge Cardoso]
 - Improved release description. [Jorge Cardoso]
 - Added changelog support. [Jorge Cardoso]
