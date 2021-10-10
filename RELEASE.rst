@@ -222,6 +222,10 @@ Bash workflow
     git checkout develop
     git pull --rebase
 
+    git checkout main
+    git merge develop
+    git push origin main
+
     #. Created a new release id
     prev_version=$(python setup.py --version)
     echo "Previous release: $prev_version"
