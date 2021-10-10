@@ -221,6 +221,11 @@ Bash workflow
     #. Update develop branch in case someone made changes
     git checkout develop
     git pull --rebase
+    git push
+
+    git checkout main
+    git merge develop
+    git push origin main
 
     #. Created a new release id
     prev_version=$(python setup.py --version)
