@@ -221,6 +221,7 @@ Bash workflow
     #. Update develop branch in case someone made changes
     git checkout develop
     git pull --rebase
+    git push
 
     git checkout main
     git merge develop
