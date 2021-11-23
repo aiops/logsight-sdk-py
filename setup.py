@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import find_packages, setup
 
 version = '0.1.17'
 
@@ -21,7 +21,7 @@ setup(
         "Tracker": "https://github.com/aiops/logsight-sdk-py/issues",
     },
     license='unlicense',
-    packages=['logsight'],
+    packages=find_packages(exclude=("test",)),
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Programming Language :: Python :: 3.6",
