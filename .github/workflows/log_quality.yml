@@ -1,0 +1,20 @@
+name: Log Quality
+
+on:
+  push:
+    branches: [ develop ]
+
+jobs:
+  check-log-quality:
+    name: Check the log quality
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Job triggered by a ${{ github.event_name }} event."
+      - run: echo "Job is running on a ${{ runner.os }}"
+      - run: echo "Checking out repository. Branch name is ${{ github.ref }}. Repository is ${{ github.repository }}."
+
+      - uses: actions/checkout@v2
+
+      - run: echo "Workflow is ready to test code on the runner."
+      - uses: aiops/check-log-quality-action@main
+      - run: echo "Job status= ${{ job.status }}."

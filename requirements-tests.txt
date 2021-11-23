@@ -1,0 +1,9 @@
+testfixtures              # MIT License
+black                     # MIT License
+coverage                  # Apache Software License (Apache 2.0)
+flake8                    # Apache Software License (Apache 2.0)
+mccabe                    # MIT License (Expat license)
+mypy                      # MIT License
+pylint                    # GNU General Public License v2 (GPLv2)
+pytest                    # MIT License
+tox                       # MIT License
