@@ -261,7 +261,6 @@ Bash workflow
 
     #. Update main branch
     git checkout main
-    git pull --rebase
     git merge --no-ff release/$version -m "Release $version"
     git push origin main
     git tag -a $version -m "Release $version"

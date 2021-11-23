@@ -1,8 +1,7 @@
 CHANGELOG
 *********
 
-
-Release 0.1.18
+Release 0.1.19
 ==============
 
 Changes
