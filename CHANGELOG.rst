@@ -1,6 +1,19 @@
 CHANGELOG
 *********
 
+
+Release 0.1.18
+==============
+
+Changes
+~~~~~~~
+- Update to new endpoint urls. [Jorge Cardoso]
+
+Fix
+~~~
+- Packaging problem. [Jorge Cardoso]
+
+
 Release 0.1.17
 ==============
 
