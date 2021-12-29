@@ -16,6 +16,7 @@ class Template:
         self._name = data.get("name", None)
         self._params = data.get("params", None)
         self._template = data.get("template", None)
+        self._tag = data.get("tag", None)
 
     def __repr__(self):
         return {"app_name": self._app_name, "template": self._template}
@@ -70,3 +71,9 @@ class Template:
 
         """
         return self._params
+
+    @property
+    def tag(self):
+        """str: Tag associated with a log message.
+        """
+        return self._tag
