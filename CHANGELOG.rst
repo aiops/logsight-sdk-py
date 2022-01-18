@@ -1,6 +1,15 @@
 CHANGELOG
 *********
 
+
+Release 0.1.20
+==============
+
+Changes
+~~~~~~~
+- Updates the quality endpoint with additional properties.
+
+
 Release 0.1.18
 ==============
 
