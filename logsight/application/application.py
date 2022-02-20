@@ -7,17 +7,15 @@ from logsight.api_client import APIClient
 
 class LogsightApplication(APIClient):
 
-    def __init__(self, private_key, email):
+    def __init__(self, token):
         """Class to manage applications (apps).
 
         Args:
-            private_key (str): Private key associated with the subscription.
-            email (str): Private key associated with the subscription.
+            token (str): token associated with the subscription.
 
         """
         super().__init__()
-        self.private_key = private_key
-        self.email = email
+        self.token = token
 
     def create(self, app_name):
         """Creates a new application.
@@ -34,8 +32,9 @@ class LogsightApplication(APIClient):
             Unauthorized: If the private_key is invalid.
 
         """
-        data = {"key": self.private_key, "name": app_name}
-        return self._post(HOST_API, PATH_APP_CREATE, data)
+        data = {'applicatonName': app_name}
+        headers = {'Authorization': f'Bearer {self.token}'}
+        return self._post(HOST_API, PATH_APP_CREATE, data, headers=headers)
 
     def lst(self):
         """Lists existing applications.

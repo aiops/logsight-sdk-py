@@ -22,10 +22,10 @@ class APIClient:
                 "Content could not be converted from JSON: %s" % r.text
             )
 
-    def _post(self, host, path, data):
+    def _post(self, host, path, data, headers={}):
         try:
             url = urllib.parse.urljoin(host, path)
-            r = requests.post(url, json=data)
+            r = requests.post(url, json=data, headers=headers)
             r.raise_for_status()
         except requests.exceptions.HTTPError as err:
             raise from_dict(json.loads(err.response.text))
