@@ -1,14 +1,8 @@
-import sys
-import logging
-import logging.handlers
 import unittest
 
 # Comments for /compare endpoint
 # - GET /api/v1/logs/compare/tags, a) tags are not a particularity of the compare function. They should belong to the endpoint logs/tags
 #                                  b) sending logs with tags, and getting the tags immediately return []
-
-# from logsight.exceptions import LogsightException, InternalServerError
-# from logsight.utils import now, create_apps, delete_apps
 
 from config import EMAIL, PASSWORD
 from logsight.user import LogsightUser
@@ -22,27 +16,6 @@ from logsight.exceptions import (LogsightException,
                                  BadRequest,
                                  NotFound,
                                  Conflict)
-
-label2id = {"INFO": 1, "DEBUG": 1, "TRACE": 1, "WARNING": 0, "WARN": 0, "ERROR": 0, "EXCEPTION": 0, "CRITICAL": 0}
-
-
-def send_logs(logger, i):
-    logger.info(f"{i}.1. Hello World!")
-    logger.debug(f"{i}.2. Hello Debug!")
-    logger.info(f"{i}.3. Hello World!")
-    logger.info(f"{i}.4. Hello World!")
-    logger.info(f"{i}.5. Hello World!")
-    logger.error(f"{i}.6. Hello Error!")
-    logger.warning(f"{i}.7. Hello Warning!")
-    logger.error(f"{i}.8. Hello Error!")
-    logger.warning(f"{i}.9. Hello Warning!")
-    logger.debug(f"{i}.10. Hello Debug!")
-    logger.info(f"{i}.11. Hello World!")
-    logger.info(f"{i}.12. Hello World!")
-    logger.info(f"{i}.13. Hello World!")
-    logger.info(f"{i}.14. Hello World!")
-    logger.info(f"{i}.15. Hello World!")
-
 
 APP_NAME = 'unittest_compare_app'
 
