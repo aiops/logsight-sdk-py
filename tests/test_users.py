@@ -13,13 +13,9 @@ from datetime import datetime
 # - POST /api/v1/users/forgot_password   -> GET /api/v1/users/password/reset
 # - POST /api/v1/users/reset_password   ->  POST /api/v1/users/password/reset (remove repeatNewPassword; why is userId returned?)
 
-from tests.config import EMAIL, PASSWORD, USER_ID
+from tests.config import EMAIL, PASSWORD
 from logsight.user import LogsightUser
-from logsight.exceptions import (LogsightException,
-                                 Unauthorized,
-                                 Forbidden,
-                                 BadRequest,
-                                 NotFound,
+from logsight.exceptions import (Unauthorized,
                                  Conflict)
 
 
@@ -30,26 +26,31 @@ class TestUserManagement(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         super(TestUserManagement, cls).setUpClass()
-
-        now = datetime.now()
-
-        e = 'email_unit_test@' + now.strftime("%m%d%Y_%H%M%S") + '.com'
+        e = 'email_unit_test@' + datetime.now().strftime("%m%d%Y_%H%M%S") + '.com'
         p = 'password.unit.test'
         cls.user_mng = LogsightUser(email=e, password=p)
 
-    def test_create_existing_user(self):
-
-        d = self.user_mng.create()
-
-        self.assertIsInstance(d, dict)
-        self.assertIsInstance(d['userId'], str)
-
-        with self.assertRaises(Conflict):
-            d = self.user_mng.create()
-
     def test_token(self):
         user = LogsightUser(email=EMAIL, password=PASSWORD)
-        self.assertIsInstance(user.token(), str)
+        self.assertIsInstance(user.token, str)
+
+    def test_user_id(self):
+        user = LogsightUser(email=EMAIL, password=PASSWORD)
+        self.assertIsInstance(user.user_id, str)
+
+    def test_invalid_password(self):
+        with self.assertRaises(Unauthorized):
+            LogsightUser(email=EMAIL, password='None')
+
+    def test_invalid_email(self):
+        with self.assertRaises(Unauthorized):
+            LogsightUser(email='None', password='None')
+
+    def test_create_existing_user(self):
+        user_id = self.user_mng.create()
+        self.assertIsInstance(user_id, str)
+        with self.assertRaises(Conflict):
+            self.user_mng.create()
 
 
 if __name__ == '__main__':

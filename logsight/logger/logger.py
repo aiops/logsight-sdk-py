@@ -3,7 +3,7 @@ import time
 import datetime
 from dateutil.tz import tzlocal
 
-from logsight.config import HOST_API_V1, PATH_DATA
+from logsight.config import HOST_API, PATH_LOGS
 from logsight.api_client import APIClient
 
 
@@ -11,7 +11,7 @@ class LogsightLogger(BufferingHandler, APIClient):
 
     buffer_lifespan_seconds = 1
 
-    def __init__(self, private_key, email, app_name, tag=None):
+    def __init__(self, token, app_id, tag=None):
         """Deletes an existing  application.
 
         Args:
@@ -22,9 +22,8 @@ class LogsightLogger(BufferingHandler, APIClient):
         """
         BufferingHandler.__init__(self, capacity=128)
         self.last_emit = None
-        self.private_key = private_key
-        self.email = email
-        self.app_name = app_name
+        self.token = token
+        self.app_id = app_id
         self.tag = tag
 
     def set_tag(self, tag):
@@ -39,16 +38,18 @@ class LogsightLogger(BufferingHandler, APIClient):
                 timestamp = datetime.datetime.now(tz=tzlocal()).isoformat()
                 messages.append(
                     {
-                        "private-key": self.private_key,
-                        "app": self.app_name,
-                        "tag": self.tag,
                         "timestamp": timestamp,
                         "message": msg,
                         "level": record.levelname,
                     }
                 )
-            self._post(HOST_API_V1, PATH_DATA,
-                       {"log-messages": messages})
+            self._post(host=HOST_API,
+                       path=PATH_LOGS,
+                       data={"applicationId": self.app_id,
+                             "logFormats": self.app_id,
+                             "tag": self.tag,
+                             "logs": messages},
+                       headers={'Authorization': f'Bearer {self.token}'})
 
             self.buffer = []
         finally:

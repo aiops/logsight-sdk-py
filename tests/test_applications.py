@@ -1,6 +1,7 @@
 import unittest
 
-from config import PRIVATE_KEY, EMAIL
+from config import EMAIL, PASSWORD
+from logsight.user import LogsightUser
 from logsight.application import LogsightApplication
 from logsight.exceptions import (LogsightException,
                                  Unauthorized,
@@ -16,17 +17,18 @@ class TestAppManagement(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         super(TestAppManagement, cls).setUpClass()
-        cls.app_mng = LogsightApplication(PRIVATE_KEY, EMAIL)
+        u = LogsightUser(email=EMAIL, password=PASSWORD)
+        cls.app_mng = LogsightApplication(u.user_id, u.token)
     #     cls._delete_all_apps()
     #
     # @classmethod
     # def tearDownClass(cls):
     #     cls._delete_all_apps()
     #
-    @classmethod
-    def _delete_all_apps(cls):
-        for app in cls.app_mng.lst():
-            cls.app_mng.delete(str(app['id']))
+    # @classmethod
+    # def _delete_all_apps(cls):
+    #     for app in cls.app_mng.lst():
+    #         cls.app_mng.delete(str(app['id']))
 
     def _create_app(self, app_name):
         content = None
@@ -36,7 +38,7 @@ class TestAppManagement(unittest.TestCase):
             print(f'Error creating app_name: {app_name} ({err.title})')
 
         self.assertIsInstance(content, dict)
-        self.assertIsInstance(content['id'], int)
+        self.assertIsInstance(content['applicationId'], str)
         return content
 
     def _delete_app(self, app_id):
@@ -44,10 +46,15 @@ class TestAppManagement(unittest.TestCase):
         self.assertIsInstance(content, dict)
         return content
 
+    def test_lst_app(self):
+        content = self.app_mng.lst()
+        self.assertIsInstance(content, dict)
+        self.assertTrue('applications' in content, dict)
+
     def test_create_delete_app(self):
-        app_name = 'test_create_app'
+        app_name = 'test_create_delete_app'
         content = self._create_app(app_name)
-        self._delete_app(str(content['id']))
+        self._delete_app(str(content['applicationId']))
 
     # def test_create_app_invalid_name(self):
     #     app_name = 'test-create-app'

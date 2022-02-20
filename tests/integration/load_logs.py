@@ -5,12 +5,12 @@ import ntpath
 
 
 LOG_FILES = {
-    'hadoop': os.path.join(os.path.dirname(os.path.abspath(__file__)), './fixtures/Hadoop_2k.log'),
-    'openstack': os.path.join(os.path.dirname(os.path.abspath(__file__)), './fixtures/OpenStack_2k.log'),
-    'mac': os.path.join(os.path.dirname(os.path.abspath(__file__)), './fixtures/Mac_2k.log'),
-    'zookeeper': os.path.join(os.path.dirname(os.path.abspath(__file__)), './fixtures/Zookeeper_2k.log'),
-    'openssh': os.path.join(os.path.dirname(os.path.abspath(__file__)), './fixtures/OpenSSH_2k.log'),
-    'helloworld': os.path.join(os.path.dirname(os.path.abspath(__file__)), './fixtures/HelloWorld_15.log'),
+    'hadoop': os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fixtures/Hadoop_2k.log'),
+    'openstack': os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fixtures/OpenStack_2k.log'),
+    'mac': os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fixtures/Mac_2k.log'),
+    'zookeeper': os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fixtures/Zookeeper_2k.log'),
+    'openssh': os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fixtures/OpenSSH_2k.log'),
+    'helloworld': os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fixtures/HelloWorld_15.log'),
 }
 
 

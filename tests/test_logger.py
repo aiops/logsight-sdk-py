@@ -5,8 +5,11 @@ import unittest
 from dateutil.tz import tzlocal
 import datetime
 
-from config import PRIVATE_KEY, EMAIL
+from utils import SLEEP, p_sleep
+from config import EMAIL, USER_ID, PASSWORD
+from tests.integration.send_logs import SendLogs
 from tests.integration.load_logs import LOG_FILES
+from logsight.user import LogsightUser
 from logsight.logger.logger import LogsightLogger
 
 APP_NAME = 'hello_app'
@@ -14,20 +17,22 @@ N_LOG_MESSAGES_TO_SEND = 450
 LOGGING_TO_SYS_STDOUT = True
 
 
-class TestLoggerResult(unittest.TestCase):
+class TestLogger(unittest.TestCase):
 
     s = None
 
     @classmethod
     def setUpClass(cls):
-        super(TestLoggerResult, cls).setUpClass()
+        super(TestLogger, cls).setUpClass()
 
         cls.dt_start = '2021-10-07T13:18:09.178477+02:00'
         cls.dt_end = datetime.datetime.now(tz=tzlocal()).isoformat()
 
-        cls.s = SendLogs(PRIVATE_KEY, EMAIL, APP_NAME)
+        cls.user = LogsightUser(email=EMAIL, password=PASSWORD)
+        cls.s = SendLogs(cls.user.token, cls.user)
 
         cls.s.create_app_name()
+
         p_sleep(SLEEP.AFTER_CREATE_APP)
 
         cls.s.send_log_messages(log_file_name=LOG_FILES['helloworld'],
@@ -56,7 +61,7 @@ class TestLoggerResult(unittest.TestCase):
         logger = logging.getLogger(__name__)
         logger.setLevel(logging.DEBUG)
 
-        logsight_handler = LogsightLogger(PRIVATE_KEY, EMAIL, APP_NAME)
+        logsight_handler = LogsightLogger(token, app_id, tag)
         logsight_handler.setLevel(logging.DEBUG)
 
         stdout_handler = logging.StreamHandler(sys.stdout)

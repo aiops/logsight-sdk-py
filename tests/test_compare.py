@@ -3,17 +3,26 @@ import logging
 import logging.handlers
 import unittest
 
-from config import PRIVATE_KEY, EMAIL
-from utils import p_sleep, SLEEP
-from logsight.exceptions import LogsightException, InternalServerError
-from logsight.logger.logger import LogsightLogger
-from logsight.result.result import LogsightResult
-from logsight.utils import now, create_apps, delete_apps
+# Comments for /compare endpoint
+# - GET /api/v1/logs/compare/tags, a) tags are not a particularity of the compare function. They should belong to the endpoint logs/tags
+#                                  b) sending logs with tags, and getting the tags immediately return []
 
-APP_NAME = 'hello_app'
-NUMBER_LOG_BLOCKS_TO_SEND = 30
-N_LOG_MESSAGES_TO_SEND = NUMBER_LOG_BLOCKS_TO_SEND * 15
-LOGGING_TO_SYS_STDOUT = True
+# from logsight.exceptions import LogsightException, InternalServerError
+# from logsight.utils import now, create_apps, delete_apps
+
+from config import EMAIL, PASSWORD
+from logsight.user import LogsightUser
+from logsight.application import LogsightApplication
+from logsight.logs import LogsightLogs
+from logsight.compare import LogsightCompare
+
+from logsight.exceptions import (LogsightException,
+                                 Unauthorized,
+                                 Forbidden,
+                                 BadRequest,
+                                 NotFound,
+                                 Conflict)
+
 label2id = {"INFO": 1, "DEBUG": 1, "TRACE": 1, "WARNING": 0, "WARN": 0, "ERROR": 0, "EXCEPTION": 0, "CRITICAL": 0}
 
 
@@ -35,102 +44,54 @@ def send_logs(logger, i):
     logger.info(f"{i}.15. Hello World!")
 
 
-class TestCompare(unittest.TestCase):
+APP_NAME = 'unittest_compare_app'
+
+
+class TestLogs(unittest.TestCase):
+
+    app_id = None
+    tag_v1 = 'v1.0.0'
+    tag_v2 = 'v2.0.0'
 
     @classmethod
     def setUpClass(cls):
-        super(TestCompare, cls).setUpClass()
-
-        logger, handler = cls.__setup_handler()
-
-        try:
-            delete_apps(PRIVATE_KEY, EMAIL, [APP_NAME])
-        except LogsightException as e:
-            print(e)
-
-        try:
-            create_apps(PRIVATE_KEY, EMAIL, [APP_NAME])
-        except LogsightException as e:
-            print(e)
-
-        p_sleep(SLEEP.AFTER_CREATE_APP)
-
-        cls.dt_start = now()
-        print('Starting message sending', cls.dt_start)
-
-        handler.set_tag('Release 3.1')
-        for i in range(NUMBER_LOG_BLOCKS_TO_SEND):
-            send_logs(logger, i)
-
-        handler.flush()
-
-        handler.set_tag('Release 3.2')
-        for i in range(NUMBER_LOG_BLOCKS_TO_SEND):
-            send_logs(logger, i)
-            logger.info(f"{i}.99. Hello New!")
-
-        # Note: need to remove the handler before timing the end
-        # Since the remove_handler will flush the messages in the internal buffer
-        cls.__remove_handler(logger, handler)
-
-        cls.dt_end = now()
-        print('Ended message sending', cls.dt_end)
-
-        p_sleep(SLEEP.BEFORE_QUERY_BACKEND)
+        super(TestLogs, cls).setUpClass()
+        cls.user = LogsightUser(email=EMAIL, password=PASSWORD)
+        cls.app_mng = LogsightApplication(cls.user.user_id, cls.user.token)
+        cls.app_id = cls.app_mng.create(APP_NAME)['applicationId']
+        cls._send_logs()
 
     @classmethod
     def tearDownClass(cls):
-        # p_sleep(SLEEP.BEFORE_DELETE_APP)
-        # delete_apps(PRIVATE_KEY, EMAIL, [APP_NAME])
-        pass
+        cls.app_mng.delete(cls.app_id)
 
-    @staticmethod
-    def __setup_handler():
-        logger = logging.getLogger(__name__)
-        logger.setLevel(logging.DEBUG)
+    @classmethod
+    def _generate_logs(cls, day, n=10):
+        m = "2022-02-{day:02d} 12:{minutes:02d}:48,963 " \
+            "INFO [main] org.apache.hadoop.mapreduce: " \
+            "Executing with tokens: {i}"
+        return [m.format(day=day, minutes=i, i=i) for i in range(max(n, 60))]
 
-        logsight_handler = LogsightLogger(PRIVATE_KEY, EMAIL, APP_NAME)
-        logsight_handler.setLevel(logging.DEBUG)
-
-        stdout_handler = logging.StreamHandler(sys.stdout)
-        stdout_handler.setLevel(logging.INFO)
-
-        logger.addHandler(logsight_handler)
-        if LOGGING_TO_SYS_STDOUT:
-            logger.addHandler(stdout_handler)
-
-        return logger, logsight_handler
-
-    @staticmethod
-    def __remove_handler(logger, handler):
-        handler.close()
-        logger.removeHandler(handler)
+    @classmethod
+    def _send_logs(cls):
+        n_log_messages = 60
+        g = LogsightLogs(cls.user.token)
+        g.send(cls.app_id, cls._generate_logs(day=19, n=n_log_messages), tag=cls.tag_v1)
+        g.send(cls.app_id, cls._generate_logs(day=20, n=n_log_messages), tag=cls.tag_v2)
 
     def test_compare(self):
-        pass
+        c = LogsightCompare(self.user.user_id, self.user.token)\
+            .compare(app_id=self.app_id,
+                     baseline_tag=self.tag_v1,
+                     candidate_tag=self.tag_v2,
+                     flush_id=None)
+        self.assertIsInstance(c, dict)
+        self.assertTrue('totalLogCount' in c)
 
-    # def test_invalid_key(self):
-    #     private_key = '27x'
-    #     with self.assertRaises(LogsightException):
-    #         LogsightResult(private_key, EMAIL, APP_NAME).\
-    #             get_results(self.dt_start, self.dt_end, 'log_ad')
-    #
-    # def test_template_count(self):
-    #     templates = LogsightResult(PRIVATE_KEY, EMAIL, APP_NAME).\
-    #         get_results(self.dt_start, self.dt_end, 'log_ad')
-    #     self.assertEqual(len(templates), N_LOG_MESSAGES_TO_SEND)
-    #
-    # def test_incident_count(self):
-    #     incidents = LogsightResult(PRIVATE_KEY, EMAIL, APP_NAME).\
-    #         get_results(self.dt_start, self.dt_end, 'incidents')
-    #     self.assertEqual(len(incidents), 1)
-    #
-    # def test_log_quality(self):
-    #     quality = LogsightResult(PRIVATE_KEY, EMAIL, APP_NAME).\
-    #         get_results(self.dt_start, self.dt_end, 'log_quality')
-    #     self.assertEqual(len(quality), 4)
-    #     self.assertEqual(label2id[quality[0].actual_level.upper()],
-    #                      quality[0].predicted_log_level)
+    def test_tags(self):
+        tags = LogsightCompare(self.user.user_id, self.user.token).tags(self.app_id)
+        self.assertIsInstance(tags, list)
+        self.assertEqual(len(tags), 2)
 
 
 if __name__ == '__main__':

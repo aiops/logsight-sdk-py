@@ -2,7 +2,7 @@ import unittest
 
 from config import PRIVATE_KEY, EMAIL
 from utils import p_sleep, SLEEP
-from integration.load_logs import LOG_FILES
+from tests.integration.load_logs import LOG_FILES
 from integration.send_logs import SendLogs
 from logsight.result.result import LogsightResult
 from logsight.utils import now, create_apps, delete_apps

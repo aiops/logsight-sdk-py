@@ -5,37 +5,37 @@ import datetime
 
 from logsight.logger.logger import LogsightLogger
 from logsight.utils import now, create_apps, delete_apps
-from logsight.exceptions import LogsightException
-from utils import p_sleep, SLEEP
+# from logsight.exceptions import LogsightException
+# from utils import p_sleep, SLEEP
 
 
 if __name__ == '__main__':
-    from load_logs import load_log_file, LOG_FILES
+    pass
 else:
-    from .load_logs import load_log_file, LOG_FILES
+    from tests.integration.load_logs import load_log_file
 
 LOGGING_TO_SYS_STDOUT = True
 
 
 class SendLogs:
 
-    def __init__(self, private_key, email, app_name):
-        self.private_key = private_key
-        self.email = email
-        self.app_name = app_name
-        self.logger, self.handler = self.__setup_handler(private_key, email, app_name)
+    def __init__(self, token, app_id):
+        self.token = token
+        self.app_id = app_id
+
+        self.logger, self.handler = self.__setup_handler(token, app_id)
         self.logger.propagate = False
 
         self.dt_start = '2021-10-07T13:18:09.178477+02:00'
         self.dt_end = datetime.datetime.now(tz=tzlocal()).isoformat()
 
     @staticmethod
-    def __setup_handler(private_key, email, app_name):
+    def __setup_handler(token, app_id):
 
         logger = logging.getLogger(__name__)
         logger.setLevel(logging.DEBUG)
 
-        logsight_handler = LogsightLogger(private_key, email, app_name)
+        logsight_handler = LogsightLogger(token, app_id)
         logsight_handler.setLevel(logging.DEBUG)
 
         stdout_handler = logging.StreamHandler(sys.stdout)
@@ -76,7 +76,7 @@ class SendLogs:
 
         for i, (level, message) in enumerate(load_log_file(log_file_name, n_messages)):
             if verbose and i % 100 == 0:
-                print(f'Sending message # (app_name: {self.app_name}): {i}')
+                print(f'Sending message # (app_name: {self.app_id}): {i}')
             self.send_log_message(i, level, message, tag)
 
         self.dt_end = now()
