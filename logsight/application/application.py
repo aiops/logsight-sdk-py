@@ -1,3 +1,5 @@
+import json
+
 from logsight.config import HOST_API
 from logsight.config import PATH_APP_CREATE, PATH_APP_LST, PATH_APP_DELETE
 from logsight.api_client import APIClient
@@ -36,10 +38,12 @@ class LogsightApplication(APIClient):
             Unauthorized: If the private_key is invalid.
 
         """
+        payload = {'applicationName': app_name}
+        headers = {'content-type': 'application/json', 'Authorization': f'Bearer {self.token}'}
         return self._post(host=HOST_API,
                           path=PATH_APP_CREATE.format(userId=self.user_id),
-                          data={'applicationName': app_name},
-                          headers={'Authorization': f'Bearer {self.token}'})
+                          json=payload,
+                          headers=headers)
 
     def lst(self):
         """Lists existing applications.
@@ -59,9 +63,10 @@ class LogsightApplication(APIClient):
             Unauthorized: If the private_key is invalid.
 
         """
+        headers = {'Authorization': f'Bearer {self.token}'}
         return self._get(host=HOST_API,
                          path=PATH_APP_LST.format(userId=self.user_id),
-                         headers={'Authorization': f'Bearer {self.token}'})
+                         headers=headers)
 
     def delete(self, app_id):
         """Deletes an existing  application.
@@ -81,6 +86,7 @@ class LogsightApplication(APIClient):
             Unauthorized: If the private_key is invalid.
 
         """
+        headers = {'Authorization': f'Bearer {self.token}'}
         return self._delete(host=HOST_API,
                             path=PATH_APP_DELETE.format(userId=self.user_id, applicationId=app_id),
-                            headers={'Authorization': f'Bearer {self.token}'})
+                            headers=headers)

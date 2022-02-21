@@ -1,3 +1,5 @@
+import json
+
 from logsight.config import HOST_API
 from logsight.config import PATH_LOGS
 from logsight.api_client import APIClient
@@ -39,11 +41,14 @@ class LogsightLogs(APIClient):
             Unauthorized: If the private_key is invalid.
 
         """
+        payload = {'applicationId': app_id,
+                   'logFormats': 'UNKNOWN_FORMAT',
+                   'logs': log_lst,
+                   'tag': tag
+                   }
+        a = json.dumps(payload)
+        headers = {"content-type": "application/json", 'Authorization': f'Bearer {self.token}'}
         return self._post(host=HOST_API,
                           path=PATH_LOGS,
-                          data={'applicationId': app_id,
-                                'logFormats': 'UNKNOWN_FORMAT',
-                                'logs': log_lst,
-                                'tag': tag
-                                },
-                          headers={'Authorization': f'Bearer {self.token}'})
+                          json=payload,
+                          headers=headers)

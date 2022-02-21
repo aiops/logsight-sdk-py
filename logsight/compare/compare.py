@@ -1,3 +1,5 @@
+import json
+
 from logsight.config import HOST_API
 from logsight.config import PATH_COMPARE, PATH_COMPARE_TAGS
 from logsight.api_client import APIClient
@@ -56,14 +58,15 @@ class LogsightCompare(APIClient):
             Unauthorized: If the private_key is invalid.
 
         """
+        payload = {'applicationId': app_id,
+                   'baselineTag': baseline_tag,
+                   'candidateTag': candidate_tag,
+                   'flushId': flush_id}
+        headers = {'content-type': 'application/json', 'Authorization': f'Bearer {self.token}'}
         return self._post(host=HOST_API,
                           path=PATH_COMPARE,
-                          data={'applicationId': app_id,
-                                'baselineTag': baseline_tag,
-                                'candidateTag': candidate_tag,
-                                'flushId': flush_id
-                                },
-                          headers={'Authorization': f'Bearer {self.token}'})
+                          data=json.dumps(payload),
+                          headers=headers)
 
     def tags(self, app_id):
         """Lists of the tags of an application.
@@ -81,7 +84,9 @@ class LogsightCompare(APIClient):
             Unauthorized: If the private_key is invalid.
 
         """
+        params = {'applicationId': app_id, 'userId': self.user_id}
+        headers = {'Authorization': f'Bearer {self.token}'}
         return self._get(host=HOST_API,
                          path=PATH_COMPARE_TAGS,
-                         params={'applicationId': app_id, 'userId': self.user_id},
-                         headers={'Authorization': f'Bearer {self.token}'})
+                         params=params,
+                         headers=headers)

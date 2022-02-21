@@ -1,6 +1,6 @@
 import unittest
 
-from config import EMAIL, PASSWORD
+from tests.config import EMAIL, PASSWORD
 from logsight.user import LogsightUser
 from logsight.application import LogsightApplication
 from logsight.exceptions import (LogsightException,

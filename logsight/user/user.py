@@ -1,3 +1,4 @@
+import json
 from logsight.config import HOST_API, PATH_USERS, PATH_LOGIN
 from logsight.api_client import APIClient
 
@@ -24,8 +25,9 @@ class LogsightUser(APIClient):
         Returns:
             userId (str): Identifier for the user created
         """
-        data = {"email": self.email, "password": self.password, "repeatPassword": self.password}
-        return self._post(HOST_API, PATH_USERS, data)['userId']
+        payload = {"email": self.email, "password": self.password, "repeatPassword": self.password}
+        headers = {"content-type": "application/json"}
+        return self._post(HOST_API, PATH_USERS, json=payload, headers=headers)['userId']
 
     def _authenticate(self):
         """Authenticate the user.
@@ -34,8 +36,9 @@ class LogsightUser(APIClient):
             token (str): Access token
             user_id (str): Identifier of the user
         """
-        data = {"email": self.email, "password": self.password}
-        r = self._post(HOST_API, PATH_LOGIN, data)
+        payload = {"email": self.email, "password": self.password}
+        headers = {"content-type": "application/json"}
+        r = self._post(HOST_API, PATH_LOGIN, json=payload, headers=headers)
 
         self._user_id = r['user']['userId']
         self._token = r['token']
