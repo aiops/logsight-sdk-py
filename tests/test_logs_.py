@@ -1,4 +1,6 @@
 import unittest
+import datetime
+from dateutil.tz import tzlocal
 
 # Comments for /logs endpoint
 # - POST /api/v1/logs, a) the key 'logFormats' suggests the log messages may have several formats (plural)
@@ -36,14 +38,29 @@ class TestLogs(unittest.TestCase):
     # def tearDownClass(cls):
     #     cls.app_mng.delete(cls.app_id)
 
-    def _generate_logs(self, n=10):
-        m = "2022-02-20 12:{minutes:02d}:48.963 INFO [main] org.apache.hadoop.mapreduce: Executing with tokens: {i}"
+    def _generate_logs_iso8106(self, n=10):
+        # "Feb  1 18:20:29 kernel: [33160.926181] audit: type=1400 audit(1643736029.672:10417): apparmor=DENIED operation=open profile=snap.whatsapp-for-linux.whatsapp-for-linux name=/proc/zoneinfo pid=58597 comm=PressureMonitor requested_mask=r denied_mask=r fsuid=1000 ouid=0",
+        m = "INFO [main] org.apache.hadoop.mapreduce: Executing with tokens: {i}"
+        return [{'timestamp_iso8601': datetime.datetime.now(tz=tzlocal()).isoformat(),
+                 'message': m.format(i=i)} for i in range(max(n, 60))]
+
+    def _generate_logs_syslog(self, n=10):
+        m = "Feb  1 18:{minutes:02d}:29 kernel: [33160.926181] audit: type=1400 audit(1643736029.672:10417):" \
+            "apparmor=DENIED operation=open profile=snap.whatsapp-for-linux.whatsapp-for-linux name=/proc/zoneinfo" \
+            " pid=58597 comm=PressureMonitor requested_mask=r denied_mask=r fsuid=1000 ouid={i:02d}"
         return [m.format(minutes=i, i=i) for i in range(max(n, 60))]
 
-    def test_logs(self):
+    def _test_logs_iso8106(self):
         n_log_messages = 60
         g = LogsightLogs(self.user.token)
-        r = g.send(self.app_id, self._generate_logs(n=n_log_messages), tag='v1.1.2')
+        r = g.send(self.app_id, self._generate_logs_iso8106(n=n_log_messages), tag='v1.1.2')
+        self.assertEqual(r['logsCount'], n_log_messages)
+
+    def test_logs_syslog(self):
+        n_log_messages = 60
+        g = LogsightLogs(self.user.token)
+        r = g.send(self.app_id, self._generate_logs_syslog(n=n_log_messages), tag='v1.1.2')
+        print(r)
         self.assertEqual(r['logsCount'], n_log_messages)
 
     # def test_invalid_app_id(self):

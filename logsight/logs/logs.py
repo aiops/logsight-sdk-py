@@ -46,7 +46,6 @@ class LogsightLogs(APIClient):
                    'logs': log_lst,
                    'tag': tag
                    }
-        a = json.dumps(payload)
         headers = {"content-type": "application/json", 'Authorization': f'Bearer {self.token}'}
         return self._post(host=HOST_API,
                           path=PATH_LOGS,
