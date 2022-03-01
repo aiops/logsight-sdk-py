@@ -1,5 +1,5 @@
 import json
-from logsight.config import HOST_API, PATH_USERS, PATH_LOGIN
+from logsight.config import HOST_API, PATH_USERS, PATH_USERS_DELETE, PATH_LOGIN
 from logsight.api_client import APIClient
 
 
@@ -28,6 +28,19 @@ class LogsightUser(APIClient):
         payload = {"email": self.email, "password": self.password, "repeatPassword": self.password}
         headers = {"content-type": "application/json"}
         return self._post(HOST_API, PATH_USERS, json=payload, headers=headers)['userId']
+
+    def delete(self):
+        """Deletes a new user.
+
+        Returns:
+            userId (str): Identifier for the user created
+        """
+        payload = {"email": self.email, "password": self.password}
+        headers = {"content-type": "application/json"}
+        return self._delete(HOST_API,
+                            path=PATH_USERS_DELETE.format(userId=self.user_id),
+                            json=payload,
+                            headers=headers)
 
     def _authenticate(self):
         """Authenticate the user.

@@ -3,7 +3,6 @@ from datetime import datetime
 
 # Comments for /users endpoint
 # - POST /api/v1/users. remove key repeatPassword.
-# - missing endpoint: DELETE /api/v1/users
 
 # - POST /api/v1/users/activate. "activationToken": "3fa85f64-5717-4562-b3fc-2c963f66afa6", the type should be string, not a uuid (this issue happens often)
 # - POST /api/v1/users/resend_activation -> GET /api/v1/users/activation
@@ -15,7 +14,8 @@ from datetime import datetime
 
 from tests.config import EMAIL, PASSWORD
 from logsight.user import LogsightUser
-from logsight.exceptions import (Unauthorized,
+from logsight.exceptions import (BadRequest,
+                                 Unauthorized,
                                  Conflict)
 
 
@@ -40,17 +40,21 @@ class TestUserManagement(unittest.TestCase):
 
     def test_invalid_password(self):
         with self.assertRaises(Unauthorized):
-            LogsightUser(email=EMAIL, password='None')
+            LogsightUser(email=EMAIL, password='invalid_password').token
 
     def test_invalid_email(self):
-        with self.assertRaises(Unauthorized):
-            LogsightUser(email='None', password='None')
+        with self.assertRaises(BadRequest):
+            LogsightUser(email='invalid_email@gmail.com', password='at_least_8_characters').token
 
     def test_create_existing_user(self):
         user_id = self.user_mng.create()
         self.assertIsInstance(user_id, str)
         with self.assertRaises(Conflict):
             self.user_mng.create()
+
+    def test_create_delete(self):
+        """TODO(Jorge): Needs to be implemented"""
+        pass
 
 
 if __name__ == '__main__':

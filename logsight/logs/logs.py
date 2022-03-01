@@ -1,8 +1,15 @@
-import json
-
 from logsight.config import HOST_API
-from logsight.config import PATH_LOGS
+from logsight.config import PATH_LOGS, PATH_LOGS_FLUSH
 from logsight.api_client import APIClient
+
+
+def create_log_record(timestamp='', level='', message='', metadata=''):
+    return {
+        'timestamp': timestamp,
+        'level': level,
+        'message': message,
+        'metadata': metadata,
+    }
 
 
 class LogsightLogs(APIClient):
@@ -23,7 +30,15 @@ class LogsightLogs(APIClient):
 
         Args:
             app_id (str): Application id.
-            log_lst (List[str]): Log records/messages.
+            log_lst (List[dict]): Log records/messages.
+                 [
+                    {
+                        'level': 'string',
+                        'message': 'string',
+                        'metadata': 'string',
+                        'timestamp': 'string'
+                    }
+                ],
             tag (str): Tag to associate with log records.
 
         Returns:
@@ -41,13 +56,39 @@ class LogsightLogs(APIClient):
             Unauthorized: If the private_key is invalid.
 
         """
-        payload = {'applicationId': app_id,
-                   'logFormats': 'UNKNOWN_FORMAT',
-                   'logs': log_lst,
-                   'tag': tag
-                   }
+        payload = {
+            'applicationId': app_id,
+            'logs': log_lst,
+            'tag': tag
+        }
         headers = {"content-type": "application/json", 'Authorization': f'Bearer {self.token}'}
         return self._post(host=HOST_API,
                           path=PATH_LOGS,
+                          json=payload,
+                          headers=headers)
+
+    def flush(self, receipt_id):
+        """Notify the server that the logs should be processed.
+
+        Args:
+            receipt_id (str): receipt id.
+
+        Returns:
+            dict:
+                {
+                  "flushId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  "status": "DONE"
+                }
+
+        Raises:
+            TODO(jcardoso)
+
+        """
+        payload = {
+            'receipt_id': receipt_id,
+        }
+        headers = {"content-type": "application/json", 'Authorization': f'Bearer {self.token}'}
+        return self._post(host=HOST_API,
+                          path=PATH_LOGS_FLUSH,
                           json=payload,
                           headers=headers)
