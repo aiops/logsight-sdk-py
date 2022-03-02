@@ -1,6 +1,6 @@
 INFO 1. Hello World!
 DEBUG 2. Hello Debug!
-INFO 3. HelloErr Error!
+INFO 3. Hello_Info Error!
 INFO 4. Hello World!
 INFO 5. Hello World in reality Error!
 ERROR 6. Hello Error!
