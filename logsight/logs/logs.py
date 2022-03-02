@@ -1,14 +1,18 @@
+import datetime
+from dateutil.tz import tzlocal
+
 from logsight.config import HOST_API
 from logsight.config import PATH_LOGS, PATH_LOGS_FLUSH
 from logsight.api_client import APIClient
 
 
-def create_log_record(timestamp='', level='', message='', metadata=''):
+def create_log_record(level, message, timestamp=None, metadata=None):
     return {
-        'timestamp': timestamp,
+        'timestamp': timestamp or datetime.datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z',
+        # 'timestamp': timestamp or datetime.datetime.now(tz=tzlocal()).isoformat(),
         'level': level,
         'message': message,
-        'metadata': metadata,
+        'metadata': metadata or '',
     }
 
 

@@ -5,8 +5,6 @@ import datetime
 
 from logsight.logger.logger import LogsightLogger
 from logsight.utils import now, create_apps, delete_apps
-# from logsight.exceptions import LogsightException
-# from utils import p_sleep, SLEEP
 
 
 if __name__ == '__main__':
@@ -52,23 +50,23 @@ class SendLogs:
         handler.close()
         logger.removeHandler(handler)
 
-    def create_app_name(self):
-        try:
-            delete_apps(self.private_key, self.email, [self.app_name])
-        except LogsightException as e:
-            print(e)
-
-        try:
-            create_apps(self.private_key, self.email, [self.app_name])
-        except LogsightException as e:
-            print(e)
-
-    def delete_app_name(self):
-        p_sleep(SLEEP.BEFORE_DELETE_APP)
-        try:
-            delete_apps(self.private_key, self.email, [self.app_name])
-        except LogsightException as e:
-            print(e)
+    # def create_app_name(self):
+    #     try:
+    #         delete_apps(self.private_key, self.email, [self.app_name])
+    #     except LogsightException as e:
+    #         print(e)
+    #
+    #     try:
+    #         create_apps(self.private_key, self.email, [self.app_name])
+    #     except LogsightException as e:
+    #         print(e)
+    #
+    # def delete_app_name(self):
+    #     p_sleep(SLEEP.BEFORE_DELETE_APP)
+    #     try:
+    #         delete_apps(self.private_key, self.email, [self.app_name])
+    #     except LogsightException as e:
+    #         print(e)
 
     def send_log_messages(self, log_file_name, n_messages, tag=None, verbose=False):
         self.dt_start = now()

@@ -26,7 +26,7 @@ def parse_generic(f, mappings, level_idx, msg_idx, max_log_messages):
             sys.exit('Error splitting log message number %d: %s' % (i, line))
 
         level = 'INFO'
-        if level_idx:
+        if level_idx >= 0:
             if tokens[level_idx] in mappings:
                 level = mappings[tokens[level_idx]]
             else:
@@ -129,15 +129,15 @@ def load_log_file(filename, max_log_messages):
 
 if __name__ == '__main__':
     max_log_messages = 2000
-    a = load_log_file(LOG_FILES['hadoop'], max_log_messages)
-    print(a[:10])
-    a = load_log_file(LOG_FILES['openstack'], max_log_messages)
-    print(a[:10])
-    a = load_log_file(LOG_FILES['mac'], max_log_messages)
-    print(a[:10])
-    a = load_log_file(LOG_FILES['zookeeper'], max_log_messages)
-    print(a[:10])
-    a = load_log_file(LOG_FILES['openssh'], max_log_messages)
-    print(a[:10])
+    # a = load_log_file(LOG_FILES['hadoop'], max_log_messages)
+    # print(a[:10])
+    # a = load_log_file(LOG_FILES['openstack'], max_log_messages)
+    # print(a[:10])
+    # a = load_log_file(LOG_FILES['mac'], max_log_messages)
+    # print(a[:10])
+    # a = load_log_file(LOG_FILES['zookeeper'], max_log_messages)
+    # print(a[:10])
+    # a = load_log_file(LOG_FILES['openssh'], max_log_messages)
+    # print(a[:10])
     a = load_log_file(LOG_FILES['helloworld'], max_log_messages)
     print(a[:10])

@@ -1,15 +1,15 @@
 INFO 1. Hello World!
 DEBUG 2. Hello Debug!
-INFO 3. Hello World!
+INFO 3. HelloErr Error!
 INFO 4. Hello World!
-INFO 5. Hello World!
+INFO 5. Hello World in reality Error!
 ERROR 6. Hello Error!
 WARNING 7. Hello Warning!
 ERROR 8. Hello Error!
 WARNING 9. Hello Warning!
 DEBUG 10. Hello Debug!
 INFO 11. Hello World!
-INFO 12. Hello World!
+INFO 12. Hello World but it failed to connect!
 INFO 13. Hello World!
 INFO 14. Hello World!
 INFO 15. Hello World!

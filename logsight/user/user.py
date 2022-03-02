@@ -83,3 +83,6 @@ class LogsightUser(APIClient):
         self._authenticate()
 
         return self._user_id
+
+    def __str__(self):
+        return f"user_id = {self.user_id}, token = {self.token}"

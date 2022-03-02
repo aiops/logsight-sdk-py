@@ -2,66 +2,69 @@ import sys
 import logging
 import logging.handlers
 import unittest
-from dateutil.tz import tzlocal
 import datetime
 
-from utils import SLEEP, p_sleep
-from config import EMAIL, USER_ID, PASSWORD
-from tests.integration.send_logs import SendLogs
+from tests.config import EMAIL, PASSWORD
+from logsight.application import LogsightApplication
+
 from tests.integration.load_logs import LOG_FILES
 from logsight.user import LogsightUser
 from logsight.logger.logger import LogsightLogger
 
-APP_NAME = 'hello_app'
+APP_NAME = 'test_logger'
 N_LOG_MESSAGES_TO_SEND = 450
 LOGGING_TO_SYS_STDOUT = True
+
+if __name__ == '__main__':
+    pass
+else:
+    from tests.integration.load_logs import load_log_file
+
+
+def now():
+    return datetime.datetime.utcnow().isoformat()
 
 
 class TestLogger(unittest.TestCase):
 
-    s = None
+    app_id = None
+    user = None
+    logger = None
+    handler = None
+    start_time = ''
+    stop_time = ''
 
     @classmethod
     def setUpClass(cls):
         super(TestLogger, cls).setUpClass()
-
-        cls.dt_start = '2021-10-07T13:18:09.178477+02:00'
-        cls.dt_end = datetime.datetime.now(tz=tzlocal()).isoformat()
-
         cls.user = LogsightUser(email=EMAIL, password=PASSWORD)
-        cls.s = SendLogs(cls.user.token, cls.user)
+        print(cls.user)
 
-        cls.s.create_app_name()
+        cls.app_mng = LogsightApplication(cls.user.user_id, cls.user.token)
+        # cls.app_id = cls.app_mng.lst()['applications'][0]['applicationId']
+        cls.app_id = cls.app_mng.create(APP_NAME)['applicationId']
+        print('app_id', cls.app_id)
 
-        p_sleep(SLEEP.AFTER_CREATE_APP)
-
-        cls.s.send_log_messages(log_file_name=LOG_FILES['helloworld'],
-                                n_messages=N_LOG_MESSAGES_TO_SEND,
-                                tag='v1')
-        cls.dt_start = cls.s.dt_start
-        cls.s.send_log_messages(log_file_name=LOG_FILES['helloworld'],
-                                n_messages=N_LOG_MESSAGES_TO_SEND,
-                                tag='v2')
-
-        # Note: need to remove the handler before timing the end
-        # Since the remove_handler will flush the messages in the internal buffer
-        cls.s.flush()
-        cls.dt_end = cls.s.dt_end
-
-        p_sleep(SLEEP.BEFORE_QUERY_BACKEND)
-
+        cls.logger, cls.handler = cls.__setup_handler()
 
     @classmethod
     def tearDownClass(cls):
-        p_sleep(SLEEP.BEFORE_DELETE_APP)
-        cls.s.delete_app_name()
+        # cls.app_mng.delete(cls.app_id)
+        # Note: need to remove the handler before timing the end
+        # Since the remove_handler will flush the messages in the internal buffer
+        cls.__remove_handler(cls.logger, cls.handler)
 
-    @staticmethod
-    def __setup_handler():
+    def test_logging(self):
+        self._send_log_messages(log_file_name=LOG_FILES['helloworld'],
+                                n_messages=N_LOG_MESSAGES_TO_SEND,
+                                tag='v1.1.2')
+
+    @classmethod
+    def __setup_handler(cls):
         logger = logging.getLogger(__name__)
         logger.setLevel(logging.DEBUG)
 
-        logsight_handler = LogsightLogger(token, app_id, tag)
+        logsight_handler = LogsightLogger(cls.user.token, cls.app_id, tag='v1.1.2')
         logsight_handler.setLevel(logging.DEBUG)
 
         stdout_handler = logging.StreamHandler(sys.stdout)
@@ -77,6 +80,37 @@ class TestLogger(unittest.TestCase):
     def __remove_handler(logger, handler):
         handler.close()
         logger.removeHandler(handler)
+
+    def _send_log_messages(self, log_file_name, n_messages, tag=None, verbose=False):
+        self.dt_start = now()
+        print('Starting message sending', self.dt_start)
+
+        for i, (level, message) in enumerate(load_log_file(log_file_name, n_messages)):
+            if verbose and i % 100 == 0:
+                print(f'Sending message # (app_name: {self.app_id}): {i}')
+            self._send_log_message(i, level, message, tag)
+
+        self.dt_end = now()
+        print('Ended message sending', self.dt_end)
+
+        return self.dt_start, self.dt_end
+
+    def _send_log_message(self, i, level, message, tag):
+
+        self.handler.set_tag(tag)
+
+        if level.upper() == 'INFO':
+            self.logger.info(message)
+        elif level.upper() == 'WARNING':
+            self.logger.warning(message)
+        elif level.upper() == 'ERROR':
+            self.logger.error(message)
+        elif level.upper() == 'DEBUG':
+            self.logger.debug(message)
+        elif level.upper() == 'CRITICAL':
+            self.logger.critical(message)
+        else:
+            sys.exit('Error parsing level for log message number %d: %s %s' % (i, level, message))
 
     # def test_template_count(self):
     #     templates = LogsightResult(PRIVATE_KEY, EMAIL, APP_NAME).\

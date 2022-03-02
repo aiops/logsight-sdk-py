@@ -11,6 +11,8 @@ PATH_APP_DELETE = "users/{userId}/applications/{applicationId}"
 
 PATH_LOGS = "logs"
 PATH_LOGS_FLUSH = "flush"
+PATH_LOGS_INCIDENTS = "logs/incidents"
 
 PATH_COMPARE = "logs/compare"
 PATH_COMPARE_TAGS = "logs/compare/tags"
+
