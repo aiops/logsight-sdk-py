@@ -65,7 +65,7 @@ class LogsightCompare(APIClient):
         headers = {'content-type': 'application/json', 'Authorization': f'Bearer {self.token}'}
         return self._post(host=HOST_API,
                           path=PATH_COMPARE,
-                          data=json.dumps(payload),
+                          json=payload,
                           headers=headers)
 
     def tags(self, app_id):

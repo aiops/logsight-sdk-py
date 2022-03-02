@@ -85,7 +85,7 @@ class LogsightLogs(APIClient):
 
         """
         payload = {
-            'receipt_id': receipt_id,
+            'receiptId': receipt_id,
         }
         headers = {"content-type": "application/json", 'Authorization': f'Bearer {self.token}'}
         return self._post(host=HOST_API,
