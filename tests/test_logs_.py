@@ -38,22 +38,17 @@ class TestLogs(unittest.TestCase):
         cls.app_mng.delete(cls.app_id)
 
     def _generate_logs(self, n=10):
-        """ Generate logs using (a variation of) iso8106 format """
+        """ Generate logs using (a variation of) iso8106 format.
+
+            The format used is: '2021-03-23T01:02:51.007Z
+        """
         m = "[main] org.apache.hadoop.mapreduce: Executing with tokens: {i}"
-        # '2021-03-23T01:02:51.007Z
+
         logs = [create_log_record(timestamp=datetime.datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z',
                                   level='INFO',
                                   message=m.format(i=i),
                                   metadata='') for i in range(max(n, 60))]
         return logs
-
-    def test_send_logs(self):
-        n_log_messages = 60
-        g = LogsightLogs(self.u.token)
-        p = self._generate_logs(n=n_log_messages)
-        r = g.send(self.app_id, p, tag='v1.1.2')
-        self.assertEqual(r['logsCount'], n_log_messages)
-        self.assertEqual(r['source'], 'REST_BATCH')
 
     def test_send_logs_and_flush(self):
         n_log_messages = 60
@@ -63,9 +58,8 @@ class TestLogs(unittest.TestCase):
         self.assertEqual(r1['logsCount'], n_log_messages)
         self.assertEqual(r1['source'], 'REST_BATCH')
 
-        with self.assertRaises(NotFound):
-            r2 = g.flush(r1['receiptId'])
-            self.assertEqual(r1['receiptId'], r2['flushId'])
+        r = g.flush(r1['receiptId'])
+        self.assertEqual(r['status'], 'PENDING')
 
 
 if __name__ == '__main__':

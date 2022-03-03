@@ -56,7 +56,7 @@ class TestLogger(unittest.TestCase):
         cls.__remove_handler(cls.logger, cls.handler)
 
     def test_logging(self):
-        for tag in ['v1.1.1', 'v2.2.2']
+        for tag in ['v1.1.1', 'v2.2.2']:
             self._send_log_messages(log_file_name=LOG_FILES['helloworld'],
                                     n_messages=N_LOG_MESSAGES_TO_SEND,
                                     tag=tag)
@@ -84,35 +84,17 @@ class TestLogger(unittest.TestCase):
         logger.removeHandler(handler)
 
     def _send_log_messages(self, log_file_name, n_messages, tag=None, verbose=False):
-        self.dt_start = now()
-        print('Starting message sending', self.dt_start)
-
         for i, (level, message) in enumerate(load_log_file(log_file_name, n_messages)):
             if verbose and i % 100 == 0:
                 print(f'Sending message # (app_name: {self.app_id}): {i}')
             self._send_log_message(i, level, message, tag)
 
-        self.dt_end = now()
-        print('Ended message sending', self.dt_end)
-
-        return self.dt_start, self.dt_end
-
     def _send_log_message(self, i, level, message, tag):
+        if level.lower() not in ['info', 'warning', 'error', 'debug', 'critical']:
+            sys.exit('Error parsing level for log message number %d: %s %s' % (i, level, message))
 
         self.handler.set_tag(tag)
-
-        if level.upper() == 'INFO':
-            self.logger.info(message)
-        elif level.upper() == 'WARNING':
-            self.logger.warning(message)
-        elif level.upper() == 'ERROR':
-            self.logger.error(message)
-        elif level.upper() == 'DEBUG':
-            self.logger.debug(message)
-        elif level.upper() == 'CRITICAL':
-            self.logger.critical(message)
-        else:
-            sys.exit('Error parsing level for log message number %d: %s %s' % (i, level, message))
+        eval('self.logger.' + level.lower() + f"({message})")
 
     # def test_template_count(self):
     #     templates = LogsightResult(PRIVATE_KEY, EMAIL, APP_NAME).\
