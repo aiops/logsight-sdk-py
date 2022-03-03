@@ -50,14 +50,16 @@ class TestLogger(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         # cls.app_mng.delete(cls.app_id)
+
         # Note: need to remove the handler before timing the end
         # Since the remove_handler will flush the messages in the internal buffer
         cls.__remove_handler(cls.logger, cls.handler)
 
     def test_logging(self):
-        self._send_log_messages(log_file_name=LOG_FILES['helloworld'],
-                                n_messages=N_LOG_MESSAGES_TO_SEND,
-                                tag='v1.1.2')
+        for tag in ['v1.1.1', 'v2.2.2']
+            self._send_log_messages(log_file_name=LOG_FILES['helloworld'],
+                                    n_messages=N_LOG_MESSAGES_TO_SEND,
+                                    tag=tag)
 
     @classmethod
     def __setup_handler(cls):
