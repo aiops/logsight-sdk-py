@@ -28,6 +28,9 @@ class LogsightLogger(BufferingHandler):
         self.tag = tag
         self.metadata = metadata or ''
 
+    def __str__(self):
+        return f'app id = {self.app_id}, token = {self.token}'
+
     def set_tag(self, tag):
         self.tag = tag
 

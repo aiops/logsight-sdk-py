@@ -1,5 +1,3 @@
-import json
-
 from logsight.config import HOST_API
 from logsight.config import PATH_APP_CREATE, PATH_APP_LST, PATH_APP_DELETE
 from logsight.api_client import APIClient
@@ -18,6 +16,9 @@ class LogsightApplication(APIClient):
         super().__init__()
         self.user_id = user_id
         self.token = token
+
+    def __str__(self):
+        return f'user id = {self.user_id}, token = {self.token}'
 
     def create(self, app_name):
         """Creates a new application.

@@ -1,4 +1,3 @@
-import json
 from logsight.config import HOST_API, PATH_USERS, PATH_USERS_DELETE, PATH_LOGIN
 from logsight.api_client import APIClient
 
@@ -18,6 +17,9 @@ class LogsightUser(APIClient):
         self.password = password
         self._user_id = None
         self._token = None
+
+    def __str__(self):
+        return f'email = {self.email}, user id = {self.user_id}, token = {self.token}'
 
     def create(self):
         """Creates a new user.
@@ -83,6 +85,3 @@ class LogsightUser(APIClient):
         self._authenticate()
 
         return self._user_id
-
-    def __str__(self):
-        return f"user_id = {self.user_id}, token = {self.token}"

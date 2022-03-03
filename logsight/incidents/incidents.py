@@ -16,6 +16,9 @@ class LogsightIncident(APIClient):
         self.user_id = user_id
         self.token = token
 
+    def __str__(self):
+        return f'user id = {self.user_id}, token = {self.token}'
+
     def incidents(self, app_id, start_time, stop_time, flush_id=None):
         """Retrieves the incidents of logs.
 

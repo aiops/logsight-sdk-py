@@ -1,5 +1,3 @@
-import json
-
 from logsight.config import HOST_API
 from logsight.config import PATH_COMPARE, PATH_COMPARE_TAGS
 from logsight.api_client import APIClient
@@ -18,6 +16,9 @@ class LogsightCompare(APIClient):
         super().__init__()
         self.user_id = user_id
         self.token = token
+
+    def __str__(self):
+        return f'user id = {self.user_id}, token = {self.token}'
 
     def compare(self, app_id, baseline_tag, candidate_tag, flush_id=None):
         """Compares the logs on an application.

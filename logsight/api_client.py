@@ -28,6 +28,7 @@ class APIClient:
             r = requests.post(url, json=json, headers=headers)
             r.raise_for_status()
         except requests.exceptions.HTTPError as err:
+            # TODO (jcardoso): remove or integrate
             if r.text:
                 d = js.loads(r.text)
                 if 'message' in d:

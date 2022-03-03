@@ -1,19 +1,10 @@
 import unittest
 import datetime
-from dateutil.tz import tzlocal
-import json
 
 from tests.config import EMAIL, PASSWORD
 from logsight.user import LogsightUser
 from logsight.application import LogsightApplication
 from logsight.logs import LogsightLogs, create_log_record
-
-from logsight.exceptions import (LogsightException,
-                                 Unauthorized,
-                                 Forbidden,
-                                 BadRequest,
-                                 NotFound,
-                                 Conflict)
 
 APP_NAME = 'class_testlogs'
 
@@ -29,8 +20,7 @@ class TestLogs(unittest.TestCase):
         cls.app_mng = LogsightApplication(cls.u.user_id, cls.u.token)
         # cls.app_id = cls.app_mng.lst()['applications'][0]['applicationId']
         cls.app_id = cls.app_mng.create(APP_NAME)['applicationId']
-        print('user_id', cls.u.user_id)
-        print('token', cls.u.token)
+        print(cls.app_mng)
         print('app_id', cls.app_id)
 
     @classmethod
@@ -43,7 +33,6 @@ class TestLogs(unittest.TestCase):
             The format used is: '2021-03-23T01:02:51.007Z
         """
         m = "[main] org.apache.hadoop.mapreduce: Executing with tokens: {i}"
-
         logs = [create_log_record(timestamp=datetime.datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z',
                                   level='INFO',
                                   message=m.format(i=i),

@@ -92,7 +92,6 @@ class TestLogger(unittest.TestCase):
     def _send_log_message(self, i, level, message, tag):
         if level.lower() not in ['info', 'warning', 'error', 'debug', 'critical']:
             sys.exit('Error parsing level for log message number %d: %s %s' % (i, level, message))
-
         self.handler.set_tag(tag)
         eval('self.logger.' + level.lower() + f"({message})")
 

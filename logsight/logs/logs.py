@@ -1,5 +1,4 @@
 import datetime
-from dateutil.tz import tzlocal
 
 from logsight.config import HOST_API
 from logsight.config import PATH_LOGS, PATH_LOGS_FLUSH
