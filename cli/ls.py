@@ -1,7 +1,7 @@
-from typing import Optional, Union
 import os
 import json
 import time
+import datetime
 import click
 from configparser import ConfigParser
 from pathlib import Path
@@ -13,6 +13,7 @@ from logsight.user import LogsightUser
 from logsight.application import LogsightApplication
 from logsight.logs import LogsightLogs
 from logsight.compare import LogsightCompare
+from logsight.incidents import LogsightIncident
 from logsight.exceptions import Conflict
 
 from cli.log_parser import parse_file
@@ -65,7 +66,7 @@ def diff(file1,
                        timestamp=lambda x: x[date[0]:date[1]],
                        level=lambda x: x[level[0]:level[1]],
                        message=lambda x: x[message:])
-    logs2 = parse_file(file1,
+    logs2 = parse_file(file2,
                        sep=sep,
                        timestamp=lambda x: x[date[0]:date[1]],
                        level=lambda x: x[level[0]:level[1]],
@@ -105,28 +106,69 @@ def diff(file1,
 
 
 @click.command()
-def incidents():
+@click.argument('file', type=click.Path(exists=True))
+@click.option('--email', default=CONFIG['EMAIL'], help='email of logsight user')
+@click.option('--password', default=CONFIG['PASSWORD'], help='password of logsight user')
+@click.option('--sep', required=False, default=' ', type=str, help='separator used to break log line into array')
+@click.option('--date', required=True, type=click.Tuple([int, int]), help='indices of array with the date/time')
+@click.option('--level', required=True, type=click.Tuple([int, int]), help='indices of array with log level')
+@click.option('--message', required=True, type=int, help='index of array where message starts')
+@click.option('--clean', type=bool, help='Remove the application created')
+def incidents(file,
+              email,
+              password,
+              sep,
+              date,
+              level,
+              message,
+              clean):
     """
     show the incidents that occurred in a log file
 
     FILE is the name of the log file
     """
-    pass
+    logs1 = parse_file(file,
+                       sep=sep,
+                       timestamp=lambda x: x[date[0]:date[1]],
+                       level=lambda x: x[level[0]:level[1]],
+                       message=lambda x: x[message:])
 
+    app_name = 'cli_incident_' + ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
+    tag1 = 'v1.1.1'
 
-@click.command()
-def sentiment():
-    """
-    identifies the semantic of a log line
+    u = LogsightUser(email=email, password=password)
+    app_mng = LogsightApplication(u.user_id, u.token)
+    app_id = app_mng.create(app_name)['applicationId']
 
-    LINE is the log line
-    """
-    pass
+    logs = LogsightLogs(u.token)
+
+    r1 = logs.send(app_id, logs1, tag=tag1)
+    flush_id = logs.flush(r1['receiptId'])['flushId']
+
+    i = LogsightIncident(u.user_id, u.token)
+    now = datetime.datetime.utcnow()
+    stop_time = now.isoformat()
+    start_time = (now - datetime.timedelta(days=1)).isoformat()
+
+    while True:
+        try:
+            r = i.incidents(app_id=app_id,
+                            start_time=start_time,
+                            stop_time=stop_time,
+                            flush_id=flush_id)
+            break
+        except Conflict:
+            time.sleep(10)
+
+    if clean:
+        app_mng.delete(app_id)
+
+    s = json.dumps(r, sort_keys=True, indent=4)
+    click.echo(s)
 
 
 cli.add_command(diff)
 cli.add_command(incidents)
-cli.add_command(sentiment)
 
 
 if __name__ == "__main__":
