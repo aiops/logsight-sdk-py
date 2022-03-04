@@ -3,5 +3,4 @@ pyparsing               # MIT License
 requests                # Apache Software License (Apache 2.0)
 gitchangelog            # BSD License (BSD 3-Clause License)
 twine                   # Apache Software License
-typer                   # MIT license
 click                   # BSD License (BSD-3-Clause)
