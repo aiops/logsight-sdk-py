@@ -26,8 +26,6 @@ class TestLogger(unittest.TestCase):
     user = None
     logger = None
     handler = None
-    start_time = ''
-    stop_time = ''
 
     @classmethod
     def setUpClass(cls):
@@ -42,8 +40,6 @@ class TestLogger(unittest.TestCase):
         # Note: need to remove the handler before timing the end
         # Since the remove_handler will flush the messages in the internal buffer
         cls.__remove_handler(cls.logger, cls.handler)
-
-        # application can only be removed after the logging flush
         cls.app_mng.delete(cls.app_id)
 
     def test_logging(self):
@@ -54,17 +50,16 @@ class TestLogger(unittest.TestCase):
 
     @classmethod
     def __setup_handler(cls):
-        logger = logging.getLogger(__name__)
-        logger.setLevel(logging.DEBUG)
-
         logsight_handler = LogsightLogger(cls.user.token, cls.app_id, tag='v1.1.2')
         logsight_handler.setLevel(logging.DEBUG)
 
-        stdout_handler = logging.StreamHandler(sys.stdout)
-        stdout_handler.setLevel(logging.INFO)
-
+        logger = logging.getLogger(__name__)
+        logger.setLevel(logging.DEBUG)
         logger.addHandler(logsight_handler)
+
         if LOGGING_TO_SYS_STDOUT:
+            stdout_handler = logging.StreamHandler(sys.stdout)
+            stdout_handler.setLevel(logging.INFO)
             logger.addHandler(stdout_handler)
 
         return logger, logsight_handler
@@ -75,6 +70,7 @@ class TestLogger(unittest.TestCase):
         logger.removeHandler(handler)
 
     def _send_log_messages(self, log_file_name, n_messages, tag=None, verbose=False):
+        self.handler.set_tag(tag)
         for i, (level, message) in enumerate(load_log_file(log_file_name, n_messages)):
             if verbose and i % 100 == 0:
                 print(f'Sending message # (app_name: {self.app_id}): {i}')
@@ -83,7 +79,6 @@ class TestLogger(unittest.TestCase):
     def _send_log_message(self, i, level, message, tag):
         if level.lower() not in ['info', 'warning', 'error', 'debug', 'critical']:
             sys.exit('Error parsing level for log message number %d: %s %s' % (i, level, message))
-        self.handler.set_tag(tag)
         eval('self.logger.' + level.lower() + f"(\'{message}\')")
 
     # def test_invalid_key(self):
