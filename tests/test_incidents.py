@@ -3,9 +3,10 @@ import datetime
 import time
 
 from tests.config import EMAIL, PASSWORD
+from tests.utils import generate_logs
 from logsight.user import LogsightUser
 from logsight.application import LogsightApplication
-from logsight.logs import LogsightLogs, create_log_record
+from logsight.logs import LogsightLogs
 from logsight.incidents import LogsightIncident
 from logsight.exceptions import Conflict
 
@@ -31,21 +32,9 @@ class TestIncidents(unittest.TestCase):
         cls.app_mng.delete(cls.app_id)
 
     @classmethod
-    def _generate_logs(cls, delta=0, n=10):
-        """ Generate logs using (a variation of) iso8106 format """
-        m = "[main] org.apache.hadoop.mapreduce: Failed to connect. Executing with tokens: {i}"
-        # '2021-03-23T01:02:51.007Z
-        logs = [create_log_record(timestamp=(datetime.datetime.utcnow() + datetime.timedelta(days=delta))
-                                  .strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z',
-                                  level='INFO',
-                                  message=m.format(i=i),
-                                  metadata='') for i in range(max(n, 60))]
-        return logs
-
-    @classmethod
     def _send_logs(cls):
         n_log_messages = 60
-        logs = cls._generate_logs(delta=0, n=n_log_messages)
+        logs = generate_logs(delta=0, n=n_log_messages)
         cls.start_time, cls.stop_time = logs[0]['timestamp'], logs[-1]['timestamp']
         g = LogsightLogs(cls.u.token)
         r = g.send(cls.app_id, logs, tag='v1.1.1')

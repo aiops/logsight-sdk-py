@@ -7,7 +7,6 @@ from logsight.user import LogsightUser
 from logsight.application import LogsightApplication
 from logsight.exceptions import (LogsightException,
                                  Unauthorized,
-                                 Forbidden,
                                  BadRequest,
                                  Conflict,
                                  NotFound)
@@ -77,7 +76,7 @@ class TestAppManagement(unittest.TestCase):
 
     def test_delete_inexistent_app_id(self):
         app_id = '3fa85f64-5717-4562-b3fc-2c963f66afa6'
-        with self.assertRaises(BadRequest):
+        with self.assertRaises(NotFound):
             self.app_mng.delete(app_id)
 
     def test_delete_invalid_app_id(self):
@@ -107,7 +106,7 @@ class TestAppManagement(unittest.TestCase):
         token = 'a' * n
         while token == self.u.token:
             token = ''.join(random.choices(string.ascii_uppercase + string.digits, k=n))
-        with self.assertRaises(Forbidden):
+        with self.assertRaises(Unauthorized):
             LogsightApplication(self.u.user_id, token).lst()
 
 

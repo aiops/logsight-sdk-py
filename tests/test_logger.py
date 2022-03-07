@@ -2,7 +2,6 @@ import sys
 import logging
 import logging.handlers
 import unittest
-import datetime
 
 from tests.config import EMAIL, PASSWORD
 from logsight.application import LogsightApplication
@@ -21,10 +20,6 @@ else:
     from tests.integration.load_logs import load_log_file
 
 
-def now():
-    return datetime.datetime.utcnow().isoformat()
-
-
 class TestLogger(unittest.TestCase):
 
     app_id = None
@@ -38,22 +33,18 @@ class TestLogger(unittest.TestCase):
     def setUpClass(cls):
         super(TestLogger, cls).setUpClass()
         cls.user = LogsightUser(email=EMAIL, password=PASSWORD)
-        print(cls.user)
-
         cls.app_mng = LogsightApplication(cls.user.user_id, cls.user.token)
-        # cls.app_id = cls.app_mng.lst()['applications'][0]['applicationId']
         cls.app_id = cls.app_mng.create(APP_NAME)['applicationId']
-        print('app_id', cls.app_id)
-
         cls.logger, cls.handler = cls.__setup_handler()
 
     @classmethod
     def tearDownClass(cls):
-        # cls.app_mng.delete(cls.app_id)
-
         # Note: need to remove the handler before timing the end
         # Since the remove_handler will flush the messages in the internal buffer
         cls.__remove_handler(cls.logger, cls.handler)
+
+        # application can only be removed after the logging flush
+        cls.app_mng.delete(cls.app_id)
 
     def test_logging(self):
         for tag in ['v1.1.1', 'v2.2.2']:
@@ -93,25 +84,8 @@ class TestLogger(unittest.TestCase):
         if level.lower() not in ['info', 'warning', 'error', 'debug', 'critical']:
             sys.exit('Error parsing level for log message number %d: %s %s' % (i, level, message))
         self.handler.set_tag(tag)
-        eval('self.logger.' + level.lower() + f"({message})")
+        eval('self.logger.' + level.lower() + f"(\'{message}\')")
 
-    # def test_template_count(self):
-    #     templates = LogsightResult(PRIVATE_KEY, EMAIL, APP_NAME).\
-    #         get_results(self.dt_start, self.dt_end, 'log_ad')
-    #     self.assertEqual(len(templates), N_LOG_MESSAGES_TO_SEND)
-    #
-    # def test_incident_count(self):
-    #     incidents = LogsightResult(PRIVATE_KEY, EMAIL, APP_NAME).\
-    #         get_results(self.dt_start, self.dt_end, 'incidents')
-    #     self.assertIn(len(incidents), [1, 2])
-    #
-    # def test_log_quality(self):
-    #     quality = LogsightResult(PRIVATE_KEY, EMAIL, APP_NAME).\
-    #         get_results(self.dt_start, self.dt_end, 'log_quality')
-    #     self.assertEqual(len(quality), 4)
-    #     self.assertIn(quality[0].actual_level.upper(),
-    #                   quality[0].predicted_level.replace(',', ' ').strip().split())
-    #
     # def test_invalid_key(self):
     #     private_key = '27x'
     #     with self.assertRaises(Unauthorized):
