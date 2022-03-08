@@ -33,7 +33,19 @@ class TestLogs(unittest.TestCase):
         self.assertEqual(r1['source'], 'REST_BATCH')
 
         r = g.flush(r1['receiptId'])
-        self.assertEqual(r['status'], 'PENDING')
+        self.assertTrue('status' in r)
+
+    def test_send_log_file_and_flush(self):
+        file_name = 'hadoop_name_node_v1_1loc'
+        file_path = './integration/fixtures/' + file_name
+        with open(file_path, 'rb') as f:
+            files = {'file': (file_name, f, 'text/csv')}
+            g = LogsightLogs(self.u.token)
+            r1 = g.upload(self.app_id, files=files, tag='v1.1.3')
+            self.assertEqual(r1['source'], 'FILE')
+
+        r = g.flush(r1['receiptId'])
+        self.assertTrue('status' in r)
 
 
 if __name__ == '__main__':

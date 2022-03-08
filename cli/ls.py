@@ -67,6 +67,10 @@ def diff(file1,
     # click.echo(f'file1: {click.format_filename(file1)}, file2: {click.format_filename(file2)}')
     # click.echo(f'email: {email}, password: {password}')
 
+    # todo(jcardoso): the parsing at the client side should be optional
+    # todo(jcardoso): provide a utility function to transform the log records fields: e.g., diff, transform, incidents
+    # todo(jcardoso): Look for such a tool in github?
+
     logs1 = parse_file(file1,
                        sep=sep,
                        timestamp=lambda x: x[date[0]:date[1]],
@@ -88,8 +92,11 @@ def diff(file1,
 
     logs = LogsightLogs(u.token)
 
-    logs.send(app_id, logs1, tag=tag1)
-    r1 = logs.send(app_id, logs2, tag=tag2)
+    logs.upload(app_id, file1, tag=tag1)
+    r1 = logs.upload(app_id, file2, tag=tag2)
+
+    # logs.send(app_id, logs1, tag=tag1)
+    # r1 = logs.send(app_id, logs2, tag=tag2)
     flush_id = logs.flush(r1['receiptId'])['flushId']
 
     comp = LogsightCompare(u.user_id, u.token)

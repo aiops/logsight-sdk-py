@@ -22,10 +22,13 @@ class APIClient:
                 "Content could not be converted from JSON: %s" % r.text
             )
 
-    def _post(self, host, path, json, headers=None):
+    def _post(self, host, path, json=None, files=None, headers=None):
         try:
             url = urllib.parse.urljoin(host, path)
-            r = requests.post(url, json=json, headers=headers)
+            if json:
+                r = requests.post(url, json=json, headers=headers)
+            if files and not json:
+                r = requests.post(url, files=files, headers=headers)
             r.raise_for_status()
         except requests.exceptions.HTTPError as err:
             # TODO (jcardoso): remove or integrate
