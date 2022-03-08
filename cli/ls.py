@@ -16,7 +16,7 @@ from logsight.compare import LogsightCompare
 from logsight.incidents import LogsightIncident
 from logsight.exceptions import Conflict
 
-from cli.log_parser import parse_file
+from cli.log_parser import parse_line, parse_file
 
 
 config = ConfigParser()
@@ -33,7 +33,7 @@ CONFIG.update({i: os.environ[f'LOGSIGHT_{i}'] for i in CONFIG.keys()
 def cli():
     pass
 
-# python -m cli.ls diff ./tests/integration/fixtures/hadoop_name_node_v1 \
+# python -m cli.ls compare ./tests/integration/fixtures/hadoop_name_node_v1 \
 # ./tests/integration/fixtures/hadoop_name_node_v2 \
 # --email jorge.cardoso.pt@gmail.com \
 # --password 'sawhUz-hanpe4-zaqtyr' \
@@ -45,20 +45,12 @@ def cli():
 @click.argument('file2', type=click.Path(exists=True))
 @click.option('--email', default=CONFIG['EMAIL'], help='email of logsight user')
 @click.option('--password', default=CONFIG['PASSWORD'], help='password of logsight user')
-@click.option('--sep', required=False, default=' ', type=str, help='separator used to break log line into array')
-@click.option('--date', required=True, type=click.Tuple([int, int]), help='indices of array with the date/time')
-@click.option('--level', required=True, type=click.Tuple([int, int]), help='indices of array with log level')
-@click.option('--message', required=True, type=int, help='index of array where message starts')
 @click.option('--clean', type=bool, help='Remove the application created')
-def diff(file1,
-         file2,
-         email,
-         password,
-         sep,
-         date,
-         level,
-         message,
-         clean):
+def compare(file1,
+            file2,
+            email,
+            password,
+            clean):
     """
     compare log files by analyzing their states
 
@@ -66,21 +58,6 @@ def diff(file1,
     """
     # click.echo(f'file1: {click.format_filename(file1)}, file2: {click.format_filename(file2)}')
     # click.echo(f'email: {email}, password: {password}')
-
-    # todo(jcardoso): the parsing at the client side should be optional
-    # todo(jcardoso): provide a utility function to transform the log records fields: e.g., diff, transform, incidents
-    # todo(jcardoso): Look for such a tool in github?
-
-    logs1 = parse_file(file1,
-                       sep=sep,
-                       timestamp=lambda x: x[date[0]:date[1]],
-                       level=lambda x: x[level[0]:level[1]],
-                       message=lambda x: x[message:])
-    logs2 = parse_file(file2,
-                       sep=sep,
-                       timestamp=lambda x: x[date[0]:date[1]],
-                       level=lambda x: x[level[0]:level[1]],
-                       message=lambda x: x[message:])
 
     app_name = 'cli_diff_' + ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
     tag1 = 'v1.1.1'
@@ -95,12 +72,9 @@ def diff(file1,
     logs.upload(app_id, file1, tag=tag1)
     r1 = logs.upload(app_id, file2, tag=tag2)
 
-    # logs.send(app_id, logs1, tag=tag1)
-    # r1 = logs.send(app_id, logs2, tag=tag2)
     flush_id = logs.flush(r1['receiptId'])['flushId']
 
     comp = LogsightCompare(u.user_id, u.token)
-
     while True:
         try:
             r = comp.compare(app_id=app_id,
@@ -120,32 +94,49 @@ def diff(file1,
 
 @click.command()
 @click.argument('file', type=click.Path(exists=True))
-@click.option('--email', default=CONFIG['EMAIL'], help='email of logsight user')
-@click.option('--password', default=CONFIG['PASSWORD'], help='password of logsight user')
+@click.option('--output', required=True, default=' ', type=str, help='name of the output file')
 @click.option('--sep', required=False, default=' ', type=str, help='separator used to break log line into array')
 @click.option('--date', required=True, type=click.Tuple([int, int]), help='indices of array with the date/time')
 @click.option('--level', required=True, type=click.Tuple([int, int]), help='indices of array with log level')
 @click.option('--message', required=True, type=int, help='index of array where message starts')
+def transform(file,
+              output,
+              sep,
+              date,
+              level,
+              message):
+    """
+    transforms the structure of a log file
+
+    FILE, the name of the log file to transform
+    """
+
+    with open(file) as r, open(output, 'w') as w:
+        for line in r:
+            d = parse_line(
+                line,
+                sep=sep,
+                timestamp=lambda x: x[date[0]:date[1]],
+                level=lambda x: x[level[0]:level[1]],
+                message=lambda x: x[message:])
+            if d:
+                w.write(' '.join([d[i] for i in ['timestamp', 'level', 'message']]))
+
+
+@click.command()
+@click.argument('file', type=click.Path(exists=True))
+@click.option('--email', default=CONFIG['EMAIL'], help='email of logsight user')
+@click.option('--password', default=CONFIG['PASSWORD'], help='password of logsight user')
 @click.option('--clean', type=bool, help='Remove the application created')
 def incidents(file,
               email,
               password,
-              sep,
-              date,
-              level,
-              message,
               clean):
     """
     show the incidents that occurred in a log file
 
     FILE is the name of the log file
     """
-    logs1 = parse_file(file,
-                       sep=sep,
-                       timestamp=lambda x: x[date[0]:date[1]],
-                       level=lambda x: x[level[0]:level[1]],
-                       message=lambda x: x[message:])
-
     app_name = 'cli_incident_' + ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
     tag1 = 'v1.1.1'
 
@@ -155,7 +146,7 @@ def incidents(file,
 
     logs = LogsightLogs(u.token)
 
-    r1 = logs.send(app_id, logs1, tag=tag1)
+    r1 = logs.upload(app_id, file, tag=tag1)
     flush_id = logs.flush(r1['receiptId'])['flushId']
 
     i = LogsightIncident(u.user_id, u.token)
@@ -180,7 +171,8 @@ def incidents(file,
     click.echo(s)
 
 
-cli.add_command(diff)
+cli.add_command(transform)
+cli.add_command(compare)
 cli.add_command(incidents)
 
 

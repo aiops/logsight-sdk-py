@@ -26,11 +26,11 @@ def autodetect_datetime(date):
         return None
 
 
-def lines_to_struct(lines, **kwargs):
-    return [line_to_struct(line, **kwargs) for line in lines]
+def parse_lines(lines, **kwargs):
+    return [parse_line(line, **kwargs) for line in lines]
 
 
-def line_to_struct(line, sep, timestamp, level, message):
+def parse_line(line, sep, timestamp, level, message):
     t = line.split(sep=sep)
     ts = autodetect_datetime(sep.join(timestamp(t)))
     if not ts:
@@ -43,7 +43,7 @@ def line_to_struct(line, sep, timestamp, level, message):
 
 def parse_file(file_name, **kwargs):
     lines = read_lines(file_name)
-    return [i for i in lines_to_struct(lines, **kwargs) if i is not None]
+    return [i for i in parse_lines(lines, **kwargs) if i is not None]
     # return lines_to_struct(lines, **kwargs)
 
 
