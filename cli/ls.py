@@ -16,7 +16,7 @@ from logsight.compare import LogsightCompare
 from logsight.incidents import LogsightIncident
 from logsight.exceptions import Conflict
 
-from cli.log_parser import parse_line, parse_file
+from cli.log_parser import parse_line
 
 
 config = ConfigParser()
