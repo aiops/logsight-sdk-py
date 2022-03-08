@@ -33,6 +33,12 @@ CONFIG.update({i: os.environ[f'LOGSIGHT_{i}'] for i in CONFIG.keys()
 def cli():
     pass
 
+# python -m cli.ls diff ./tests/integration/fixtures/hadoop_name_node_v1 \
+# ./tests/integration/fixtures/hadoop_name_node_v2 \
+# --email jorge.cardoso.pt@gmail.com \
+# --password 'sawhUz-hanpe4-zaqtyr' \
+# --sep ' ' --date 0 1 --level 2 2 --message 3
+
 
 @click.command()
 @click.argument('file1', type=click.Path(exists=True))
