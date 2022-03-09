@@ -31,12 +31,13 @@ def parse_lines(lines, **kwargs):
 
 
 def parse_line(line, sep, timestamp, level, message):
-    t = line.split(sep=sep)
+    t = line.split()
     ts = autodetect_datetime(sep.join(timestamp(t)))
     if not ts:
         return None
+    lv = sep.join(level(t)) or 'INFO'
     return create_log_record(timestamp=ts,
-                             level=sep.join(level(t)),
+                             level=lv,
                              message=sep.join(message(t)),
                              metadata='')
 

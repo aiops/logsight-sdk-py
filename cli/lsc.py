@@ -29,6 +29,10 @@ CONFIG.update({i: os.environ[f'LOGSIGHT_{i}'] for i in CONFIG.keys()
                if f'LOGSIGHT_{i}' in os.environ})
 
 
+def app_name_generator():
+    return 'cli_' + ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
+
+
 @click.group()
 def cli():
     pass
@@ -45,7 +49,7 @@ def cli():
 @click.argument('file2', type=click.Path(exists=True))
 @click.option('--email', default=CONFIG['EMAIL'], help='email of logsight user')
 @click.option('--password', default=CONFIG['PASSWORD'], help='password of logsight user')
-@click.option('--clean', type=bool, help='Remove the application created')
+@click.option('--clean', type=bool, help='Remove the temporary application created')
 def compare(file1,
             file2,
             email,
@@ -56,16 +60,14 @@ def compare(file1,
 
     FILE1, FILE2 are the name of the log files to compare
     """
-    # click.echo(f'file1: {click.format_filename(file1)}, file2: {click.format_filename(file2)}')
-    # click.echo(f'email: {email}, password: {password}')
-
-    app_name = 'cli_diff_' + ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
     tag1 = 'v1.1.1'
     tag2 = 'v2.2.2'
 
     u = LogsightUser(email=email, password=password)
     app_mng = LogsightApplication(u.user_id, u.token)
+    app_name = app_name_generator()
     app_id = app_mng.create(app_name)['applicationId']
+    click.echo(f'app_name: {app_name} (app_id {app_id})')
 
     logs = LogsightLogs(u.token)
 
@@ -120,14 +122,14 @@ def transform(file,
                 level=lambda x: x[level[0]:level[1]],
                 message=lambda x: x[message:])
             if d:
-                w.write(' '.join([d[i] for i in ['timestamp', 'level', 'message']]))
+                w.write(' '.join([d[i] for i in ['timestamp', 'level', 'message']]) + '\n')
 
 
 @click.command()
 @click.argument('file', type=click.Path(exists=True))
 @click.option('--email', default=CONFIG['EMAIL'], help='email of logsight user')
 @click.option('--password', default=CONFIG['PASSWORD'], help='password of logsight user')
-@click.option('--clean', type=bool, help='Remove the application created')
+@click.option('--clean', type=bool, help='Remove the temporary application created')
 def incidents(file,
               email,
               password,
@@ -137,12 +139,13 @@ def incidents(file,
 
     FILE is the name of the log file
     """
-    app_name = 'cli_incident_' + ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
     tag1 = 'v1.1.1'
 
     u = LogsightUser(email=email, password=password)
     app_mng = LogsightApplication(u.user_id, u.token)
+    app_name = app_name_generator()
     app_id = app_mng.create(app_name)['applicationId']
+    click.echo(f'app_name: {app_name} (app_id {app_id})')
 
     logs = LogsightLogs(u.token)
 
