@@ -81,8 +81,7 @@ python -m cli.lsc compare ./tests/integration/fixtures/Mac_2k \
 
     comp = LogsightCompare(u.user_id, u.token)
     r = None
-    for char in (td := tqdm(range(1, N_CALL_RETRIES + 1), colour='white', file=sys.stdout)):
-        td.set_description("Call retries %s" % char)
+    for _ in (td := tqdm(range(1, N_CALL_RETRIES + 1), desc='Call retries', colour='white', file=sys.stdout)):
         td.refresh()
         try:
             r = comp.compare(app_id=app_id,
@@ -143,8 +142,7 @@ python -m cli.lsc incidents ./tests/integration/fixtures/hadoop_name_node_v1 \
     start_time = (now - datetime.timedelta(days=1)).isoformat()
 
     r = None
-    for char in (td := tqdm(range(1, N_CALL_RETRIES + 1), colour='white', file=sys.stdout)):
-        td.set_description("Call retries %s" % char)
+    for _ in (td := tqdm(range(1, N_CALL_RETRIES + 1), desc='Call retries', colour='white', file=sys.stdout)):
         td.refresh()
         try:
             r = i.incidents(app_id=app_id,
@@ -188,7 +186,7 @@ python -m cli.lsc transform ./tests/integration/fixtures/Mac_2k.log \
 --message 3
     """
 
-    with open(file, 'r', newline='') as r, open(output, 'w', newline='') as w:
+    with open(file, 'r') as r, open(output, 'w') as w:
         for line in r:
             d = parse_line(
                 line,
