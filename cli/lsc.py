@@ -1,4 +1,5 @@
 import os
+import sys
 import json
 import time
 import datetime
@@ -79,7 +80,10 @@ python -m cli.lsc compare ./tests/integration/fixtures/Mac_2k \
     flush_id = logs.flush(r1['receiptId'])['flushId']
 
     comp = LogsightCompare(u.user_id, u.token)
-    for _ in tqdm(range(1, N_CALL_RETRIES + 1)):
+    r = None
+    for char in (td := tqdm(range(1, N_CALL_RETRIES + 1), colour='white', file=sys.stdout)):
+        td.set_description("Call retries %s" % char)
+        td.refresh()
         try:
             r = comp.compare(app_id=app_id,
                              baseline_tag=tag1,
@@ -95,8 +99,11 @@ python -m cli.lsc compare ./tests/integration/fixtures/Mac_2k \
     if clean:
         app_mng.delete(app_id)
 
-    s = json.dumps(r, sort_keys=True, indent=4)
-    click.echo(s)
+    if r:
+        s = json.dumps(r, sort_keys=True, indent=4)
+        click.echo(s)
+    else:
+        click.echo('Unable to compare log files')
 
 
 @click.command()
@@ -135,7 +142,10 @@ python -m cli.lsc incidents ./tests/integration/fixtures/hadoop_name_node_v1 \
     stop_time = now.isoformat()
     start_time = (now - datetime.timedelta(days=1)).isoformat()
 
-    for _ in tqdm(range(1, N_CALL_RETRIES + 1)):
+    r = None
+    for char in (td := tqdm(range(1, N_CALL_RETRIES + 1), colour='white', file=sys.stdout)):
+        td.set_description("Call retries %s" % char)
+        td.refresh()
         try:
             r = i.incidents(app_id=app_id,
                             start_time=start_time,
@@ -148,8 +158,11 @@ python -m cli.lsc incidents ./tests/integration/fixtures/hadoop_name_node_v1 \
     if clean:
         app_mng.delete(app_id)
 
-    s = json.dumps(r, sort_keys=True, indent=4)
-    click.echo(s)
+    if r:
+        s = json.dumps(r, sort_keys=True, indent=4)
+        click.echo(s)
+    else:
+        click.echo('Unable to retrieve incidents')
 
 
 @click.command()
