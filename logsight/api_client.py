@@ -22,7 +22,7 @@ class APIClient:
                 "Content could not be converted from JSON: %s" % r.text
             )
 
-    def _post(self, host, path, json=None, files=None, headers=None):
+    def _post(self, host, path, json=None, files=None, headers=None, verbose=False):
         try:
             url = urllib.parse.urljoin(host, path)
             if json:
@@ -32,7 +32,7 @@ class APIClient:
             r.raise_for_status()
         except requests.exceptions.HTTPError as err:
             # TODO (jcardoso): remove or integrate
-            if r.text:
+            if r.text and verbose:
                 d = js.loads(r.text)
                 if 'message' in d:
                     print('Error', js.loads(r.text)['message'])

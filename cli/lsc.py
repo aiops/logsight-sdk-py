@@ -5,6 +5,7 @@ import datetime
 import click
 from configparser import ConfigParser
 from pathlib import Path
+from tqdm import tqdm
 
 import random
 import string
@@ -27,6 +28,8 @@ CONFIG.update({i: config['DEFAULT'][i] for i in CONFIG.keys()
                if config.has_option('DEFAULT', i)})
 CONFIG.update({i: os.environ[f'LOGSIGHT_{i}'] for i in CONFIG.keys()
                if f'LOGSIGHT_{i}' in os.environ})
+
+N_CALL_RETRIES = 10
 
 
 def app_name_generator():
@@ -54,8 +57,8 @@ def compare(file1,
 
     FILE1, FILE2 are the name of the log files to compare
 
-python -m cli.lsc compare ./tests/integration/fixtures/hadoop_name_node_v1_1kloc \
-./tests/integration/fixtures/hadoop_name_node_v2_1kloc \
+python -m cli.lsc compare ./tests/integration/fixtures/Mac_2k \
+./tests/integration/fixtures/Mac_2k \
 --email jorge.cardoso.pt@gmail.com \
 --password sawhUz-hanpe4-zaqtyr
     """
@@ -72,19 +75,17 @@ python -m cli.lsc compare ./tests/integration/fixtures/hadoop_name_node_v1_1kloc
 
     logs.upload(app_id, file1, tag=tag1)
     r1 = logs.upload(app_id, file2, tag=tag2)
-    time.sleep(5)
 
     flush_id = logs.flush(r1['receiptId'])['flushId']
-    time.sleep(5)
 
     comp = LogsightCompare(u.user_id, u.token)
-    while True:
+    for _ in tqdm(range(1, N_CALL_RETRIES + 1)):
         try:
             r = comp.compare(app_id=app_id,
                              baseline_tag=tag1,
                              candidate_tag=tag2,
-                             flush_id=flush_id)
-            print(r)
+                             flush_id=flush_id,
+                             verbose=False)
             break
         except Conflict:
             time.sleep(10)
@@ -112,7 +113,7 @@ def incidents(file,
 
     FILE is the name of the log file
 
-python -m cli.lsc incidents ./tests/integration/fixtures/Mac_2k \
+python -m cli.lsc incidents ./tests/integration/fixtures/hadoop_name_node_v1 \
 --email jorge.cardoso.pt@gmail.com \
 --password sawhUz-hanpe4-zaqtyr
     """
@@ -134,7 +135,7 @@ python -m cli.lsc incidents ./tests/integration/fixtures/Mac_2k \
     stop_time = now.isoformat()
     start_time = (now - datetime.timedelta(days=1)).isoformat()
 
-    while True:
+    for _ in tqdm(range(1, N_CALL_RETRIES + 1)):
         try:
             r = i.incidents(app_id=app_id,
                             start_time=start_time,
@@ -142,7 +143,7 @@ python -m cli.lsc incidents ./tests/integration/fixtures/Mac_2k \
                             flush_id=flush_id)
             break
         except Conflict:
-            time.sleep(240)
+            time.sleep(10)
 
     if clean:
         app_mng.delete(app_id)
@@ -174,7 +175,7 @@ python -m cli.lsc transform ./tests/integration/fixtures/Mac_2k.log \
 --message 3
     """
 
-    with open(file) as r, open(output, 'w') as w:
+    with open(file, 'r', newline='') as r, open(output, 'w', newline='') as w:
         for line in r:
             d = parse_line(
                 line,
@@ -182,7 +183,7 @@ python -m cli.lsc transform ./tests/integration/fixtures/Mac_2k.log \
                 level=lambda x: x[level[0]:level[1]],
                 message=lambda x: x[message:])
             if d:
-                w.write(' '.join([d[i] for i in ['timestamp', 'level', 'message']]) + '\n')
+                w.write(' '.join([d[i] for i in ['timestamp', 'level', 'message']]) + r.newlines)
 
 
 cli.add_command(transform)
