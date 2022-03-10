@@ -14,7 +14,7 @@ from logsight.application import LogsightApplication
 from logsight.logs import LogsightLogs
 from logsight.compare import LogsightCompare
 from logsight.incidents import LogsightIncident
-from logsight.exceptions import Conflict
+from logsight.exceptions import Conflict, NotFound
 
 from cli.log_parser import parse_line
 
@@ -37,12 +37,6 @@ def app_name_generator():
 def cli():
     pass
 
-# python -m cli.ls compare ./tests/integration/fixtures/hadoop_name_node_v1 \
-# ./tests/integration/fixtures/hadoop_name_node_v2 \
-# --email jorge.cardoso.pt@gmail.com \
-# --password 'sawhUz-hanpe4-zaqtyr' \
-# --sep ' ' --date 0 1 --level 2 2 --message 3
-
 
 @click.command()
 @click.argument('file1', type=click.Path(exists=True))
@@ -59,6 +53,11 @@ def compare(file1,
     compare log files by analyzing their states
 
     FILE1, FILE2 are the name of the log files to compare
+
+python -m cli.lsc compare ./tests/integration/fixtures/hadoop_name_node_v1_1kloc \
+./tests/integration/fixtures/hadoop_name_node_v2_1kloc \
+--email jorge.cardoso.pt@gmail.com \
+--password sawhUz-hanpe4-zaqtyr
     """
     tag1 = 'v1.1.1'
     tag2 = 'v2.2.2'
@@ -73,8 +72,10 @@ def compare(file1,
 
     logs.upload(app_id, file1, tag=tag1)
     r1 = logs.upload(app_id, file2, tag=tag2)
+    time.sleep(5)
 
     flush_id = logs.flush(r1['receiptId'])['flushId']
+    time.sleep(5)
 
     comp = LogsightCompare(u.user_id, u.token)
     while True:
@@ -83,46 +84,18 @@ def compare(file1,
                              baseline_tag=tag1,
                              candidate_tag=tag2,
                              flush_id=flush_id)
+            print(r)
             break
         except Conflict:
             time.sleep(10)
+        except NotFound:
+            pass
 
     if clean:
         app_mng.delete(app_id)
 
     s = json.dumps(r, sort_keys=True, indent=4)
     click.echo(s)
-
-
-@click.command()
-@click.argument('file', type=click.Path(exists=True))
-@click.option('--output', required=True, default=' ', type=str, help='name of the output file')
-@click.option('--sep', required=False, default=' ', type=str, help='separator used to break log line into array')
-@click.option('--date', required=True, type=click.Tuple([int, int]), help='indices of array with the date/time')
-@click.option('--level', required=True, type=click.Tuple([int, int]), help='indices of array with log level')
-@click.option('--message', required=True, type=int, help='index of array where message starts')
-def transform(file,
-              output,
-              sep,
-              date,
-              level,
-              message):
-    """
-    transforms the structure of a log file
-
-    FILE, the name of the log file to transform
-    """
-
-    with open(file) as r, open(output, 'w') as w:
-        for line in r:
-            d = parse_line(
-                line,
-                sep=sep,
-                timestamp=lambda x: x[date[0]:date[1]],
-                level=lambda x: x[level[0]:level[1]],
-                message=lambda x: x[message:])
-            if d:
-                w.write(' '.join([d[i] for i in ['timestamp', 'level', 'message']]) + '\n')
 
 
 @click.command()
@@ -138,6 +111,10 @@ def incidents(file,
     show the incidents that occurred in a log file
 
     FILE is the name of the log file
+
+python -m cli.lsc incidents ./tests/integration/fixtures/Mac_2k \
+--email jorge.cardoso.pt@gmail.com \
+--password sawhUz-hanpe4-zaqtyr
     """
     tag1 = 'v1.1.1'
 
@@ -165,13 +142,47 @@ def incidents(file,
                             flush_id=flush_id)
             break
         except Conflict:
-            time.sleep(10)
+            time.sleep(240)
 
     if clean:
         app_mng.delete(app_id)
 
     s = json.dumps(r, sort_keys=True, indent=4)
     click.echo(s)
+
+
+@click.command()
+@click.argument('file', type=click.Path(exists=True))
+@click.option('--output', required=True, default=' ', type=str, help='name of the output file')
+@click.option('--date', required=True, type=click.Tuple([int, int]), help='indices of array with the date/time')
+@click.option('--level', required=True, type=click.Tuple([int, int]), help='indices of array with log level')
+@click.option('--message', required=True, type=int, help='index of array where message starts')
+def transform(file,
+              output,
+              date,
+              level,
+              message):
+    """
+    transforms the structure of a log file
+
+    FILE, the name of the log file to transform
+
+python -m cli.lsc transform ./tests/integration/fixtures/Mac_2k.log \
+--output ./tests/integration/fixtures/Mac_2k \
+--date 0 3 \
+--level 3 3 \
+--message 3
+    """
+
+    with open(file) as r, open(output, 'w') as w:
+        for line in r:
+            d = parse_line(
+                line,
+                timestamp=lambda x: x[date[0]:date[1]],
+                level=lambda x: x[level[0]:level[1]],
+                message=lambda x: x[message:])
+            if d:
+                w.write(' '.join([d[i] for i in ['timestamp', 'level', 'message']]) + '\n')
 
 
 cli.add_command(transform)

@@ -20,7 +20,6 @@ def read_lines(file_name):
 
 def autodetect_datetime(date):
     try:
-        # return parser.parse(date).strftime('%Y-%m-%dT%H:%M:%S.%f')
         return parser.parse(date).replace(tzinfo=tzlocal()).isoformat()
     except parser._parser.ParserError as e:
         return None
@@ -30,16 +29,19 @@ def parse_lines(lines, **kwargs):
     return [parse_line(line, **kwargs) for line in lines]
 
 
-def parse_line(line, sep, timestamp, level, message):
-    t = line.split()
-    ts = autodetect_datetime(sep.join(timestamp(t)))
-    if not ts:
+def parse_line(line, timestamp, level, message):
+    sep = ' '
+    line_lst = line.split()
+
+    d = {'timestamp': autodetect_datetime(sep.join(timestamp(line_lst))),
+         'level': sep.join(level(line_lst)) or 'INFO',
+         'message': sep.join(message(line_lst)),
+         'metadata': ''}
+
+    if not d['timestamp']:
         return None
-    lv = sep.join(level(t)) or 'INFO'
-    return create_log_record(timestamp=ts,
-                             level=lv,
-                             message=sep.join(message(t)),
-                             metadata='')
+
+    return create_log_record(**d)
 
 
 def parse_file(file_name, **kwargs):
