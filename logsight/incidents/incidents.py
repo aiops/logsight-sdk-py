@@ -19,7 +19,7 @@ class LogsightIncident(APIClient):
     def __str__(self):
         return f'user id = {self.user_id}, token = {self.token}'
 
-    def incidents(self, app_id, start_time, stop_time, flush_id=None):
+    def incidents(self, app_id, start_time, stop_time, flush_id=None, verbose=False):
         """Retrieves the incidents of logs.
 
         Args:
@@ -27,6 +27,7 @@ class LogsightIncident(APIClient):
             start_time (str): Start time.
             stop_time (str): Stop time.
             flush_id (Union[str, None]): Flush id.
+            verbose (bool): provides additional information.
 
         Returns:
             dict.
@@ -60,4 +61,5 @@ class LogsightIncident(APIClient):
         return self._post(host=HOST_API,
                           path=PATH_LOGS_INCIDENTS.format(userId=self.user_id),
                           json=payload,
-                          headers=headers)
+                          headers=headers,
+                          verbose=verbose)

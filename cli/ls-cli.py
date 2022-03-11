@@ -16,7 +16,7 @@ from logsight.application import LogsightApplication
 from logsight.logs import LogsightLogs
 from logsight.compare import LogsightCompare
 from logsight.incidents import LogsightIncident
-from logsight.exceptions import Conflict, NotFound
+from logsight.exceptions import APIException, Conflict, NotFound
 
 from cli.log_parser import parse_line
 
@@ -30,15 +30,18 @@ CONFIG.update({i: config['DEFAULT'][i] for i in CONFIG.keys()
 CONFIG.update({i: os.environ[f'LOGSIGHT_{i}'] for i in CONFIG.keys()
                if f'LOGSIGHT_{i}' in os.environ})
 
+VERSION = 'v2022.03.11'
 N_CALL_RETRIES = 10
 
 
 def app_name_generator():
-    return 'cli_' + ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
+    return 'ls-cli_' + ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
 
 
 @click.group()
-def cli():
+@click.version_option(VERSION)
+@click.pass_context
+def cli(ctx):
     pass
 
 
@@ -47,30 +50,42 @@ def cli():
 @click.argument('file2', type=click.Path(exists=True))
 @click.option('--email', default=CONFIG['EMAIL'], help='email of logsight user')
 @click.option('--password', default=CONFIG['PASSWORD'], help='password of logsight user')
+@click.option('--tag1', default='v1.0.0', help='tag to assign to log file 1')
+@click.option('--tag2', default='v2.0.0', help='tag to assign to log file 2')
+@click.option('--verbose', type=bool, help='displays the progress of compare')
 @click.option('--clean', type=bool, help='Remove the temporary application created')
 def compare(file1,
             file2,
             email,
             password,
+            tag1,
+            tag2,
+            verbose,
             clean):
     """
     compare log files by analyzing their states
 
     FILE1, FILE2 are the name of the log files to compare
 
-python -m cli.lsc compare ./tests/integration/fixtures/Mac_2k \
-./tests/integration/fixtures/Mac_2k \
+python -m cli.logs compare \
+./tests/integration/fixtures/hadoop_name_node_v1 \
+./tests/integration/fixtures/hadoop_name_node_v2 \
 --email jorge.cardoso.pt@gmail.com \
---password sawhUz-hanpe4-zaqtyr
+--password sawhUz-hanpe4-zaqtyr | jq -r '.risk'
     """
-    tag1 = 'v1.1.1'
-    tag2 = 'v2.2.2'
-
     u = LogsightUser(email=email, password=password)
     app_mng = LogsightApplication(u.user_id, u.token)
     app_name = app_name_generator()
-    app_id = app_mng.create(app_name)['applicationId']
-    click.echo(f'app_name: {app_name} (app_id {app_id})')
+
+    app_id = None
+    try:
+        app_id = app_mng.create(app_name)['applicationId']
+    except APIException as e:
+        click.echo(f'Unable to create temporary application ({app_name})')
+        exit(1)
+
+    if verbose:
+        click.echo(f'app_name: {app_name} (app_id {app_id})')
 
     logs = LogsightLogs(u.token)
 
@@ -81,14 +96,18 @@ python -m cli.lsc compare ./tests/integration/fixtures/Mac_2k \
 
     comp = LogsightCompare(u.user_id, u.token)
     r = None
-    for _ in (td := tqdm(range(1, N_CALL_RETRIES + 1), desc='Call retries', colour='white', file=sys.stdout)):
+    for _ in (td := tqdm(range(1, N_CALL_RETRIES + 1),
+                         desc='Call retries',
+                         colour='white',
+                         file=sys.stdout,
+                         disable=not verbose)):
         td.refresh()
         try:
             r = comp.compare(app_id=app_id,
                              baseline_tag=tag1,
                              candidate_tag=tag2,
                              flush_id=flush_id,
-                             verbose=False)
+                             verbose=verbose)
             break
         except Conflict:
             time.sleep(10)
@@ -101,25 +120,30 @@ python -m cli.lsc compare ./tests/integration/fixtures/Mac_2k \
     if r:
         s = json.dumps(r, sort_keys=True, indent=4)
         click.echo(s)
+        exit(0)
     else:
         click.echo('Unable to compare log files')
+        exit(1)
 
 
 @click.command()
 @click.argument('file', type=click.Path(exists=True))
 @click.option('--email', default=CONFIG['EMAIL'], help='email of logsight user')
 @click.option('--password', default=CONFIG['PASSWORD'], help='password of logsight user')
+@click.option('--verbose', type=bool, help='displays the progress of compare')
 @click.option('--clean', type=bool, help='Remove the temporary application created')
 def incidents(file,
               email,
               password,
+              verbose,
               clean):
     """
     show the incidents that occurred in a log file
 
     FILE is the name of the log file
 
-python -m cli.lsc incidents ./tests/integration/fixtures/hadoop_name_node_v1 \
+python -m cli.logs incidents \
+./tests/integration/fixtures/hadoop_name_node_v1 \
 --email jorge.cardoso.pt@gmail.com \
 --password sawhUz-hanpe4-zaqtyr
     """
@@ -128,8 +152,16 @@ python -m cli.lsc incidents ./tests/integration/fixtures/hadoop_name_node_v1 \
     u = LogsightUser(email=email, password=password)
     app_mng = LogsightApplication(u.user_id, u.token)
     app_name = app_name_generator()
-    app_id = app_mng.create(app_name)['applicationId']
-    click.echo(f'app_name: {app_name} (app_id {app_id})')
+
+    app_id = None
+    try:
+        app_id = app_mng.create(app_name)['applicationId']
+    except APIException as e:
+        click.echo(f'Unable to create temporary application ({app_name})')
+        exit(1)
+
+    if verbose:
+        click.echo(f'app_name: {app_name} (app_id {app_id})')
 
     logs = LogsightLogs(u.token)
 
@@ -142,13 +174,18 @@ python -m cli.lsc incidents ./tests/integration/fixtures/hadoop_name_node_v1 \
     start_time = (now - datetime.timedelta(days=1)).isoformat()
 
     r = None
-    for _ in (td := tqdm(range(1, N_CALL_RETRIES + 1), desc='Call retries', colour='white', file=sys.stdout)):
+    for _ in (td := tqdm(range(1, N_CALL_RETRIES + 1),
+                         desc='Call retries',
+                         colour='white',
+                         file=sys.stdout,
+                         disable=not verbose)):
         td.refresh()
         try:
             r = i.incidents(app_id=app_id,
                             start_time=start_time,
                             stop_time=stop_time,
-                            flush_id=flush_id)
+                            flush_id=flush_id,
+                            verbose=not verbose)
             break
         except Conflict:
             time.sleep(10)
@@ -159,8 +196,10 @@ python -m cli.lsc incidents ./tests/integration/fixtures/hadoop_name_node_v1 \
     if r:
         s = json.dumps(r, sort_keys=True, indent=4)
         click.echo(s)
+        exit(0)
     else:
         click.echo('Unable to retrieve incidents')
+        exit(1)
 
 
 @click.command()
@@ -179,7 +218,7 @@ def transform(file,
 
     FILE, the name of the log file to transform
 
-python -m cli.lsc transform ./tests/integration/fixtures/Mac_2k.log \
+python -m cli.logs transform ./tests/integration/fixtures/Mac_2k.log \
 --output ./tests/integration/fixtures/Mac_2k \
 --date 0 3 \
 --level 3 3 \
@@ -197,9 +236,9 @@ python -m cli.lsc transform ./tests/integration/fixtures/Mac_2k.log \
                 w.write(' '.join([d[i] for i in ['timestamp', 'level', 'message']]) + r.newlines)
 
 
-cli.add_command(transform)
 cli.add_command(compare)
 cli.add_command(incidents)
+cli.add_command(transform)
 
 
 if __name__ == "__main__":

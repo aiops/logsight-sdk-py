@@ -27,9 +27,14 @@ class LogsightUser(APIClient):
         Returns:
             userId (str): Identifier for the user created
         """
-        payload = {"email": self.email, "password": self.password, "repeatPassword": self.password}
+        payload = {"email": self.email,
+                   "password": self.password,
+                   "repeatPassword": self.password}
         headers = {"content-type": "application/json"}
-        return self._post(HOST_API, PATH_USERS, json=payload, headers=headers)['userId']
+        return self._post(HOST_API,
+                          PATH_USERS,
+                          json=payload,
+                          headers=headers)['userId']
 
     def delete(self):
         """Deletes a new user.
@@ -37,11 +42,9 @@ class LogsightUser(APIClient):
         Returns:
             userId (str): Identifier for the user created
         """
-        payload = {"email": self.email, "password": self.password}
-        headers = {"content-type": "application/json"}
+        headers = {'content-type': 'application/json', 'Authorization': f'Bearer {self.token}'}
         return self._delete(HOST_API,
                             path=PATH_USERS_DELETE.format(userId=self.user_id),
-                            json=payload,
                             headers=headers)
 
     def _authenticate(self):
@@ -51,9 +54,13 @@ class LogsightUser(APIClient):
             token (str): Access token
             user_id (str): Identifier of the user
         """
-        payload = {"email": self.email, "password": self.password}
+        payload = {"email": self.email,
+                   "password": self.password}
         headers = {"content-type": "application/json"}
-        r = self._post(HOST_API, PATH_LOGIN, json=payload, headers=headers)
+        r = self._post(HOST_API,
+                       PATH_LOGIN,
+                       json=payload,
+                       headers=headers)
 
         self._user_id = r['user']['userId']
         self._token = r['token']
