@@ -5,3 +5,4 @@ gitchangelog            # BSD License (BSD 3-Clause License)
 twine                   # Apache Software License
 click                   # BSD License (BSD-3-Clause)
 tqdm
+prettytable
