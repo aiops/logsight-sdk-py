@@ -12,27 +12,24 @@ def apps(ctx):
     pass
 
 
-@apps.command('list')
+@apps.command()
 @click.pass_context
-def lst(ctx):
+def ls(ctx):
     """
     lists applications registered
 
-    python -m cli.ls-cli --email jorge.cardoso.pt@gmail.com --password sawhUz-hanpe4-zaqtyr applications list
+    python -m cli.ls-cli --email jorge.cardoso.pt@gmail.com --password sawhUz-hanpe4-zaqtyr applications ls
     """
     app_mng = LogsightApplication(ctx.obj['USER'].user_id, ctx.obj['USER'].token)
-
-    r = None
     try:
-        r = app_mng.lst()
+
+        table = PrettyTable(['application Id', 'Name'])
+        for a in app_mng.lst()['applications']:
+            table.add_row([a['applicationId'], a['name']])
+        click.echo(table)
+
     except APIException as e:
         click.echo(f'Unable to retrieve application list ({e})')
         exit(1)
-
-    if r:
-        table = PrettyTable(['application Id', 'Name'])
-        for a in r['applications']:
-            table.add_row([a['applicationId'], a['name']])
-        click.echo(table)
 
     exit(0)
