@@ -19,10 +19,13 @@ def ls(ctx):
     lists applications registered
 
     python -m cli.ls-cli --email jorge.cardoso.pt@gmail.com --password sawhUz-hanpe4-zaqtyr applications ls
+    python -m cli.ls-cli applications ls
     """
-    app_mng = LogsightApplication(ctx.obj['USER'].user_id, ctx.obj['USER'].token)
+    u = ctx.obj['USER']
+
     try:
 
+        app_mng = LogsightApplication(u.user_id, u.token)
         table = PrettyTable(['application Id', 'Name'])
         for a in app_mng.lst()['applications']:
             table.add_row([a['applicationId'], a['name']])
@@ -30,6 +33,30 @@ def ls(ctx):
 
     except APIException as e:
         click.echo(f'Unable to retrieve application list ({e})')
+        exit(1)
+
+    exit(0)
+
+
+@apps.command()
+@click.pass_context
+@click.option('--name', help='name of the application.')
+def create(ctx, name):
+    """
+    creates an application
+
+    python -m cli.ls-cli --email jorge.cardoso.pt@gmail.com --password sawhUz-hanpe4-zaqtyr applications create --name xxxx
+    """
+    u = ctx.obj['USER']
+
+    try:
+
+        app_mng = LogsightApplication(u.user_id, u.token)
+        r = app_mng.create(name)
+        click.echo(f"application_id: {r['applicationId']}")
+
+    except APIException as e:
+        click.echo(f'Unable to create application name: {name}')
         exit(1)
 
     exit(0)

@@ -31,11 +31,6 @@ class APIClient:
                 r = requests.post(url, files=files, headers=headers)
             r.raise_for_status()
         except requests.exceptions.HTTPError as err:
-            # TODO (jcardoso): remove or integrate
-            if r.text and verbose:
-                d = js.loads(r.text)
-                if 'message' in d:
-                    print('Error', js.loads(r.text)['message'])
             raise from_dict(js.loads(err.response.text))
 
         try:
