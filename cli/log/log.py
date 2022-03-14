@@ -8,12 +8,12 @@ from logsight.compare import LogsightCompare
 
 @click.group()
 @click.pass_context
-def logs(ctx):
+def log(ctx):
     """Operates on log files"""
     pass
 
 
-@logs.command('upload')
+@log.command('upload')
 @click.pass_context
 @click.argument('file', type=click.Path(exists=True))
 @click.option('--tag', help='tag to index the log file.')
@@ -24,17 +24,15 @@ def upload(ctx, file, tag, app_id):
 
     FILE is the name of the log file
 
-./tests/integration/fixtures/hadoop_name_node_v1 \
-
-python -m cli.ls-cli logs upload ./tests/integration/fixtures/Hadoop_2k.log --tag v1 \
---app_id 07402355-e74e-4115-b21d-4cbf453490d1
+    python -m cli.ls-cli log upload <file> --tag v1 --app_id <applicationId>
     """
     u = ctx.obj['USER']
+    a = app_id or ctx.obj['APP_ID']
 
     flush_id = None
     try:
         logs = LogsightLogs(u.token)
-        r = logs.upload(app_id, file, tag=tag)
+        r = logs.upload(a, file, tag=tag)
         flush_id = logs.flush(r['receiptId'])['flushId']
     except APIException as e:
         click.echo(f'Unable to upload log file to application ({e})')
@@ -44,23 +42,30 @@ python -m cli.ls-cli logs upload ./tests/integration/fixtures/Hadoop_2k.log --ta
     exit(0)
 
 
-@logs.command()
+@log.group()
+@click.pass_context
+def tag(ctx):
+    pass
+
+
+@tag.command()
 @click.pass_context
 @click.option('--app_id', help='application id which will receive the log file.')
-def tags(ctx, application_id):
+def ls(ctx, app_id):
     """
-    Get the tags of logs
+    List the tags of logs
 
-    python -m cli.ls-cli logs tags --app_id 07402355-e74e-4115-b21d-4cbf453490d1
+    python -m cli.ls-cli log tag ls --app_id <applicationId>
     """
     u = ctx.obj['USER']
+    a = app_id or ctx.obj['APP_ID']
 
     try:
 
         cmp_mng = LogsightCompare(u.user_id, u.token)
         table = PrettyTable(['Tag', 'View'])
-        for a in cmp_mng.tags(application_id):
-            table.add_row([a['tag'], a['tagView']])
+        for i in cmp_mng.tags(a):
+            table.add_row([i['tag'], i['tagView']])
         click.echo(table)
 
     except APIException as e:
