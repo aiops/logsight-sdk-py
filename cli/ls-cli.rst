@@ -26,6 +26,11 @@ INSTALLATION
 The CLI can can installed using pip from PyPI.
 It has been tested with Mac and Linux operating systems.
 
+PREREQUISITE
+============
+You have a Logsight account with `EMAIL` and `PASSWORD`.
+
+
 CONFIGURING THE LOGSIGHT COMMAND LINE INTERFACE
 ================================================
 There are several methods you can use to configure the settings that the Logsight CLI uses when interacting with Logsight.ai service,
@@ -97,6 +102,19 @@ The following list provides examples of useful commands:
     $ python -m cli.ls-cli compare log --app_id <applicationId> --tags <tag_v1> <tag_v2> --flush_id <flushId>
     $ python -m cli.ls-cli incident log --app_id <applicationId> --tags <tag_v1>
        $ python -m cli.ls-cli quality log --app_id <applicationId> --tags <tag_v1>
+
+
+EXAMPLES OF SCENARIO
+********************
+
+    $ python -m cli.ls-cli application create --name apache_srv2
+    $ # copy the <app_id> returned to next command
+    $ export LOGSIGHT_APP_ID=<app_id>
+    $ python -m cli.ls-cli log upload hadoop_name_node_v1 --tag v1
+    $ python -m cli.ls-cli log upload hadoop_name_node_v1 --tag v2
+    $ # copy <flush_id> returned to next command
+    $ python -m cli.ls-cli compare log --tags v1 v2 --flush_id <flush_id>
+
 
 
 

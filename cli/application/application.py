@@ -53,7 +53,7 @@ def create(ctx, name):
 
         app_mng = LogsightApplication(u.user_id, u.token)
         r = app_mng.create(name)
-        click.echo(f"application_id: {r['applicationId']}")
+        click.echo(f"app_id: {r['applicationId']}")
 
     except APIException as e:
         click.echo(f'Unable to create application name: {name} ({e})')
