@@ -17,8 +17,8 @@ def logs(ctx):
 @click.pass_context
 @click.argument('file', type=click.Path(exists=True))
 @click.option('--tag', help='tag to index the log file.')
-@click.option('--application_id', help='application id which will receive the log file.')
-def upload(ctx, file, tag, application_id):
+@click.option('--app_id', help='application id which will receive the log file.')
+def upload(ctx, file, tag, app_id):
     """
     Upload a log file to an application
 
@@ -27,14 +27,14 @@ def upload(ctx, file, tag, application_id):
 ./tests/integration/fixtures/hadoop_name_node_v1 \
 
 python -m cli.ls-cli logs upload ./tests/integration/fixtures/Hadoop_2k.log --tag v1 \
---application_id 07402355-e74e-4115-b21d-4cbf453490d1
+--app_id 07402355-e74e-4115-b21d-4cbf453490d1
     """
     u = ctx.obj['USER']
 
     flush_id = None
     try:
         logs = LogsightLogs(u.token)
-        r = logs.upload(application_id, file, tag=tag)
+        r = logs.upload(app_id, file, tag=tag)
         flush_id = logs.flush(r['receiptId'])['flushId']
     except APIException as e:
         click.echo(f'Unable to upload log file to application ({e})')
@@ -46,12 +46,12 @@ python -m cli.ls-cli logs upload ./tests/integration/fixtures/Hadoop_2k.log --ta
 
 @logs.command()
 @click.pass_context
-@click.option('--application_id', help='application id which will receive the log file.')
+@click.option('--app_id', help='application id which will receive the log file.')
 def tags(ctx, application_id):
     """
     Get the tags of logs
 
-    python -m cli.ls-cli logs tags --application_id 07402355-e74e-4115-b21d-4cbf453490d1
+    python -m cli.ls-cli logs tags --app_id 07402355-e74e-4115-b21d-4cbf453490d1
     """
     u = ctx.obj['USER']
 

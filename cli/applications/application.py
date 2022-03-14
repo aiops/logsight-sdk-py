@@ -26,7 +26,7 @@ def ls(ctx):
     try:
 
         app_mng = LogsightApplication(u.user_id, u.token)
-        table = PrettyTable(['application Id', 'Name'])
+        table = PrettyTable(['Application Id', 'Name'])
         for a in app_mng.lst()['applications']:
             table.add_row([a['applicationId'], a['name']])
         click.echo(table)

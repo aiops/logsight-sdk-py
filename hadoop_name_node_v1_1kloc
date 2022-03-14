@@ -1,0 +1,1000 @@
+2021-12-16 05:15:30,254 INFO org.apache.hadoop.hdfs.server.namenode.NameNode: STARTUP_MSG:
+2021-12-16 05:16:00,359 INFO org.apache.hadoop.hdfs.server.namenode.NameNode: registered UNIX signal handlers for [TERM, HUP, INT]
+2021-12-16 05:16:03,370 INFO org.apache.hadoop.hdfs.server.namenode.NameNode: createNameNode []
+2021-12-16 05:16:06,380 INFO org.apache.hadoop.metrics2.impl.MetricsConfig: Loaded properties from hadoop-metrics2.properties
+2021-12-16 05:16:09,391 INFO org.apache.hadoop.metrics2.impl.MetricsSystemImpl: Scheduled Metric snapshot period at 10 second(s).
+2021-12-16 05:16:12,401 INFO org.apache.hadoop.metrics2.impl.MetricsSystemImpl: NameNode metrics system started
+2021-12-16 05:16:15,412 INFO org.apache.hadoop.hdfs.server.namenode.NameNodeUtils: fs.defaultFS is hdfs://localhost:9000
+2021-12-16 05:16:18,422 INFO org.apache.hadoop.hdfs.server.namenode.NameNode: Clients should use localhost:9000 to access this namenode/service.
+2021-12-16 05:16:21,433 INFO org.apache.hadoop.util.JvmPauseMonitor: Starting JVM pause monitor
+2021-12-16 05:16:24,443 INFO org.apache.hadoop.hdfs.DFSUtil: Filter initializers set : org.apache.hadoop.http.lib.StaticUserWebFilter,org.apache.hadoop.hdfs.web.AuthFilterInitializer
+2021-12-16 05:16:27,454 INFO org.apache.hadoop.hdfs.DFSUtil: Starting Web-server for hdfs at: http://0.0.0.0:9870
+2021-12-16 05:16:30,464 INFO org.eclipse.jetty.util.log: Logging initialized @924ms to org.eclipse.jetty.util.log.Slf4jLog
+2021-12-16 05:16:36,485 INFO org.apache.hadoop.http.HttpRequestLog: Http request log for http.requests.namenode is not defined
+2021-12-16 05:16:39,496 INFO org.apache.hadoop.http.HttpServer2: Added global filter 'safety' (class=org.apache.hadoop.http.HttpServer2$QuotingInputFilter)
+2021-12-16 05:16:42,507 INFO org.apache.hadoop.http.HttpServer2: Added filter static_user_filter (class=org.apache.hadoop.http.lib.StaticUserWebFilter$StaticUserFilter) to context hdfs
+2021-12-16 05:16:45,517 INFO org.apache.hadoop.http.HttpServer2: Added filter static_user_filter (class=org.apache.hadoop.http.lib.StaticUserWebFilter$StaticUserFilter) to context logs
+2021-12-16 05:16:48,528 INFO org.apache.hadoop.http.HttpServer2: Added filter static_user_filter (class=org.apache.hadoop.http.lib.StaticUserWebFilter$StaticUserFilter) to context static
+2021-12-16 05:16:51,538 INFO org.apache.hadoop.http.HttpServer2: Added filter AuthFilter (class=org.apache.hadoop.hdfs.web.AuthFilter) to context hdfs
+2021-12-16 05:16:54,549 INFO org.apache.hadoop.http.HttpServer2: Added filter AuthFilter (class=org.apache.hadoop.hdfs.web.AuthFilter) to context logs
+2021-12-16 05:16:57,559 INFO org.apache.hadoop.http.HttpServer2: Added filter AuthFilter (class=org.apache.hadoop.hdfs.web.AuthFilter) to context static
+2021-12-16 05:17:00,570 INFO org.apache.hadoop.http.HttpServer2: addJerseyResourcePackage: packageName=org.apache.hadoop.hdfs.server.namenode.web.resources;org.apache.hadoop.hdfs.web.resources, pathSpec=/webhdfs/v1/*
+2021-12-16 05:17:03,580 INFO org.apache.hadoop.http.HttpServer2: Jetty bound to port 9870
+2021-12-16 05:17:06,591 INFO org.eclipse.jetty.server.Server: jetty-9.4.20.v20190813; built: 2019-08-13T21:28:18.144Z; git: 84700530e645e812b336747464d6fbbf370c9a20; jvm 1.8.0_292-8u292-b10-0ubuntu1~18.04-b10
+2021-12-16 05:17:09,601 INFO org.eclipse.jetty.server.session: DefaultSessionIdManager workerName=node0
+2021-12-16 05:17:12,612 INFO org.eclipse.jetty.server.session: No SessionScavenger set, using defaults
+2021-12-16 05:17:15,622 INFO org.eclipse.jetty.server.session: node0 Scavenging every 660000ms
+2021-12-16 05:17:21,643 INFO org.eclipse.jetty.server.handler.ContextHandler: Started o.e.j.s.ServletContextHandler@43f02ef2{logs,/logs,file:///home/hduser/hadoop-3.3.0/logs/,AVAILABLE}
+2021-12-16 05:17:24,654 INFO org.eclipse.jetty.server.handler.ContextHandler: Started o.e.j.s.ServletContextHandler@2de56eb2{static,/static,file:///home/hduser/hadoop-3.3.0/share/hadoop/hdfs/webapps/static/,AVAILABLE}
+2021-12-16 05:17:27,664 INFO org.eclipse.jetty.util.TypeUtil: JVM Runtime does not support Modules
+2021-12-16 05:17:30,675 INFO org.eclipse.jetty.server.handler.ContextHandler: Started o.e.j.w.WebAppContext@379614be{hdfs,/,file:///home/hduser/hadoop-3.3.0/share/hadoop/hdfs/webapps/hdfs/,AVAILABLE}{file:/home/hduser/hadoop-3.3.0/share/hadoop/hdfs/webapps/hdfs}
+2021-12-16 05:17:33,685 INFO org.eclipse.jetty.server.AbstractConnector: Started ServerConnector@3aa078fd{HTTP/1.1,[http/1.1]}{0.0.0.0:9870}
+2021-12-16 05:17:36,696 INFO org.eclipse.jetty.server.Server: Started @1199ms
+2021-12-16 05:17:45,728 INFO org.apache.hadoop.hdfs.server.namenode.FSEditLog: Edit logging is async:true
+2021-12-16 05:17:48,738 INFO org.apache.hadoop.hdfs.server.namenode.FSNamesystem: KeyProvider: null
+2021-12-16 05:17:51,749 INFO org.apache.hadoop.hdfs.server.namenode.FSNamesystem: fsLock is fair: true
+2021-12-16 05:17:54,759 INFO org.apache.hadoop.hdfs.server.namenode.FSNamesystem: Detailed lock hold time metrics enabled: false
+2021-12-16 05:17:57,770 INFO org.apache.hadoop.hdfs.server.namenode.FSNamesystem: fsOwner                = hduser (auth:SIMPLE)
+2021-12-16 05:18:00,780 INFO org.apache.hadoop.hdfs.server.namenode.FSNamesystem: supergroup             = supergroup
+2021-12-16 05:18:03,791 INFO org.apache.hadoop.hdfs.server.namenode.FSNamesystem: isPermissionEnabled    = false
+2021-12-16 05:18:06,801 INFO org.apache.hadoop.hdfs.server.namenode.FSNamesystem: isStoragePolicyEnabled = true
+2021-12-16 05:18:09,812 INFO org.apache.hadoop.hdfs.server.namenode.FSNamesystem: HA Enabled: false
+2021-12-16 05:18:12,822 INFO org.apache.hadoop.hdfs.server.common.Util: dfs.datanode.fileio.profiling.sampling.percentage set to 0. Disabling file IO profiling
+2021-12-16 05:18:15,833 INFO org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager: dfs.block.invalidate.limit: configured=1000, counted=60, effected=1000
+2021-12-16 05:18:18,843 INFO org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager: dfs.namenode.datanode.registration.ip-hostname-check=true
+2021-12-16 05:18:21,854 INFO org.apache.hadoop.hdfs.server.blockmanagement.BlockManager: dfs.namenode.startup.delay.block.deletion.sec is set to 000:00:00:00.000
+2021-12-16 05:18:24,864 INFO org.apache.hadoop.hdfs.server.blockmanagement.BlockManager: The block deletion will start around 2021 Dec 15 14:58:20
+2021-12-16 05:18:27,875 INFO org.apache.hadoop.util.GSet: Computing capacity for map BlocksMap
+2021-12-16 05:18:30,885 INFO org.apache.hadoop.util.GSet: VM type       = 64-bit
+2021-12-16 05:18:33,896 INFO org.apache.hadoop.util.GSet: 2.0% max memory 3.5 GB = 70.8 MB
+2021-12-16 05:18:36,906 INFO org.apache.hadoop.util.GSet: capacity      = 2^23 = 8388608 entries
+2021-12-16 05:18:39,917 INFO org.apache.hadoop.hdfs.server.blockmanagement.BlockManager: Storage policy satisfier is disabled
+2021-12-16 05:18:42,928 INFO org.apache.hadoop.hdfs.server.blockmanagement.BlockManager: dfs.block.access.token.enable = false
+2021-12-16 05:18:45,938 INFO org.apache.hadoop.hdfs.server.blockmanagement.BlockManagerSafeMode: dfs.namenode.safemode.threshold-pct = 0.999
+2021-12-16 05:18:48,949 INFO org.apache.hadoop.hdfs.server.blockmanagement.BlockManagerSafeMode: dfs.namenode.safemode.min.datanodes = 0
+2021-12-16 05:18:51,959 INFO org.apache.hadoop.hdfs.server.blockmanagement.BlockManagerSafeMode: dfs.namenode.safemode.extension = 30000
+2021-12-16 05:18:54,970 INFO org.apache.hadoop.hdfs.server.blockmanagement.BlockManager: defaultReplication         = 1
+2021-12-16 05:18:57,980 INFO org.apache.hadoop.hdfs.server.blockmanagement.BlockManager: maxReplication             = 512
+2021-12-16 05:19:00,991 INFO org.apache.hadoop.hdfs.server.blockmanagement.BlockManager: minReplication             = 1
+2021-12-16 05:19:04,001 INFO org.apache.hadoop.hdfs.server.blockmanagement.BlockManager: maxReplicationStreams      = 2
+2021-12-16 05:19:07,012 INFO org.apache.hadoop.hdfs.server.blockmanagement.BlockManager: redundancyRecheckInterval  = 3000ms
+2021-12-16 05:19:10,022 INFO org.apache.hadoop.hdfs.server.blockmanagement.BlockManager: encryptDataTransfer        = false
+2021-12-16 05:19:13,033 INFO org.apache.hadoop.hdfs.server.blockmanagement.BlockManager: maxNumBlocksToLog          = 1000
+2021-12-16 05:19:16,043 INFO org.apache.hadoop.hdfs.server.namenode.FSDirectory: GLOBAL serial map: bits=29 maxEntries=536870911
+2021-12-16 05:19:19,054 INFO org.apache.hadoop.hdfs.server.namenode.FSDirectory: USER serial map: bits=24 maxEntries=16777215
+2021-12-16 05:19:22,064 INFO org.apache.hadoop.hdfs.server.namenode.FSDirectory: GROUP serial map: bits=24 maxEntries=16777215
+2021-12-16 05:19:25,075 INFO org.apache.hadoop.hdfs.server.namenode.FSDirectory: XATTR serial map: bits=24 maxEntries=16777215
+2021-12-16 05:19:28,085 INFO org.apache.hadoop.util.GSet: Computing capacity for map INodeMap
+2021-12-16 05:19:31,096 INFO org.apache.hadoop.util.GSet: VM type       = 64-bit
+2021-12-16 05:19:34,106 INFO org.apache.hadoop.util.GSet: 1.0% max memory 3.5 GB = 35.4 MB
+2021-12-16 05:19:37,117 INFO org.apache.hadoop.util.GSet: capacity      = 2^22 = 4194304 entries
+2021-12-16 05:19:40,128 INFO org.apache.hadoop.hdfs.server.namenode.FSDirectory: ACLs enabled? true
+2021-12-16 05:19:43,138 INFO org.apache.hadoop.hdfs.server.namenode.FSDirectory: POSIX ACL inheritance enabled? true
+2021-12-16 05:19:46,149 INFO org.apache.hadoop.hdfs.server.namenode.FSDirectory: XAttrs enabled? true
+2021-12-16 05:19:49,159 INFO org.apache.hadoop.hdfs.server.namenode.NameNode: Caching file names occurring more than 10 times
+2021-12-16 05:19:52,170 INFO org.apache.hadoop.hdfs.server.namenode.snapshot.SnapshotManager: Loaded config captureOpenFiles: false, skipCaptureAccessTimeOnlyChange: false, snapshotDiffAllowSnapRootDescendant: true, maxSnapshotLimit: 65536
+2021-12-16 05:19:55,180 INFO org.apache.hadoop.hdfs.server.namenode.snapshot.SnapshotManager: SkipList is disabled
+2021-12-16 05:19:58,191 INFO org.apache.hadoop.util.GSet: Computing capacity for map cachedBlocks
+2021-12-16 05:20:01,201 INFO org.apache.hadoop.util.GSet: VM type       = 64-bit
+2021-12-16 05:20:04,212 INFO org.apache.hadoop.util.GSet: 0.25% max memory 3.5 GB = 8.9 MB
+2021-12-16 05:20:07,222 INFO org.apache.hadoop.util.GSet: capacity      = 2^20 = 1048576 entries
+2021-12-16 05:20:10,233 INFO org.apache.hadoop.hdfs.server.namenode.top.metrics.TopMetrics: NNTop conf: dfs.namenode.top.window.num.buckets = 10
+2021-12-16 05:20:13,243 INFO org.apache.hadoop.hdfs.server.namenode.top.metrics.TopMetrics: NNTop conf: dfs.namenode.top.num.users = 10
+2021-12-16 05:20:16,254 INFO org.apache.hadoop.hdfs.server.namenode.top.metrics.TopMetrics: NNTop conf: dfs.namenode.top.windows.minutes = 1,5,25
+2021-12-16 05:20:19,264 INFO org.apache.hadoop.hdfs.server.namenode.FSNamesystem: Retry cache on namenode is enabled
+2021-12-16 05:20:22,275 INFO org.apache.hadoop.hdfs.server.namenode.FSNamesystem: Retry cache will use 0.03 of total heap and retry cache entry expiry time is 600000 millis
+2021-12-16 05:20:25,285 INFO org.apache.hadoop.util.GSet: Computing capacity for map NameNodeRetryCache
+2021-12-16 05:20:28,296 INFO org.apache.hadoop.util.GSet: VM type       = 64-bit
+2021-12-16 05:20:31,306 INFO org.apache.hadoop.util.GSet: 0.029999999329447746% max memory 3.5 GB = 1.1 MB
+2021-12-16 05:20:34,317 INFO org.apache.hadoop.util.GSet: capacity      = 2^17 = 131072 entries
+2021-12-16 05:20:37,328 INFO org.apache.hadoop.hdfs.server.common.Storage: Lock on /tmp/hadoop-hduser/dfs/name/in_use.lock acquired by nodename 246@hadoop
+2021-12-16 05:20:40,338 INFO org.apache.hadoop.hdfs.server.namenode.FileJournalManager: Recovering unfinalized segments in /tmp/hadoop-hduser/dfs/name/current
+2021-12-16 05:20:43,349 INFO org.apache.hadoop.hdfs.server.namenode.FSImage: No edit log streams selected.
+2021-12-16 05:20:46,359 INFO org.apache.hadoop.hdfs.server.namenode.FSImage: Planning to load image: FSImageFile(file=/tmp/hadoop-hduser/dfs/name/current/fsimage_0000000000000000000, cpktTxId=0000000000000000000)
+2021-12-16 05:20:49,370 INFO org.apache.hadoop.hdfs.server.namenode.FSImageFormatPBINode: Loading 1 INodes.
+2021-12-16 05:20:52,380 INFO org.apache.hadoop.hdfs.server.namenode.FSImageFormatPBINode: Successfully loaded 1 inodes
+2021-12-16 05:20:55,391 INFO org.apache.hadoop.hdfs.server.namenode.FSImageFormatProtobuf: Loaded FSImage in 0 seconds.
+2021-12-16 05:20:58,401 INFO org.apache.hadoop.hdfs.server.namenode.FSImage: Loaded image for txid 0 from /tmp/hadoop-hduser/dfs/name/current/fsimage_0000000000000000000
+2021-12-16 05:21:01,412 INFO org.apache.hadoop.hdfs.server.namenode.FSNamesystem: Need to save fs image? false (staleImage=false, haEnabled=false, isRollingUpgrade=false)
+2021-12-16 05:21:04,422 INFO org.apache.hadoop.hdfs.server.namenode.FSEditLog: Starting log segment at 1
+2021-12-16 05:21:07,433 INFO org.apache.hadoop.hdfs.server.namenode.NameCache: initialized with 0 entries 0 lookups
+2021-12-16 05:21:10,443 INFO org.apache.hadoop.hdfs.server.namenode.FSNamesystem: Finished loading FSImage in 209 msecs
+2021-12-16 05:21:13,454 INFO org.apache.hadoop.hdfs.server.namenode.NameNode: RPC server is binding to localhost:9000
+2021-12-16 05:21:16,464 INFO org.apache.hadoop.hdfs.server.namenode.NameNode: Enable NameNode state context:false
+2021-12-16 05:21:19,475 INFO org.apache.hadoop.ipc.CallQueueManager: Using callQueue: class java.util.concurrent.LinkedBlockingQueue, queueCapacity: 1000, scheduler: class org.apache.hadoop.ipc.DefaultRpcScheduler, ipcBackoff: false.
+2021-12-16 05:21:22,485 INFO org.apache.hadoop.ipc.Server: Starting Socket Reader #1 for port 9000
+2021-12-16 05:21:25,496 INFO org.apache.hadoop.hdfs.server.namenode.FSNamesystem: Registered FSNamesystemState, ReplicatedBlocksState and ECBlockGroupsState MBeans.
+2021-12-16 05:21:28,506 INFO org.apache.hadoop.hdfs.server.namenode.LeaseManager: Number of blocks under construction: 0
+2021-12-16 05:21:31,517 INFO org.apache.hadoop.hdfs.server.blockmanagement.DatanodeAdminDefaultMonitor: Initialized the Default Decommission and Maintenance monitor
+2021-12-16 05:21:34,528 INFO org.apache.hadoop.hdfs.server.blockmanagement.BlockManager: initializing replication queues
+2021-12-16 05:21:37,538 INFO org.apache.hadoop.hdfs.StateChange: STATE* Leaving safe mode after 0 secs
+2021-12-16 05:21:40,549 INFO org.apache.hadoop.hdfs.StateChange: STATE* Network topology has 0 racks and 0 datanodes
+2021-12-16 05:21:43,559 INFO org.apache.hadoop.hdfs.StateChange: STATE* UnderReplicatedBlocks has 0 blocks
+2021-12-16 05:21:46,570 INFO org.apache.hadoop.hdfs.server.blockmanagement.BlockManager: Total number of blocks            = 0
+2021-12-16 05:21:49,580 INFO org.apache.hadoop.hdfs.server.blockmanagement.BlockManager: Number of invalid blocks          = 0
+2021-12-16 05:21:52,591 INFO org.apache.hadoop.hdfs.server.blockmanagement.BlockManager: Number of under-replicated blocks = 0
+2021-12-16 05:21:55,601 INFO org.apache.hadoop.hdfs.server.blockmanagement.BlockManager: Number of  over-replicated blocks = 0
+2021-12-16 05:21:58,612 INFO org.apache.hadoop.hdfs.server.blockmanagement.BlockManager: Number of blocks being written    = 0
+2021-12-16 05:22:01,622 INFO org.apache.hadoop.hdfs.StateChange: STATE* Replication Queue initialization scan for invalid, over- and under-replicated blocks completed in 17 msec
+2021-12-16 05:22:04,633 INFO org.apache.hadoop.ipc.Server: IPC Server Responder: starting
+2021-12-16 05:22:07,643 INFO org.apache.hadoop.ipc.Server: IPC Server listener on 9000: starting
+2021-12-16 05:22:10,654 INFO org.apache.hadoop.hdfs.server.namenode.NameNode: NameNode RPC up at: localhost/127.0.0.1:9000
+2021-12-16 05:22:13,664 INFO org.apache.hadoop.hdfs.server.namenode.FSNamesystem: Starting services required for active state
+2021-12-16 05:22:16,675 INFO org.apache.hadoop.hdfs.server.namenode.FSDirectory: Initializing quota with 4 thread(s)
+2021-12-16 05:22:19,685 INFO org.apache.hadoop.hdfs.server.namenode.FSDirectory: Quota initialization completed in 6 milliseconds
+name space=1
+storage space=0
+storage types=RAM_DISK=0, SSD=0, DISK=0, ARCHIVE=0, PROVIDED=0
+2021-12-16 05:22:31,728 INFO org.apache.hadoop.hdfs.server.blockmanagement.CacheReplicationMonitor: Starting CacheReplicationMonitor with interval 30000 milliseconds
+2021-12-16 05:22:34,738 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* registerDatanode: from DatanodeRegistration(127.0.0.1:9866, datanodeUuid=d5b8eb69-1a9a-47d2-b7fb-1105b1033103, infoPort=9864, infoSecurePort=0, ipcPort=9867, storageInfo=lv=-57;cid=CID-05abffff-caae-4873-89ee-83e99b4e3019;nsid=346866182;c=1639580298019) storage d5b8eb69-1a9a-47d2-b7fb-1105b1033103
+2021-12-16 05:22:37,749 INFO org.apache.hadoop.net.NetworkTopology: Adding a new node: /default-rack/127.0.0.1:9866
+2021-12-16 05:22:40,759 INFO org.apache.hadoop.hdfs.server.blockmanagement.BlockReportLeaseManager: Registered DN d5b8eb69-1a9a-47d2-b7fb-1105b1033103 (127.0.0.1:9866).
+2021-12-16 05:22:43,770 INFO org.apache.hadoop.hdfs.server.blockmanagement.DatanodeDescriptor: Adding new storage ID DS-7fd3b0f5-0838-4096-ac43-f20520e8ca2c for DN 127.0.0.1:9866
+2021-12-16 05:22:46,780 INFO BlockStateChange: BLOCK* processReport 0x523c504ae7228cbf: Processing first storage report for DS-7fd3b0f5-0838-4096-ac43-f20520e8ca2c from datanode d5b8eb69-1a9a-47d2-b7fb-1105b1033103
+2021-12-16 05:22:49,791 INFO BlockStateChange: BLOCK* processReport 0x523c504ae7228cbf: from storage DS-7fd3b0f5-0838-4096-ac43-f20520e8ca2c node DatanodeRegistration(127.0.0.1:9866, datanodeUuid=d5b8eb69-1a9a-47d2-b7fb-1105b1033103, infoPort=9864, infoSecurePort=0, ipcPort=9867, storageInfo=lv=-57;cid=CID-05abffff-caae-4873-89ee-83e99b4e3019;nsid=346866182;c=1639580298019), blocks: 0, hasStaleStorage: false, processing time: 1 msecs, invalidatedBlocks: 0
+2021-12-16 05:22:52,801 INFO org.apache.hadoop.hdfs.server.namenode.FSNamesystem: Roll Edit Log from 127.0.0.1
+2021-12-16 05:22:55,812 INFO org.apache.hadoop.hdfs.server.namenode.FSEditLog: Rolling edit logs
+2021-12-16 05:22:58,822 INFO org.apache.hadoop.hdfs.server.namenode.FSEditLog: Ending log segment 1, 1
+2021-12-16 05:23:01,833 INFO org.apache.hadoop.hdfs.server.namenode.FSEditLog: Number of transactions: 2 Total time for transactions(ms): 0 Number of transactions batched in Syncs: 0 Number of syncs: 2 SyncTimes(ms): 8 
+2021-12-16 05:23:04,843 INFO org.apache.hadoop.hdfs.server.namenode.FSEditLog: Number of transactions: 2 Total time for transactions(ms): 0 Number of transactions batched in Syncs: 0 Number of syncs: 3 SyncTimes(ms): 11 
+2021-12-16 05:23:07,854 INFO org.apache.hadoop.hdfs.server.namenode.FileJournalManager: Finalizing edits file /tmp/hadoop-hduser/dfs/name/current/edits_inprogress_0000000000000000001 -> /tmp/hadoop-hduser/dfs/name/current/edits_0000000000000000001-0000000000000000002
+2021-12-16 05:23:10,864 INFO org.apache.hadoop.hdfs.server.namenode.FSEditLog: Starting log segment at 3
+2021-12-16 05:23:13,875 INFO org.apache.hadoop.hdfs.server.namenode.TransferFsImage: Sending fileName: /tmp/hadoop-hduser/dfs/name/current/fsimage_0000000000000000000, fileSize: 401. Sent total: 401 bytes. Size of last segment intended to send: -1 bytes.
+2021-12-16 05:23:16,885 INFO org.apache.hadoop.hdfs.server.namenode.TransferFsImage: Sending fileName: /tmp/hadoop-hduser/dfs/name/current/edits_0000000000000000001-0000000000000000002, fileSize: 42. Sent total: 42 bytes. Size of last segment intended to send: -1 bytes.
+2021-12-16 05:23:19,896 INFO org.apache.hadoop.hdfs.server.namenode.ImageServlet: Rejecting a fsimage due to small time delta and txnid delta. Time since previous checkpoint is 68 expecting at least 2700 txnid delta since previous checkpoint is 2 expecting at least 1000000
+2021-12-16 05:23:22,906 INFO org.apache.hadoop.hdfs.server.namenode.FSEditLog: Number of transactions: 2 Total time for transactions(ms): 10 Number of transactions batched in Syncs: 0 Number of syncs: 2 SyncTimes(ms): 8 
+2021-12-16 05:23:25,917 INFO org.apache.hadoop.hdfs.server.namenode.FSEditLog: Number of transactions: 3 Total time for transactions(ms): 10 Number of transactions batched in Syncs: 0 Number of syncs: 3 SyncTimes(ms): 10 
+2021-12-16 05:23:28,928 INFO org.apache.hadoop.hdfs.server.namenode.FSEditLog: Number of transactions: 4 Total time for transactions(ms): 10 Number of transactions batched in Syncs: 0 Number of syncs: 4 SyncTimes(ms): 12 
+2021-12-16 05:23:31,938 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741825_1001, replicas=127.0.0.1:9866 for /user/hduser/input/capacity-scheduler.xml._COPYING_
+2021-12-16 05:23:34,949 INFO org.apache.hadoop.hdfs.server.namenode.FSNamesystem: BLOCK* blk_1073741825_1001 is COMMITTED but not COMPLETE(numNodes= 0 <  minimum = 1) in file /user/hduser/input/capacity-scheduler.xml._COPYING_
+2021-12-16 05:23:37,959 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/input/capacity-scheduler.xml._COPYING_ is closed by DFSClient_NONMAPREDUCE_1623474964_1
+2021-12-16 05:23:40,970 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741826_1002, replicas=127.0.0.1:9866 for /user/hduser/input/core-site.xml._COPYING_
+2021-12-16 05:23:43,980 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/input/core-site.xml._COPYING_ is closed by DFSClient_NONMAPREDUCE_1623474964_1
+2021-12-16 05:23:46,991 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741827_1003, replicas=127.0.0.1:9866 for /user/hduser/input/hadoop-policy.xml._COPYING_
+2021-12-16 05:23:50,001 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/input/hadoop-policy.xml._COPYING_ is closed by DFSClient_NONMAPREDUCE_1623474964_1
+2021-12-16 05:23:53,012 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741828_1004, replicas=127.0.0.1:9866 for /user/hduser/input/hdfs-rbf-site.xml._COPYING_
+2021-12-16 05:23:56,022 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/input/hdfs-rbf-site.xml._COPYING_ is closed by DFSClient_NONMAPREDUCE_1623474964_1
+2021-12-16 05:23:59,033 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741829_1005, replicas=127.0.0.1:9866 for /user/hduser/input/hdfs-site.xml._COPYING_
+2021-12-16 05:24:02,043 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/input/hdfs-site.xml._COPYING_ is closed by DFSClient_NONMAPREDUCE_1623474964_1
+2021-12-16 05:24:05,054 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741830_1006, replicas=127.0.0.1:9866 for /user/hduser/input/httpfs-site.xml._COPYING_
+2021-12-16 05:24:08,064 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/input/httpfs-site.xml._COPYING_ is closed by DFSClient_NONMAPREDUCE_1623474964_1
+2021-12-16 05:24:11,075 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741831_1007, replicas=127.0.0.1:9866 for /user/hduser/input/kms-acls.xml._COPYING_
+2021-12-16 05:24:14,085 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/input/kms-acls.xml._COPYING_ is closed by DFSClient_NONMAPREDUCE_1623474964_1
+2021-12-16 05:24:17,096 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741832_1008, replicas=127.0.0.1:9866 for /user/hduser/input/kms-site.xml._COPYING_
+2021-12-16 05:24:20,106 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/input/kms-site.xml._COPYING_ is closed by DFSClient_NONMAPREDUCE_1623474964_1
+2021-12-16 05:24:23,117 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741833_1009, replicas=127.0.0.1:9866 for /user/hduser/input/mapred-site.xml._COPYING_
+2021-12-16 05:24:26,128 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/input/mapred-site.xml._COPYING_ is closed by DFSClient_NONMAPREDUCE_1623474964_1
+2021-12-16 05:24:29,138 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741834_1010, replicas=127.0.0.1:9866 for /user/hduser/input/yarn-site.xml._COPYING_
+2021-12-16 05:24:32,149 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/input/yarn-site.xml._COPYING_ is closed by DFSClient_NONMAPREDUCE_1623474964_1
+2021-12-16 05:24:35,159 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741835_1011, replicas=127.0.0.1:9866 for /user/hduser/grep-temp-398500143/_temporary/0/_temporary/attempt_local626765149_0001_r_000000_0/part-r-00000
+2021-12-16 05:24:38,170 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/grep-temp-398500143/_temporary/0/_temporary/attempt_local626765149_0001_r_000000_0/part-r-00000 is closed by DFSClient_NONMAPREDUCE_-911932899_1
+2021-12-16 05:24:41,180 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/grep-temp-398500143/_SUCCESS is closed by DFSClient_NONMAPREDUCE_-911932899_1
+2021-12-16 05:24:44,191 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/output/_temporary/0/_temporary/attempt_local1570347813_0002_r_000000_0/part-r-00000 is closed by DFSClient_NONMAPREDUCE_-911932899_1
+2021-12-16 05:24:47,201 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/output/_SUCCESS is closed by DFSClient_NONMAPREDUCE_-911932899_1
+2021-12-16 05:24:50,212 INFO org.apache.hadoop.hdfs.server.namenode.FSEditLog: Number of transactions: 92 Total time for transactions(ms): 17 Number of transactions batched in Syncs: 15 Number of syncs: 76 SyncTimes(ms): 164 
+2021-12-16 05:24:53,222 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741836_1012, replicas=127.0.0.1:9866 for /home/hduser/hadoop-3.3.0/pi_5_84.hex
+2021-12-16 05:24:56,233 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /home/hduser/hadoop-3.3.0/pi_5_84.hex is closed by DFSClient_NONMAPREDUCE_974923741_1
+2021-12-16 05:24:59,243 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /home/hduser/hadoop-3.3.0/out/_temporary/0/_temporary/attempt_local209859535_0001_r_000000_0/part-r-00000 is closed by DFSClient_NONMAPREDUCE_974923741_1
+2021-12-16 05:25:02,254 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /home/hduser/hadoop-3.3.0/out/_SUCCESS is closed by DFSClient_NONMAPREDUCE_974923741_1
+2021-12-16 05:25:05,264 INFO org.apache.hadoop.hdfs.server.namenode.FSEditLog: Number of transactions: 110 Total time for transactions(ms): 18 Number of transactions batched in Syncs: 20 Number of syncs: 90 SyncTimes(ms): 218 
+2021-12-16 05:25:08,275 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741837_1013, replicas=127.0.0.1:9866 for /home/hduser/hadoop-3.3.0/o1/pi_5_84.hex
+2021-12-16 05:25:11,285 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /home/hduser/hadoop-3.3.0/o1/pi_5_84.hex is closed by DFSClient_NONMAPREDUCE_-640718720_1
+2021-12-16 05:25:14,296 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /home/hduser/hadoop-3.3.0/o1/out/_temporary/0/_temporary/attempt_local1655588658_0001_r_000000_0/part-r-00000 is closed by DFSClient_NONMAPREDUCE_-640718720_1
+2021-12-16 05:25:17,306 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /home/hduser/hadoop-3.3.0/o1/out/_SUCCESS is closed by DFSClient_NONMAPREDUCE_-640718720_1
+2021-12-16 05:25:20,317 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741838_1014, replicas=127.0.0.1:9866 for /home/hduser/hadoop-3.3.0/o2/pi_5_84.hex
+2021-12-16 05:25:23,328 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /home/hduser/hadoop-3.3.0/o2/pi_5_84.hex is closed by DFSClient_NONMAPREDUCE_1591429310_1
+2021-12-16 05:25:26,338 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /home/hduser/hadoop-3.3.0/o2/out/_temporary/0/_temporary/attempt_local1085396476_0001_r_000000_0/part-r-00000 is closed by DFSClient_NONMAPREDUCE_1591429310_1
+2021-12-16 05:25:29,349 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /home/hduser/hadoop-3.3.0/o2/out/_SUCCESS is closed by DFSClient_NONMAPREDUCE_1591429310_1
+2021-12-16 05:25:32,359 INFO org.apache.hadoop.http.HttpServer2: Process Thread Dump: jsp requested
+47 active threads
+Thread 65 (qtp262445056-65):
+  State: TIMED_WAITING
+  Blocked count: 0
+  Waited count: 19
+  Stack:
+    sun.misc.Unsafe.park(Native Method)
+    java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+    java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2163)
+    org.eclipse.jetty.util.thread.ReservedThreadExecutor$ReservedThread.reservedWait(ReservedThreadExecutor.java:293)
+    org.eclipse.jetty.util.thread.ReservedThreadExecutor$ReservedThread.run(ReservedThreadExecutor.java:358)
+    org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:782)
+    org.eclipse.jetty.util.thread.QueuedThreadPool$Runner.run(QueuedThreadPool.java:918)
+    java.lang.Thread.run(Thread.java:748)
+Thread 62 (qtp262445056-62):
+  State: RUNNABLE
+  Blocked count: 7
+  Waited count: 19
+  Stack:
+    sun.management.ThreadImpl.getThreadInfo1(Native Method)
+    sun.management.ThreadImpl.getThreadInfo(ThreadImpl.java:185)
+    sun.management.ThreadImpl.getThreadInfo(ThreadImpl.java:144)
+    org.apache.hadoop.util.ReflectionUtils.printThreadInfo(ReflectionUtils.java:171)
+    org.apache.hadoop.util.ReflectionUtils.logThreadInfo(ReflectionUtils.java:255)
+    org.apache.hadoop.http.HttpServer2$StackServlet.doGet(HttpServer2.java:1563)
+    javax.servlet.http.HttpServlet.service(HttpServlet.java:687)
+    javax.servlet.http.HttpServlet.service(HttpServlet.java:790)
+    org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:852)
+    org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1604)
+    org.apache.hadoop.security.authentication.server.AuthenticationFilter.doFilter(AuthenticationFilter.java:644)
+    org.apache.hadoop.security.authentication.server.ProxyUserAuthenticationFilter.doFilter(ProxyUserAuthenticationFilter.java:104)
+    org.apache.hadoop.security.authentication.server.AuthenticationFilter.doFilter(AuthenticationFilter.java:592)
+    org.apache.hadoop.hdfs.web.AuthFilter.doFilter(AuthFilter.java:51)
+    org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1591)
+    org.apache.hadoop.http.lib.StaticUserWebFilter$StaticUserFilter.doFilter(StaticUserWebFilter.java:110)
+    org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1591)
+    org.apache.hadoop.http.HttpServer2$QuotingInputFilter.doFilter(HttpServer2.java:1698)
+    org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1591)
+    org.apache.hadoop.http.NoCacheFilter.doFilter(NoCacheFilter.java:45)
+Thread 61 (qtp262445056-61):
+  State: RUNNABLE
+  Blocked count: 3
+  Waited count: 30
+  Stack:
+    sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+    sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+    sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:93)
+    sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:86)
+    sun.nio.ch.SelectorImpl.select(SelectorImpl.java:97)
+    sun.nio.ch.SelectorImpl.select(SelectorImpl.java:101)
+    org.eclipse.jetty.io.ManagedSelector$SelectorProducer.select(ManagedSelector.java:466)
+    org.eclipse.jetty.io.ManagedSelector$SelectorProducer.produce(ManagedSelector.java:403)
+    org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.produceTask(EatWhatYouKill.java:360)
+    org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.doProduce(EatWhatYouKill.java:184)
+    org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.tryProduce(EatWhatYouKill.java:171)
+    org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.run(EatWhatYouKill.java:129)
+    org.eclipse.jetty.util.thread.ReservedThreadExecutor$ReservedThread.run(ReservedThreadExecutor.java:367)
+    org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:782)
+    org.eclipse.jetty.util.thread.QueuedThreadPool$Runner.run(QueuedThreadPool.java:918)
+    java.lang.Thread.run(Thread.java:748)
+Thread 60 (Connector-Scheduler-3aa078fd):
+  State: TIMED_WAITING
+  Blocked count: 0
+  Waited count: 45
+  Stack:
+    sun.misc.Unsafe.park(Native Method)
+    java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+    java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2078)
+    java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1093)
+    java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:809)
+    java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1074)
+    java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1134)
+    java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+    java.lang.Thread.run(Thread.java:748)
+Thread 59 (CacheReplicationMonitor(699717409)):
+  State: TIMED_WAITING
+  Blocked count: 0
+  Waited count: 34
+  Stack:
+    sun.misc.Unsafe.park(Native Method)
+    java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+    java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2163)
+    org.apache.hadoop.hdfs.server.blockmanagement.CacheReplicationMonitor.run(CacheReplicationMonitor.java:181)
+Thread 58 (org.apache.hadoop.hdfs.server.namenode.FSNamesystem$LazyPersistFileScrubber@2fb69ff6):
+  State: TIMED_WAITING
+  Blocked count: 0
+  Waited count: 5
+  Stack:
+    java.lang.Thread.sleep(Native Method)
+    org.apache.hadoop.hdfs.server.namenode.FSNamesystem$LazyPersistFileScrubber.run(FSNamesystem.java:4526)
+    java.lang.Thread.run(Thread.java:748)
+Thread 57 (org.apache.hadoop.hdfs.server.namenode.FSNamesystem$NameNodeEditLogRoller@5eefa415):
+  State: TIMED_WAITING
+  Blocked count: 0
+  Waited count: 4
+  Stack:
+    java.lang.Thread.sleep(Native Method)
+    org.apache.hadoop.hdfs.server.namenode.FSNamesystem$NameNodeEditLogRoller.run(FSNamesystem.java:4430)
+    java.lang.Thread.run(Thread.java:748)
+Thread 56 (org.apache.hadoop.hdfs.server.namenode.FSNamesystem$NameNodeResourceMonitor@4010d494):
+  State: TIMED_WAITING
+  Blocked count: 0
+  Waited count: 196
+  Stack:
+    java.lang.Thread.sleep(Native Method)
+    org.apache.hadoop.hdfs.server.namenode.FSNamesystem$NameNodeResourceMonitor.run(FSNamesystem.java:4388)
+    java.lang.Thread.run(Thread.java:748)
+Thread 55 (org.apache.hadoop.hdfs.server.namenode.LeaseManager$Monitor@1f9d6c7b):
+  State: TIMED_WAITING
+  Blocked count: 0
+  Waited count: 492
+  Stack:
+    java.lang.Thread.sleep(Native Method)
+    org.apache.hadoop.hdfs.server.namenode.LeaseManager$Monitor.run(LeaseManager.java:545)
+    java.lang.Thread.run(Thread.java:748)
+Thread 53 (pool-5-thread-1):
+  State: TIMED_WAITING
+  Blocked count: 14
+  Waited count: 2
+  Stack:
+    sun.misc.Unsafe.park(Native Method)
+    java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+    java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2078)
+    java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1093)
+    java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:809)
+    java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1074)
+    java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1134)
+    java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+    java.lang.Thread.run(Thread.java:748)
+Thread 52 (AsyncAppender-Dispatcher-Thread-35):
+  State: WAITING
+  Blocked count: 170
+  Waited count: 171
+  Waiting on java.util.ArrayList@6207892
+  Stack:
+    java.lang.Object.wait(Native Method)
+    java.lang.Object.wait(Object.java:502)
+    org.apache.log4j.AsyncAppender$Dispatcher.run(AsyncAppender.java:548)
+    java.lang.Thread.run(Thread.java:748)
+Thread 51 (IPC Server handler 9 on default port 9000):
+  State: TIMED_WAITING
+  Blocked count: 0
+  Waited count: 1018
+  Stack:
+    sun.misc.Unsafe.park(Native Method)
+    java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+    java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2078)
+    java.util.concurrent.LinkedBlockingQueue.poll(LinkedBlockingQueue.java:467)
+    org.apache.hadoop.ipc.CallQueueManager.take(CallQueueManager.java:303)
+    org.apache.hadoop.ipc.Server$Handler.run(Server.java:2918)
+Thread 50 (IPC Server handler 8 on default port 9000):
+  State: TIMED_WAITING
+  Blocked count: 0
+  Waited count: 1160
+  Stack:
+    sun.misc.Unsafe.park(Native Method)
+    java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+    java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2078)
+    java.util.concurrent.LinkedBlockingQueue.poll(LinkedBlockingQueue.java:467)
+    org.apache.hadoop.ipc.CallQueueManager.take(CallQueueManager.java:303)
+    org.apache.hadoop.ipc.Server$Handler.run(Server.java:2918)
+Thread 49 (IPC Server handler 7 on default port 9000):
+  State: TIMED_WAITING
+  Blocked count: 0
+  Waited count: 1126
+  Stack:
+    sun.misc.Unsafe.park(Native Method)
+    java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+    java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2078)
+    java.util.concurrent.LinkedBlockingQueue.poll(LinkedBlockingQueue.java:467)
+    org.apache.hadoop.ipc.CallQueueManager.take(CallQueueManager.java:303)
+    org.apache.hadoop.ipc.Server$Handler.run(Server.java:2918)
+Thread 48 (IPC Server handler 6 on default port 9000):
+  State: TIMED_WAITING
+  Blocked count: 2
+  Waited count: 1024
+  Stack:
+    sun.misc.Unsafe.park(Native Method)
+    java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+    java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2078)
+    java.util.concurrent.LinkedBlockingQueue.poll(LinkedBlockingQueue.java:467)
+    org.apache.hadoop.ipc.CallQueueManager.take(CallQueueManager.java:303)
+    org.apache.hadoop.ipc.Server$Handler.run(Server.java:2918)
+Thread 47 (IPC Server handler 5 on default port 9000):
+  State: TIMED_WAITING
+  Blocked count: 0
+  Waited count: 1036
+  Stack:
+    sun.misc.Unsafe.park(Native Method)
+    java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+    java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2078)
+    java.util.concurrent.LinkedBlockingQueue.poll(LinkedBlockingQueue.java:467)
+    org.apache.hadoop.ipc.CallQueueManager.take(CallQueueManager.java:303)
+    org.apache.hadoop.ipc.Server$Handler.run(Server.java:2918)
+Thread 46 (IPC Server handler 4 on default port 9000):
+  State: TIMED_WAITING
+  Blocked count: 0
+  Waited count: 1149
+  Stack:
+    sun.misc.Unsafe.park(Native Method)
+    java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+    java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2078)
+    java.util.concurrent.LinkedBlockingQueue.poll(LinkedBlockingQueue.java:467)
+    org.apache.hadoop.ipc.CallQueueManager.take(CallQueueManager.java:303)
+    org.apache.hadoop.ipc.Server$Handler.run(Server.java:2918)
+Thread 45 (IPC Server handler 3 on default port 9000):
+  State: TIMED_WAITING
+  Blocked count: 0
+  Waited count: 1030
+  Stack:
+    sun.misc.Unsafe.park(Native Method)
+    java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+    java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2078)
+    java.util.concurrent.LinkedBlockingQueue.poll(LinkedBlockingQueue.java:467)
+    org.apache.hadoop.ipc.CallQueueManager.take(CallQueueManager.java:303)
+    org.apache.hadoop.ipc.Server$Handler.run(Server.java:2918)
+Thread 44 (IPC Server handler 2 on default port 9000):
+  State: TIMED_WAITING
+  Blocked count: 0
+  Waited count: 999
+  Stack:
+    sun.misc.Unsafe.park(Native Method)
+    java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+    java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2078)
+    java.util.concurrent.LinkedBlockingQueue.poll(LinkedBlockingQueue.java:467)
+    org.apache.hadoop.ipc.CallQueueManager.take(CallQueueManager.java:303)
+    org.apache.hadoop.ipc.Server$Handler.run(Server.java:2918)
+Thread 43 (IPC Server handler 1 on default port 9000):
+  State: TIMED_WAITING
+  Blocked count: 0
+  Waited count: 996
+  Stack:
+    sun.misc.Unsafe.park(Native Method)
+    java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+    java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2078)
+    java.util.concurrent.LinkedBlockingQueue.poll(LinkedBlockingQueue.java:467)
+    org.apache.hadoop.ipc.CallQueueManager.take(CallQueueManager.java:303)
+    org.apache.hadoop.ipc.Server$Handler.run(Server.java:2918)
+Thread 42 (IPC Server handler 0 on default port 9000):
+  State: TIMED_WAITING
+  Blocked count: 0
+  Waited count: 997
+  Stack:
+    sun.misc.Unsafe.park(Native Method)
+    java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+    java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2078)
+    java.util.concurrent.LinkedBlockingQueue.poll(LinkedBlockingQueue.java:467)
+    org.apache.hadoop.ipc.CallQueueManager.take(CallQueueManager.java:303)
+    org.apache.hadoop.ipc.Server$Handler.run(Server.java:2918)
+Thread 34 (IPC Server listener on 9000):
+  State: RUNNABLE
+  Blocked count: 0
+  Waited count: 0
+  Stack:
+    sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+    sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+    sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:93)
+    sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:86)
+    sun.nio.ch.SelectorImpl.select(SelectorImpl.java:97)
+    sun.nio.ch.SelectorImpl.select(SelectorImpl.java:101)
+    org.apache.hadoop.ipc.Server$Listener.run(Server.java:1335)
+Thread 37 (IPC Server Responder):
+  State: RUNNABLE
+  Blocked count: 0
+  Waited count: 0
+  Stack:
+    sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+    sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+    sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:93)
+    sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:86)
+    sun.nio.ch.SelectorImpl.select(SelectorImpl.java:97)
+    org.apache.hadoop.ipc.Server$Responder.doRunLoop(Server.java:1512)
+    org.apache.hadoop.ipc.Server$Responder.run(Server.java:1495)
+Thread 31 (Block report processor):
+  State: WAITING
+  Blocked count: 0
+  Waited count: 16
+  Waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@52529570
+  Stack:
+    sun.misc.Unsafe.park(Native Method)
+    java.util.concurrent.locks.LockSupport.park(LockSupport.java:175)
+    java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2039)
+    java.util.concurrent.ArrayBlockingQueue.take(ArrayBlockingQueue.java:403)
+    org.apache.hadoop.hdfs.server.blockmanagement.BlockManager$BlockReportProcessingThread.processQueue(BlockManager.java:5284)
+    org.apache.hadoop.hdfs.server.blockmanagement.BlockManager$BlockReportProcessingThread.run(BlockManager.java:5273)
+Thread 28 (StorageInfoMonitor):
+  State: TIMED_WAITING
+  Blocked count: 0
+  Waited count: 2
+  Stack:
+    java.lang.Thread.sleep(Native Method)
+    org.apache.hadoop.hdfs.server.blockmanagement.BlockManager$StorageInfoDefragmenter.run(BlockManager.java:4961)
+    java.lang.Thread.run(Thread.java:748)
+Thread 27 (RedundancyMonitor):
+  State: TIMED_WAITING
+  Blocked count: 0
+  Waited count: 328
+  Stack:
+    java.lang.Thread.sleep(Native Method)
+    java.lang.Thread.sleep(Thread.java:340)
+    java.util.concurrent.TimeUnit.sleep(TimeUnit.java:386)
+    org.apache.hadoop.hdfs.server.blockmanagement.BlockManager$RedundancyMonitor.run(BlockManager.java:4926)
+    java.lang.Thread.run(Thread.java:748)
+Thread 29 (org.apache.hadoop.hdfs.server.blockmanagement.HeartbeatManager$Monitor@53de625d):
+  State: TIMED_WAITING
+  Blocked count: 0
+  Waited count: 196
+  Stack:
+    java.lang.Thread.sleep(Native Method)
+    org.apache.hadoop.hdfs.server.blockmanagement.HeartbeatManager$Monitor.run(HeartbeatManager.java:542)
+    java.lang.Thread.run(Thread.java:748)
+Thread 40 (DatanodeAdminMonitor-0):
+  State: TIMED_WAITING
+  Blocked count: 0
+  Waited count: 33
+  Stack:
+    sun.misc.Unsafe.park(Native Method)
+    java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+    java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2078)
+    java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1093)
+    java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:809)
+    java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1074)
+    java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1134)
+    java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+    java.lang.Thread.run(Thread.java:748)
+Thread 39 (org.apache.hadoop.hdfs.server.blockmanagement.PendingReconstructionBlocks$PendingReconstructionMonitor@5a6d5a8f):
+  State: TIMED_WAITING
+  Blocked count: 0
+  Waited count: 4
+  Stack:
+    java.lang.Thread.sleep(Native Method)
+    org.apache.hadoop.hdfs.server.blockmanagement.PendingReconstructionBlocks$PendingReconstructionMonitor.run(PendingReconstructionBlocks.java:259)
+    java.lang.Thread.run(Thread.java:748)
+Thread 36 (IPC Server idle connection scanner for port 9000):
+  State: TIMED_WAITING
+  Blocked count: 1
+  Waited count: 99
+  Stack:
+    java.lang.Object.wait(Native Method)
+    java.util.TimerThread.mainLoop(Timer.java:552)
+    java.util.TimerThread.run(Timer.java:505)
+Thread 35 (Socket Reader #1 for port 9000):
+  State: RUNNABLE
+  Blocked count: 0
+  Waited count: 0
+  Stack:
+    sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+    sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+    sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:93)
+    sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:86)
+    sun.nio.ch.SelectorImpl.select(SelectorImpl.java:97)
+    sun.nio.ch.SelectorImpl.select(SelectorImpl.java:101)
+    org.apache.hadoop.ipc.Server$Listener$Reader.doRunLoop(Server.java:1273)
+    org.apache.hadoop.ipc.Server$Listener$Reader.run(Server.java:1252)
+Thread 33 (FSEditLogAsync):
+  State: WAITING
+  Blocked count: 2
+  Waited count: 98
+  Waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@300aee55
+  Stack:
+    sun.misc.Unsafe.park(Native Method)
+    java.util.concurrent.locks.LockSupport.park(LockSupport.java:175)
+    java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2039)
+    java.util.concurrent.ArrayBlockingQueue.take(ArrayBlockingQueue.java:403)
+    org.apache.hadoop.hdfs.server.namenode.FSEditLogAsync.dequeueEdit(FSEditLogAsync.java:221)
+    org.apache.hadoop.hdfs.server.namenode.FSEditLogAsync.run(FSEditLogAsync.java:229)
+    java.lang.Thread.run(Thread.java:748)
+Thread 26 (pool-3-thread-1):
+  State: TIMED_WAITING
+  Blocked count: 0
+  Waited count: 1
+  Stack:
+    sun.misc.Unsafe.park(Native Method)
+    java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+    java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2078)
+    java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1093)
+    java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:809)
+    java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1074)
+    java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1134)
+    java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+    java.lang.Thread.run(Thread.java:748)
+Thread 25 (Session-HouseKeeper-2e570ded):
+  State: TIMED_WAITING
+  Blocked count: 0
+  Waited count: 2
+  Stack:
+    sun.misc.Unsafe.park(Native Method)
+    java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+    java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2078)
+    java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1093)
+    java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:809)
+    java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1074)
+    java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1134)
+    java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+    java.lang.Thread.run(Thread.java:748)
+Thread 24 (qtp262445056-24):
+  State: TIMED_WAITING
+  Blocked count: 2
+  Waited count: 24
+  Stack:
+    sun.misc.Unsafe.park(Native Method)
+    java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+    java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2078)
+    org.eclipse.jetty.util.BlockingArrayQueue.poll(BlockingArrayQueue.java:382)
+    org.eclipse.jetty.util.thread.QueuedThreadPool$Runner.idleJobPoll(QueuedThreadPool.java:851)
+    org.eclipse.jetty.util.thread.QueuedThreadPool$Runner.run(QueuedThreadPool.java:890)
+    java.lang.Thread.run(Thread.java:748)
+Thread 22 (qtp262445056-22):
+  State: TIMED_WAITING
+  Blocked count: 0
+  Waited count: 35
+  Stack:
+    sun.misc.Unsafe.park(Native Method)
+    java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+    java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2078)
+    org.eclipse.jetty.util.BlockingArrayQueue.poll(BlockingArrayQueue.java:382)
+    org.eclipse.jetty.util.thread.QueuedThreadPool$Runner.idleJobPoll(QueuedThreadPool.java:851)
+    org.eclipse.jetty.util.thread.QueuedThreadPool$Runner.run(QueuedThreadPool.java:890)
+    java.lang.Thread.run(Thread.java:748)
+Thread 19 (qtp262445056-19-acceptor-0@96fd007-ServerConnector@3aa078fd{HTTP/1.1,[http/1.1]}{0.0.0.0:9870}):
+  State: RUNNABLE
+  Blocked count: 0
+  Waited count: 1
+  Stack:
+    sun.nio.ch.ServerSocketChannelImpl.accept0(Native Method)
+    sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:421)
+    sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:249)
+    org.eclipse.jetty.server.ServerConnector.accept(ServerConnector.java:385)
+    org.eclipse.jetty.server.AbstractConnector$Acceptor.run(AbstractConnector.java:664)
+    org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:782)
+    org.eclipse.jetty.util.thread.QueuedThreadPool$Runner.run(QueuedThreadPool.java:918)
+    java.lang.Thread.run(Thread.java:748)
+Thread 18 (qtp262445056-18):
+  State: RUNNABLE
+  Blocked count: 5
+  Waited count: 15
+  Stack:
+    sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+    sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+    sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:93)
+    sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:86)
+    sun.nio.ch.SelectorImpl.select(SelectorImpl.java:97)
+    sun.nio.ch.SelectorImpl.select(SelectorImpl.java:101)
+    org.eclipse.jetty.io.ManagedSelector$SelectorProducer.select(ManagedSelector.java:466)
+    org.eclipse.jetty.io.ManagedSelector$SelectorProducer.produce(ManagedSelector.java:403)
+    org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.produceTask(EatWhatYouKill.java:360)
+    org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.doProduce(EatWhatYouKill.java:184)
+    org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.tryProduce(EatWhatYouKill.java:171)
+    org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.run(EatWhatYouKill.java:129)
+    org.eclipse.jetty.util.thread.ReservedThreadExecutor$ReservedThread.run(ReservedThreadExecutor.java:367)
+    org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:782)
+    org.eclipse.jetty.util.thread.QueuedThreadPool$Runner.run(QueuedThreadPool.java:918)
+    java.lang.Thread.run(Thread.java:748)
+Thread 17 (qtp262445056-17):
+  State: TIMED_WAITING
+  Blocked count: 1
+  Waited count: 31
+  Stack:
+    sun.misc.Unsafe.park(Native Method)
+    java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+    java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2078)
+    org.eclipse.jetty.util.BlockingArrayQueue.poll(BlockingArrayQueue.java:382)
+    org.eclipse.jetty.util.thread.QueuedThreadPool$Runner.idleJobPoll(QueuedThreadPool.java:851)
+    org.eclipse.jetty.util.thread.QueuedThreadPool$Runner.run(QueuedThreadPool.java:890)
+    java.lang.Thread.run(Thread.java:748)
+Thread 16 (pool-2-thread-1):
+  State: TIMED_WAITING
+  Blocked count: 0
+  Waited count: 1
+  Stack:
+    sun.misc.Unsafe.park(Native Method)
+    java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+    java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2078)
+    java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1093)
+    java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:809)
+    java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1074)
+    java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1134)
+    java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+    java.lang.Thread.run(Thread.java:748)
+Thread 15 (GcTimeMonitor obsWindow = 60000, sleepInterval = 5000, maxGcTimePerc = 100):
+  State: TIMED_WAITING
+  Blocked count: 0
+  Waited count: 196
+  Stack:
+    java.lang.Thread.sleep(Native Method)
+    org.apache.hadoop.util.GcTimeMonitor.run(GcTimeMonitor.java:155)
+Thread 14 (org.apache.hadoop.util.JvmPauseMonitor$Monitor@4f67eb2a):
+  State: TIMED_WAITING
+  Blocked count: 0
+  Waited count: 1958
+  Stack:
+    java.lang.Thread.sleep(Native Method)
+    org.apache.hadoop.util.JvmPauseMonitor$Monitor.run(JvmPauseMonitor.java:192)
+    java.lang.Thread.run(Thread.java:748)
+Thread 13 (Timer for 'NameNode' metrics system):
+  State: TIMED_WAITING
+  Blocked count: 0
+  Waited count: 98
+  Stack:
+    java.lang.Object.wait(Native Method)
+    java.util.TimerThread.mainLoop(Timer.java:552)
+    java.util.TimerThread.run(Timer.java:505)
+Thread 4 (Signal Dispatcher):
+  State: RUNNABLE
+  Blocked count: 0
+  Waited count: 0
+  Stack:
+Thread 3 (Finalizer):
+  State: WAITING
+  Blocked count: 63
+  Waited count: 9
+  Waiting on java.lang.ref.ReferenceQueue$Lock@24aee1c7
+  Stack:
+    java.lang.Object.wait(Native Method)
+    java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:144)
+    java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:165)
+    java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:216)
+Thread 2 (Reference Handler):
+  State: WAITING
+  Blocked count: 7
+  Waited count: 7
+  Waiting on java.lang.ref.Reference$Lock@28a8b79c
+  Stack:
+    java.lang.Object.wait(Native Method)
+    java.lang.Object.wait(Object.java:502)
+    java.lang.ref.Reference.tryHandlePending(Reference.java:191)
+    java.lang.ref.Reference$ReferenceHandler.run(Reference.java:153)
+Thread 1 (Listener at localhost/9000):
+  State: WAITING
+  Blocked count: 4
+  Waited count: 7
+  Waiting on org.apache.hadoop.ipc.ProtobufRpcEngine2$Server@3aa495dc
+  Stack:
+    java.lang.Object.wait(Native Method)
+    java.lang.Object.wait(Object.java:502)
+    org.apache.hadoop.ipc.Server.join(Server.java:3429)
+    org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer.join(NameNodeRpcServer.java:601)
+    org.apache.hadoop.hdfs.server.namenode.NameNode.join(NameNode.java:1065)
+    org.apache.hadoop.hdfs.server.namenode.NameNode.main(NameNode.java:1823)
+
+2021-12-16 05:52:41,054 INFO org.apache.hadoop.hdfs.server.namenode.FSEditLog: Number of transactions: 149 Total time for transactions(ms): 21 Number of transactions batched in Syncs: 31 Number of syncs: 117 SyncTimes(ms): 298 
+2021-12-16 05:52:44,064 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741839_1015, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639581602332_160957983/in/part0
+2021-12-16 05:52:47,075 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639581602332_160957983/in/part0 is closed by DFSClient_NONMAPREDUCE_-1133475156_1
+2021-12-16 05:52:50,085 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741840_1016, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639581602332_160957983/in/part1
+2021-12-16 05:52:53,096 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639581602332_160957983/in/part1 is closed by DFSClient_NONMAPREDUCE_-1133475156_1
+2021-12-16 05:52:56,106 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741841_1017, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639581602332_160957983/in/part2
+2021-12-16 05:52:59,117 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639581602332_160957983/in/part2 is closed by DFSClient_NONMAPREDUCE_-1133475156_1
+2021-12-16 05:53:02,127 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741842_1018, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639581602332_160957983/in/part3
+2021-12-16 05:53:05,138 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639581602332_160957983/in/part3 is closed by DFSClient_NONMAPREDUCE_-1133475156_1
+2021-12-16 05:53:08,148 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741843_1019, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639581602332_160957983/in/part4
+2021-12-16 05:53:11,159 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639581602332_160957983/in/part4 is closed by DFSClient_NONMAPREDUCE_-1133475156_1
+2021-12-16 05:53:14,169 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741844_1020, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639581602332_160957983/in/part5
+2021-12-16 05:53:17,180 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639581602332_160957983/in/part5 is closed by DFSClient_NONMAPREDUCE_-1133475156_1
+2021-12-16 05:53:20,190 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741845_1021, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639581602332_160957983/in/part6
+2021-12-16 05:53:23,201 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639581602332_160957983/in/part6 is closed by DFSClient_NONMAPREDUCE_-1133475156_1
+2021-12-16 05:53:26,212 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741846_1022, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639581602332_160957983/in/part7
+2021-12-16 05:53:29,222 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639581602332_160957983/in/part7 is closed by DFSClient_NONMAPREDUCE_-1133475156_1
+2021-12-16 05:53:32,233 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741847_1023, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639581602332_160957983/in/part8
+2021-12-16 05:53:35,243 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639581602332_160957983/in/part8 is closed by DFSClient_NONMAPREDUCE_-1133475156_1
+2021-12-16 05:53:38,254 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741848_1024, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639581602332_160957983/in/part9
+2021-12-16 05:53:41,264 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639581602332_160957983/in/part9 is closed by DFSClient_NONMAPREDUCE_-1133475156_1
+2021-12-16 05:53:44,275 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741849_1025, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639581602332_160957983/out/reduce-out
+2021-12-16 05:53:47,285 INFO org.apache.hadoop.hdfs.server.namenode.FSNamesystem: BLOCK* blk_1073741849_1025 is COMMITTED but not COMPLETE(numNodes= 0 <  minimum = 1) in file /user/hduser/QuasiMonteCarlo_1639581602332_160957983/out/reduce-out
+2021-12-16 05:53:50,296 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639581602332_160957983/out/reduce-out is closed by DFSClient_NONMAPREDUCE_-1133475156_1
+2021-12-16 05:53:53,306 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741850_1026, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639581602332_160957983/out/_temporary/0/_temporary/attempt_local877030892_0001_r_000000_0/part-r-00000
+2021-12-16 05:53:56,317 INFO org.apache.hadoop.hdfs.server.namenode.FSNamesystem: BLOCK* blk_1073741850_1026 is COMMITTED but not COMPLETE(numNodes= 0 <  minimum = 1) in file /user/hduser/QuasiMonteCarlo_1639581602332_160957983/out/_temporary/0/_temporary/attempt_local877030892_0001_r_000000_0/part-r-00000
+2021-12-16 05:53:59,327 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639581602332_160957983/out/_temporary/0/_temporary/attempt_local877030892_0001_r_000000_0/part-r-00000 is closed by DFSClient_NONMAPREDUCE_-1133475156_1
+2021-12-16 05:54:02,338 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639581602332_160957983/out/_SUCCESS is closed by DFSClient_NONMAPREDUCE_-1133475156_1
+2021-12-16 05:54:05,348 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741851_1027, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639581623284_1914427215/in/part0
+2021-12-16 05:54:08,359 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639581623284_1914427215/in/part0 is closed by DFSClient_NONMAPREDUCE_-961091815_1
+2021-12-16 05:54:11,369 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741852_1028, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639581623284_1914427215/in/part1
+2021-12-16 05:54:14,380 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639581623284_1914427215/in/part1 is closed by DFSClient_NONMAPREDUCE_-961091815_1
+2021-12-16 05:54:17,390 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741853_1029, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639581623284_1914427215/in/part2
+2021-12-16 05:54:20,401 INFO org.apache.hadoop.hdfs.server.namenode.FSNamesystem: BLOCK* blk_1073741853_1029 is COMMITTED but not COMPLETE(numNodes= 0 <  minimum = 1) in file /user/hduser/QuasiMonteCarlo_1639581623284_1914427215/in/part2
+2021-12-16 05:54:23,412 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639581623284_1914427215/in/part2 is closed by DFSClient_NONMAPREDUCE_-961091815_1
+2021-12-16 05:54:26,422 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741854_1030, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639581623284_1914427215/in/part3
+2021-12-16 05:54:29,433 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639581623284_1914427215/in/part3 is closed by DFSClient_NONMAPREDUCE_-961091815_1
+2021-12-16 05:54:32,443 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741855_1031, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639581623284_1914427215/in/part4
+2021-12-16 05:54:35,454 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639581623284_1914427215/in/part4 is closed by DFSClient_NONMAPREDUCE_-961091815_1
+2021-12-16 05:54:38,464 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741856_1032, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639581623284_1914427215/in/part5
+2021-12-16 05:54:41,475 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639581623284_1914427215/in/part5 is closed by DFSClient_NONMAPREDUCE_-961091815_1
+2021-12-16 05:54:44,485 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741857_1033, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639581623284_1914427215/in/part6
+2021-12-16 05:54:47,496 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639581623284_1914427215/in/part6 is closed by DFSClient_NONMAPREDUCE_-961091815_1
+2021-12-16 05:54:50,506 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741858_1034, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639581623284_1914427215/in/part7
+2021-12-16 05:54:53,517 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639581623284_1914427215/in/part7 is closed by DFSClient_NONMAPREDUCE_-961091815_1
+2021-12-16 05:54:56,527 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741859_1035, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639581623284_1914427215/in/part8
+2021-12-16 05:54:59,538 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639581623284_1914427215/in/part8 is closed by DFSClient_NONMAPREDUCE_-961091815_1
+2021-12-16 05:55:02,548 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741860_1036, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639581623284_1914427215/in/part9
+2021-12-16 05:55:05,559 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639581623284_1914427215/in/part9 is closed by DFSClient_NONMAPREDUCE_-961091815_1
+2021-12-16 05:55:08,569 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741861_1037, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639581623284_1914427215/out/reduce-out
+2021-12-16 05:55:11,580 INFO org.apache.hadoop.hdfs.server.namenode.FSNamesystem: BLOCK* blk_1073741861_1037 is COMMITTED but not COMPLETE(numNodes= 0 <  minimum = 1) in file /user/hduser/QuasiMonteCarlo_1639581623284_1914427215/out/reduce-out
+2021-12-16 05:55:14,590 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639581623284_1914427215/out/reduce-out is closed by DFSClient_NONMAPREDUCE_-961091815_1
+2021-12-16 05:55:17,601 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741862_1038, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639581623284_1914427215/out/_temporary/0/_temporary/attempt_local1670044885_0001_r_000000_0/part-r-00000
+2021-12-16 05:55:20,612 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639581623284_1914427215/out/_temporary/0/_temporary/attempt_local1670044885_0001_r_000000_0/part-r-00000 is closed by DFSClient_NONMAPREDUCE_-961091815_1
+2021-12-16 05:55:23,622 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639581623284_1914427215/out/_SUCCESS is closed by DFSClient_NONMAPREDUCE_-961091815_1
+2021-12-16 05:55:26,633 INFO org.apache.hadoop.hdfs.server.namenode.FSEditLog: Number of transactions: 293 Total time for transactions(ms): 40 Number of transactions batched in Syncs: 68 Number of syncs: 224 SyncTimes(ms): 553 
+2021-12-16 05:55:29,643 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741863_1039, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582556245_586165175/in/part0
+2021-12-16 05:55:32,654 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582556245_586165175/in/part0 is closed by DFSClient_NONMAPREDUCE_446111257_1
+2021-12-16 05:55:35,664 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741864_1040, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582556245_586165175/in/part1
+2021-12-16 05:55:38,675 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582556245_586165175/in/part1 is closed by DFSClient_NONMAPREDUCE_446111257_1
+2021-12-16 05:55:41,685 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741865_1041, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582556245_586165175/in/part2
+2021-12-16 05:55:44,696 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582556245_586165175/in/part2 is closed by DFSClient_NONMAPREDUCE_446111257_1
+2021-12-16 05:55:47,706 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741866_1042, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582556245_586165175/in/part3
+2021-12-16 05:55:50,717 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582556245_586165175/in/part3 is closed by DFSClient_NONMAPREDUCE_446111257_1
+2021-12-16 05:55:53,727 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741867_1043, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582556245_586165175/in/part4
+2021-12-16 05:55:56,738 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582556245_586165175/in/part4 is closed by DFSClient_NONMAPREDUCE_446111257_1
+2021-12-16 05:55:59,748 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741868_1044, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582556245_586165175/in/part5
+2021-12-16 05:56:02,759 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582556245_586165175/in/part5 is closed by DFSClient_NONMAPREDUCE_446111257_1
+2021-12-16 05:56:05,769 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741869_1045, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582556245_586165175/in/part6
+2021-12-16 05:56:08,780 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582556245_586165175/in/part6 is closed by DFSClient_NONMAPREDUCE_446111257_1
+2021-12-16 05:56:11,790 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741870_1046, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582556245_586165175/in/part7
+2021-12-16 05:56:14,801 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582556245_586165175/in/part7 is closed by DFSClient_NONMAPREDUCE_446111257_1
+2021-12-16 05:56:17,812 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741871_1047, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582556245_586165175/in/part8
+2021-12-16 05:56:20,822 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582556245_586165175/in/part8 is closed by DFSClient_NONMAPREDUCE_446111257_1
+2021-12-16 05:56:23,833 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741872_1048, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582556245_586165175/in/part9
+2021-12-16 05:56:26,843 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582556245_586165175/in/part9 is closed by DFSClient_NONMAPREDUCE_446111257_1
+2021-12-16 05:56:29,854 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741873_1049, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582556245_586165175/out/reduce-out
+2021-12-16 05:56:32,864 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582556245_586165175/out/reduce-out is closed by DFSClient_NONMAPREDUCE_446111257_1
+2021-12-16 05:56:35,875 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741874_1050, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582556245_586165175/out/_temporary/0/_temporary/attempt_local1597073693_0001_r_000000_0/part-r-00000
+2021-12-16 05:56:38,885 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582556245_586165175/out/_temporary/0/_temporary/attempt_local1597073693_0001_r_000000_0/part-r-00000 is closed by DFSClient_NONMAPREDUCE_446111257_1
+2021-12-16 05:56:41,896 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582556245_586165175/out/_SUCCESS is closed by DFSClient_NONMAPREDUCE_446111257_1
+2021-12-16 05:56:44,906 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741875_1051, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582559864_1269700191/in/part0
+2021-12-16 05:56:47,917 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582559864_1269700191/in/part0 is closed by DFSClient_NONMAPREDUCE_-2034960295_1
+2021-12-16 05:56:50,927 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741876_1052, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582559864_1269700191/in/part1
+2021-12-16 05:56:53,938 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582559864_1269700191/in/part1 is closed by DFSClient_NONMAPREDUCE_-2034960295_1
+2021-12-16 05:56:56,948 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741877_1053, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582559864_1269700191/in/part2
+2021-12-16 05:56:59,959 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582559864_1269700191/in/part2 is closed by DFSClient_NONMAPREDUCE_-2034960295_1
+2021-12-16 05:57:02,969 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741878_1054, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582559864_1269700191/in/part3
+2021-12-16 05:57:05,980 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582559864_1269700191/in/part3 is closed by DFSClient_NONMAPREDUCE_-2034960295_1
+2021-12-16 05:57:08,990 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741879_1055, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582559864_1269700191/in/part4
+2021-12-16 05:57:12,001 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582559864_1269700191/in/part4 is closed by DFSClient_NONMAPREDUCE_-2034960295_1
+2021-12-16 05:57:15,012 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741880_1056, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582559864_1269700191/in/part5
+2021-12-16 05:57:18,022 INFO org.apache.hadoop.hdfs.server.namenode.FSNamesystem: BLOCK* blk_1073741880_1056 is COMMITTED but not COMPLETE(numNodes= 0 <  minimum = 1) in file /user/hduser/QuasiMonteCarlo_1639582559864_1269700191/in/part5
+2021-12-16 05:57:21,033 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582559864_1269700191/in/part5 is closed by DFSClient_NONMAPREDUCE_-2034960295_1
+2021-12-16 05:57:24,043 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741881_1057, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582559864_1269700191/in/part6
+2021-12-16 05:57:27,054 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582559864_1269700191/in/part6 is closed by DFSClient_NONMAPREDUCE_-2034960295_1
+2021-12-16 05:57:30,064 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741882_1058, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582559864_1269700191/in/part7
+2021-12-16 05:57:33,075 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582559864_1269700191/in/part7 is closed by DFSClient_NONMAPREDUCE_-2034960295_1
+2021-12-16 05:57:36,085 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741883_1059, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582559864_1269700191/in/part8
+2021-12-16 05:57:39,096 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582559864_1269700191/in/part8 is closed by DFSClient_NONMAPREDUCE_-2034960295_1
+2021-12-16 05:57:42,106 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741884_1060, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582559864_1269700191/in/part9
+2021-12-16 05:57:45,117 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582559864_1269700191/in/part9 is closed by DFSClient_NONMAPREDUCE_-2034960295_1
+2021-12-16 05:57:48,127 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741885_1061, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582559864_1269700191/out/reduce-out
+2021-12-16 05:57:51,138 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582559864_1269700191/out/reduce-out is closed by DFSClient_NONMAPREDUCE_-2034960295_1
+2021-12-16 05:57:54,148 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741886_1062, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582559864_1269700191/out/_temporary/0/_temporary/attempt_local2046022439_0001_r_000000_0/part-r-00000
+2021-12-16 05:57:57,159 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582559864_1269700191/out/_temporary/0/_temporary/attempt_local2046022439_0001_r_000000_0/part-r-00000 is closed by DFSClient_NONMAPREDUCE_-2034960295_1
+2021-12-16 05:58:00,169 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582559864_1269700191/out/_SUCCESS is closed by DFSClient_NONMAPREDUCE_-2034960295_1
+2021-12-16 05:58:03,180 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741887_1063, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582563936_1033726551/in/part0
+2021-12-16 05:58:06,190 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582563936_1033726551/in/part0 is closed by DFSClient_NONMAPREDUCE_-2124697120_1
+2021-12-16 05:58:09,201 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741888_1064, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582563936_1033726551/in/part1
+2021-12-16 05:58:12,212 INFO org.apache.hadoop.hdfs.server.namenode.FSNamesystem: BLOCK* blk_1073741888_1064 is COMMITTED but not COMPLETE(numNodes= 0 <  minimum = 1) in file /user/hduser/QuasiMonteCarlo_1639582563936_1033726551/in/part1
+2021-12-16 05:58:15,222 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582563936_1033726551/in/part1 is closed by DFSClient_NONMAPREDUCE_-2124697120_1
+2021-12-16 05:58:18,233 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741889_1065, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582563936_1033726551/in/part2
+2021-12-16 05:58:21,243 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582563936_1033726551/in/part2 is closed by DFSClient_NONMAPREDUCE_-2124697120_1
+2021-12-16 05:58:24,254 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741890_1066, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582563936_1033726551/in/part3
+2021-12-16 05:58:27,264 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582563936_1033726551/in/part3 is closed by DFSClient_NONMAPREDUCE_-2124697120_1
+2021-12-16 05:58:30,275 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741891_1067, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582563936_1033726551/in/part4
+2021-12-16 05:58:33,285 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582563936_1033726551/in/part4 is closed by DFSClient_NONMAPREDUCE_-2124697120_1
+2021-12-16 05:58:36,296 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741892_1068, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582563936_1033726551/in/part5
+2021-12-16 05:58:39,306 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582563936_1033726551/in/part5 is closed by DFSClient_NONMAPREDUCE_-2124697120_1
+2021-12-16 05:58:42,317 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741893_1069, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582563936_1033726551/in/part6
+2021-12-16 05:58:45,327 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582563936_1033726551/in/part6 is closed by DFSClient_NONMAPREDUCE_-2124697120_1
+2021-12-16 05:58:48,338 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741894_1070, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582563936_1033726551/in/part7
+2021-12-16 05:58:51,348 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582563936_1033726551/in/part7 is closed by DFSClient_NONMAPREDUCE_-2124697120_1
+2021-12-16 05:58:54,359 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741895_1071, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582563936_1033726551/in/part8
+2021-12-16 05:58:57,369 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582563936_1033726551/in/part8 is closed by DFSClient_NONMAPREDUCE_-2124697120_1
+2021-12-16 05:59:00,380 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741896_1072, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582563936_1033726551/in/part9
+2021-12-16 05:59:03,390 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582563936_1033726551/in/part9 is closed by DFSClient_NONMAPREDUCE_-2124697120_1
+2021-12-16 05:59:06,401 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741897_1073, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582563936_1033726551/out/reduce-out
+2021-12-16 05:59:09,412 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582563936_1033726551/out/reduce-out is closed by DFSClient_NONMAPREDUCE_-2124697120_1
+2021-12-16 05:59:12,422 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741898_1074, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582563936_1033726551/out/_temporary/0/_temporary/attempt_local266267236_0001_r_000000_0/part-r-00000
+2021-12-16 05:59:15,433 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582563936_1033726551/out/_temporary/0/_temporary/attempt_local266267236_0001_r_000000_0/part-r-00000 is closed by DFSClient_NONMAPREDUCE_-2124697120_1
+2021-12-16 05:59:18,443 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582563936_1033726551/out/_SUCCESS is closed by DFSClient_NONMAPREDUCE_-2124697120_1
+2021-12-16 05:59:21,454 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741899_1075, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582567856_534640359/in/part0
+2021-12-16 05:59:24,464 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582567856_534640359/in/part0 is closed by DFSClient_NONMAPREDUCE_1932963798_1
+2021-12-16 05:59:27,475 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741900_1076, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582567856_534640359/in/part1
+2021-12-16 05:59:30,485 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582567856_534640359/in/part1 is closed by DFSClient_NONMAPREDUCE_1932963798_1
+2021-12-16 05:59:33,496 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741901_1077, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582567856_534640359/in/part2
+2021-12-16 05:59:36,506 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582567856_534640359/in/part2 is closed by DFSClient_NONMAPREDUCE_1932963798_1
+2021-12-16 05:59:39,517 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741902_1078, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582567856_534640359/in/part3
+2021-12-16 05:59:42,527 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582567856_534640359/in/part3 is closed by DFSClient_NONMAPREDUCE_1932963798_1
+2021-12-16 05:59:45,538 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741903_1079, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582567856_534640359/in/part4
+2021-12-16 05:59:48,548 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582567856_534640359/in/part4 is closed by DFSClient_NONMAPREDUCE_1932963798_1
+2021-12-16 05:59:51,559 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741904_1080, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582567856_534640359/in/part5
+2021-12-16 05:59:54,569 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582567856_534640359/in/part5 is closed by DFSClient_NONMAPREDUCE_1932963798_1
+2021-12-16 05:59:57,580 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741905_1081, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582567856_534640359/in/part6
+2021-12-16 06:00:00,590 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582567856_534640359/in/part6 is closed by DFSClient_NONMAPREDUCE_1932963798_1
+2021-12-16 06:00:03,601 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741906_1082, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582567856_534640359/in/part7
+2021-12-16 06:00:06,612 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582567856_534640359/in/part7 is closed by DFSClient_NONMAPREDUCE_1932963798_1
+2021-12-16 06:00:09,622 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741907_1083, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582567856_534640359/in/part8
+2021-12-16 06:00:12,633 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582567856_534640359/in/part8 is closed by DFSClient_NONMAPREDUCE_1932963798_1
+2021-12-16 06:00:15,643 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741908_1084, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582567856_534640359/in/part9
+2021-12-16 06:00:18,654 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582567856_534640359/in/part9 is closed by DFSClient_NONMAPREDUCE_1932963798_1
+2021-12-16 06:00:21,664 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741909_1085, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582567856_534640359/out/reduce-out
+2021-12-16 06:00:24,675 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582567856_534640359/out/reduce-out is closed by DFSClient_NONMAPREDUCE_1932963798_1
+2021-12-16 06:00:27,685 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741910_1086, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582567856_534640359/out/_temporary/0/_temporary/attempt_local1289710883_0001_r_000000_0/part-r-00000
+2021-12-16 06:00:30,696 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582567856_534640359/out/_temporary/0/_temporary/attempt_local1289710883_0001_r_000000_0/part-r-00000 is closed by DFSClient_NONMAPREDUCE_1932963798_1
+2021-12-16 06:00:33,706 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582567856_534640359/out/_SUCCESS is closed by DFSClient_NONMAPREDUCE_1932963798_1
+2021-12-16 06:00:36,717 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741911_1087, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582571493_1315532301/in/part0
+2021-12-16 06:00:39,727 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582571493_1315532301/in/part0 is closed by DFSClient_NONMAPREDUCE_-1872809454_1
+2021-12-16 06:00:42,738 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741912_1088, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582571493_1315532301/in/part1
+2021-12-16 06:00:45,748 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582571493_1315532301/in/part1 is closed by DFSClient_NONMAPREDUCE_-1872809454_1
+2021-12-16 06:00:48,759 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741913_1089, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582571493_1315532301/in/part2
+2021-12-16 06:00:51,769 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582571493_1315532301/in/part2 is closed by DFSClient_NONMAPREDUCE_-1872809454_1
+2021-12-16 06:00:54,780 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741914_1090, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582571493_1315532301/in/part3
+2021-12-16 06:00:57,790 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582571493_1315532301/in/part3 is closed by DFSClient_NONMAPREDUCE_-1872809454_1
+2021-12-16 06:01:00,801 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741915_1091, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582571493_1315532301/in/part4
+2021-12-16 06:01:03,811 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582571493_1315532301/in/part4 is closed by DFSClient_NONMAPREDUCE_-1872809454_1
+2021-12-16 06:01:06,822 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741916_1092, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582571493_1315532301/in/part5
+2021-12-16 06:01:09,833 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582571493_1315532301/in/part5 is closed by DFSClient_NONMAPREDUCE_-1872809454_1
+2021-12-16 06:01:12,843 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741917_1093, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582571493_1315532301/in/part6
+2021-12-16 06:01:15,854 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582571493_1315532301/in/part6 is closed by DFSClient_NONMAPREDUCE_-1872809454_1
+2021-12-16 06:01:18,864 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741918_1094, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582571493_1315532301/in/part7
+2021-12-16 06:01:21,875 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582571493_1315532301/in/part7 is closed by DFSClient_NONMAPREDUCE_-1872809454_1
+2021-12-16 06:01:24,885 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741919_1095, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582571493_1315532301/in/part8
+2021-12-16 06:01:27,896 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582571493_1315532301/in/part8 is closed by DFSClient_NONMAPREDUCE_-1872809454_1
+2021-12-16 06:01:30,906 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741920_1096, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582571493_1315532301/in/part9
+2021-12-16 06:01:33,917 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582571493_1315532301/in/part9 is closed by DFSClient_NONMAPREDUCE_-1872809454_1
+2021-12-16 06:01:36,927 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741921_1097, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582571493_1315532301/out/reduce-out
+2021-12-16 06:01:39,938 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582571493_1315532301/out/reduce-out is closed by DFSClient_NONMAPREDUCE_-1872809454_1
+2021-12-16 06:01:42,948 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741922_1098, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582571493_1315532301/out/_temporary/0/_temporary/attempt_local601550821_0001_r_000000_0/part-r-00000
+2021-12-16 06:01:45,959 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582571493_1315532301/out/_temporary/0/_temporary/attempt_local601550821_0001_r_000000_0/part-r-00000 is closed by DFSClient_NONMAPREDUCE_-1872809454_1
+2021-12-16 06:01:48,969 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582571493_1315532301/out/_SUCCESS is closed by DFSClient_NONMAPREDUCE_-1872809454_1
+2021-12-16 06:01:51,980 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741923_1099, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582575132_1332970628/in/part0
+2021-12-16 06:01:54,990 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582575132_1332970628/in/part0 is closed by DFSClient_NONMAPREDUCE_1190115685_1
+2021-12-16 06:01:58,001 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741924_1100, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582575132_1332970628/in/part1
+2021-12-16 06:02:01,011 INFO org.apache.hadoop.hdfs.server.namenode.FSNamesystem: BLOCK* blk_1073741924_1100 is COMMITTED but not COMPLETE(numNodes= 0 <  minimum = 1) in file /user/hduser/QuasiMonteCarlo_1639582575132_1332970628/in/part1
+2021-12-16 06:02:04,022 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582575132_1332970628/in/part1 is closed by DFSClient_NONMAPREDUCE_1190115685_1
+2021-12-16 06:02:07,033 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741925_1101, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582575132_1332970628/in/part2
+2021-12-16 06:02:10,043 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582575132_1332970628/in/part2 is closed by DFSClient_NONMAPREDUCE_1190115685_1
+2021-12-16 06:02:13,054 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741926_1102, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582575132_1332970628/in/part3
+2021-12-16 06:02:16,064 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582575132_1332970628/in/part3 is closed by DFSClient_NONMAPREDUCE_1190115685_1
+2021-12-16 06:02:19,075 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741927_1103, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582575132_1332970628/in/part4
+2021-12-16 06:02:22,085 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582575132_1332970628/in/part4 is closed by DFSClient_NONMAPREDUCE_1190115685_1
+2021-12-16 06:02:25,096 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741928_1104, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582575132_1332970628/in/part5
+2021-12-16 06:02:28,106 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582575132_1332970628/in/part5 is closed by DFSClient_NONMAPREDUCE_1190115685_1
+2021-12-16 06:02:31,117 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741929_1105, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582575132_1332970628/in/part6
+2021-12-16 06:02:34,127 INFO org.apache.hadoop.hdfs.server.namenode.FSNamesystem: BLOCK* blk_1073741929_1105 is COMMITTED but not COMPLETE(numNodes= 0 <  minimum = 1) in file /user/hduser/QuasiMonteCarlo_1639582575132_1332970628/in/part6
+2021-12-16 06:02:37,138 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582575132_1332970628/in/part6 is closed by DFSClient_NONMAPREDUCE_1190115685_1
+2021-12-16 06:02:40,148 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741930_1106, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582575132_1332970628/in/part7
+2021-12-16 06:02:43,159 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582575132_1332970628/in/part7 is closed by DFSClient_NONMAPREDUCE_1190115685_1
+2021-12-16 06:02:46,169 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741931_1107, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582575132_1332970628/in/part8
+2021-12-16 06:02:49,180 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582575132_1332970628/in/part8 is closed by DFSClient_NONMAPREDUCE_1190115685_1
+2021-12-16 06:02:52,190 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741932_1108, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582575132_1332970628/in/part9
+2021-12-16 06:02:55,201 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582575132_1332970628/in/part9 is closed by DFSClient_NONMAPREDUCE_1190115685_1
+2021-12-16 06:02:58,211 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741933_1109, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582575132_1332970628/out/reduce-out
+2021-12-16 06:03:01,222 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582575132_1332970628/out/reduce-out is closed by DFSClient_NONMAPREDUCE_1190115685_1
+2021-12-16 06:03:04,233 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741934_1110, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582575132_1332970628/out/_temporary/0/_temporary/attempt_local1378696534_0001_r_000000_0/part-r-00000
+2021-12-16 06:03:07,243 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582575132_1332970628/out/_temporary/0/_temporary/attempt_local1378696534_0001_r_000000_0/part-r-00000 is closed by DFSClient_NONMAPREDUCE_1190115685_1
+2021-12-16 06:03:10,254 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582575132_1332970628/out/_SUCCESS is closed by DFSClient_NONMAPREDUCE_1190115685_1
+2021-12-16 06:03:13,264 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741935_1111, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582579661_2140566547/in/part0
+2021-12-16 06:03:16,275 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582579661_2140566547/in/part0 is closed by DFSClient_NONMAPREDUCE_249821458_1
+2021-12-16 06:03:19,285 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741936_1112, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582579661_2140566547/in/part1
+2021-12-16 06:03:22,296 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582579661_2140566547/in/part1 is closed by DFSClient_NONMAPREDUCE_249821458_1
+2021-12-16 06:03:25,306 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741937_1113, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582579661_2140566547/in/part2
+2021-12-16 06:03:28,317 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582579661_2140566547/in/part2 is closed by DFSClient_NONMAPREDUCE_249821458_1
+2021-12-16 06:03:31,327 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741938_1114, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582579661_2140566547/in/part3
+2021-12-16 06:03:34,338 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582579661_2140566547/in/part3 is closed by DFSClient_NONMAPREDUCE_249821458_1
+2021-12-16 06:03:37,348 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741939_1115, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582579661_2140566547/in/part4
+2021-12-16 06:03:40,359 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582579661_2140566547/in/part4 is closed by DFSClient_NONMAPREDUCE_249821458_1
+2021-12-16 06:03:43,369 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741940_1116, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582579661_2140566547/in/part5
+2021-12-16 06:03:46,380 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582579661_2140566547/in/part5 is closed by DFSClient_NONMAPREDUCE_249821458_1
+2021-12-16 06:03:49,390 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741941_1117, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582579661_2140566547/in/part6
+2021-12-16 06:03:52,401 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582579661_2140566547/in/part6 is closed by DFSClient_NONMAPREDUCE_249821458_1
+2021-12-16 06:03:55,411 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741942_1118, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582579661_2140566547/in/part7
+2021-12-16 06:03:58,422 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582579661_2140566547/in/part7 is closed by DFSClient_NONMAPREDUCE_249821458_1
+2021-12-16 06:04:01,433 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741943_1119, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582579661_2140566547/in/part8
+2021-12-16 06:04:04,443 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582579661_2140566547/in/part8 is closed by DFSClient_NONMAPREDUCE_249821458_1
+2021-12-16 06:04:07,454 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741944_1120, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582579661_2140566547/in/part9
+2021-12-16 06:04:10,464 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582579661_2140566547/in/part9 is closed by DFSClient_NONMAPREDUCE_249821458_1
+2021-12-16 06:04:13,475 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741945_1121, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582579661_2140566547/out/reduce-out
+2021-12-16 06:04:16,485 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582579661_2140566547/out/reduce-out is closed by DFSClient_NONMAPREDUCE_249821458_1
+2021-12-16 06:04:19,496 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741946_1122, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582579661_2140566547/out/_temporary/0/_temporary/attempt_local351356799_0001_r_000000_0/part-r-00000
+2021-12-16 06:04:22,506 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582579661_2140566547/out/_temporary/0/_temporary/attempt_local351356799_0001_r_000000_0/part-r-00000 is closed by DFSClient_NONMAPREDUCE_249821458_1
+2021-12-16 06:04:25,517 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582579661_2140566547/out/_SUCCESS is closed by DFSClient_NONMAPREDUCE_249821458_1
+2021-12-16 06:04:28,527 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741947_1123, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582583204_1418403915/in/part0
+2021-12-16 06:04:31,538 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582583204_1418403915/in/part0 is closed by DFSClient_NONMAPREDUCE_1509012110_1
+2021-12-16 06:04:34,548 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741948_1124, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582583204_1418403915/in/part1
+2021-12-16 06:04:37,559 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582583204_1418403915/in/part1 is closed by DFSClient_NONMAPREDUCE_1509012110_1
+2021-12-16 06:04:40,569 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741949_1125, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582583204_1418403915/in/part2
+2021-12-16 06:04:43,580 INFO org.apache.hadoop.hdfs.server.namenode.FSNamesystem: BLOCK* blk_1073741949_1125 is COMMITTED but not COMPLETE(numNodes= 0 <  minimum = 1) in file /user/hduser/QuasiMonteCarlo_1639582583204_1418403915/in/part2
+2021-12-16 06:04:46,590 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582583204_1418403915/in/part2 is closed by DFSClient_NONMAPREDUCE_1509012110_1
+2021-12-16 06:04:49,601 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741950_1126, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582583204_1418403915/in/part3
+2021-12-16 06:04:52,611 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582583204_1418403915/in/part3 is closed by DFSClient_NONMAPREDUCE_1509012110_1
+2021-12-16 06:04:55,622 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741951_1127, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582583204_1418403915/in/part4
+2021-12-16 06:04:58,633 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582583204_1418403915/in/part4 is closed by DFSClient_NONMAPREDUCE_1509012110_1
+2021-12-16 06:05:01,643 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741952_1128, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582583204_1418403915/in/part5
+2021-12-16 06:05:04,654 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582583204_1418403915/in/part5 is closed by DFSClient_NONMAPREDUCE_1509012110_1
+2021-12-16 06:05:07,664 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741953_1129, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582583204_1418403915/in/part6
+2021-12-16 06:05:10,675 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582583204_1418403915/in/part6 is closed by DFSClient_NONMAPREDUCE_1509012110_1
+2021-12-16 06:05:13,685 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741954_1130, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582583204_1418403915/in/part7
+2021-12-16 06:05:16,696 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582583204_1418403915/in/part7 is closed by DFSClient_NONMAPREDUCE_1509012110_1
+2021-12-16 06:05:19,706 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741955_1131, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582583204_1418403915/in/part8
+2021-12-16 06:05:22,717 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582583204_1418403915/in/part8 is closed by DFSClient_NONMAPREDUCE_1509012110_1
+2021-12-16 06:05:25,727 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741956_1132, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582583204_1418403915/in/part9
+2021-12-16 06:05:28,738 INFO org.apache.hadoop.hdfs.server.namenode.FSNamesystem: BLOCK* blk_1073741956_1132 is COMMITTED but not COMPLETE(numNodes= 0 <  minimum = 1) in file /user/hduser/QuasiMonteCarlo_1639582583204_1418403915/in/part9
+2021-12-16 06:05:31,748 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582583204_1418403915/in/part9 is closed by DFSClient_NONMAPREDUCE_1509012110_1
+2021-12-16 06:05:34,759 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741957_1133, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582583204_1418403915/out/reduce-out
+2021-12-16 06:05:37,769 INFO org.apache.hadoop.hdfs.server.namenode.FSNamesystem: BLOCK* blk_1073741957_1133 is COMMITTED but not COMPLETE(numNodes= 0 <  minimum = 1) in file /user/hduser/QuasiMonteCarlo_1639582583204_1418403915/out/reduce-out
+2021-12-16 06:05:40,780 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582583204_1418403915/out/reduce-out is closed by DFSClient_NONMAPREDUCE_1509012110_1
+2021-12-16 06:05:43,790 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741958_1134, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582583204_1418403915/out/_temporary/0/_temporary/attempt_local411780591_0001_r_000000_0/part-r-00000
+2021-12-16 06:05:46,801 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582583204_1418403915/out/_temporary/0/_temporary/attempt_local411780591_0001_r_000000_0/part-r-00000 is closed by DFSClient_NONMAPREDUCE_1509012110_1
+2021-12-16 06:05:49,811 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582583204_1418403915/out/_SUCCESS is closed by DFSClient_NONMAPREDUCE_1509012110_1
+2021-12-16 06:05:52,822 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741959_1135, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582588663_573361718/in/part0
+2021-12-16 06:05:55,833 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582588663_573361718/in/part0 is closed by DFSClient_NONMAPREDUCE_-1311592772_1
+2021-12-16 06:05:58,843 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741960_1136, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582588663_573361718/in/part1
+2021-12-16 06:06:01,854 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582588663_573361718/in/part1 is closed by DFSClient_NONMAPREDUCE_-1311592772_1
+2021-12-16 06:06:04,864 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741961_1137, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582588663_573361718/in/part2
+2021-12-16 06:06:07,875 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582588663_573361718/in/part2 is closed by DFSClient_NONMAPREDUCE_-1311592772_1
+2021-12-16 06:06:10,885 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741962_1138, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582588663_573361718/in/part3
+2021-12-16 06:06:13,896 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /user/hduser/QuasiMonteCarlo_1639582588663_573361718/in/part3 is closed by DFSClient_NONMAPREDUCE_-1311592772_1
+2021-12-16 06:06:16,906 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocate blk_1073741963_1139, replicas=127.0.0.1:9866 for /user/hduser/QuasiMonteCarlo_1639582588663_573361718/in/part4

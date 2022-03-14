@@ -16,19 +16,13 @@ CONFIG_FILE = os.path.join(str(Path.home()), '.logsight')
 config = ConfigParser()
 config.read(CONFIG_FILE)
 
-# Config file: ~/.logsight
-# [DEFAULT]
-# EMAIL = john.miller@gmail.com
-# USER_ID = 11cc4a8a-c1ff-4852-9486-62fd8e618623
-# PASSWORD = 11whUz-hanpe4-zaqtyr
-
 CONFIG = {i: None for i in ['EMAIL', 'USERID', 'PASSWORD']}
 CONFIG.update({i: config['DEFAULT'][i] for i in CONFIG.keys()
                if config.has_option('DEFAULT', i)})
 CONFIG.update({i: os.environ[f'LOGSIGHT_{i}'] for i in CONFIG.keys()
                if f'LOGSIGHT_{i}' in os.environ})
 
-VERSION = 'v2022.03.11'
+VERSION = '2022.03.14'
 
 
 @click.group(help="CLI tool to manage logsight.ai artifacts")
