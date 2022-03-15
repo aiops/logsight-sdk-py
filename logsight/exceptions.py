@@ -13,7 +13,7 @@ class APIException(Exception):
 
     def __init__(self,
                  type_: str = None, title: str = None, status: int = None,
-                 detail: str = None, instance: str = None, **kwargs: Dict) -> None:
+                 detail: str = None, message: str = None, instance: str = None, **kwargs: Dict) -> None:
         """Problem exception as defined in RFC 7807 (https://tools.ietf.org/html/rfc7807).
 
         Args:
@@ -28,13 +28,16 @@ class APIException(Exception):
                 specific error; this will often point to an error log for that specific response.
             **kwargs: additional context information
         """
-
         self.type = type_
         self.status = status
         self.title = title
         self.detail = detail
+        self.message = message
         self.instance = instance
         self.kwargs = kwargs
+
+    def __str__(self):
+        return f'Status: {self.status}, message: {self.message}'
 
 
 class BadRequest(APIException):

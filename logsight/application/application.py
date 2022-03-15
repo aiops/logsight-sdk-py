@@ -1,5 +1,3 @@
-import html
-
 from logsight.config import HOST_API
 from logsight.config import PATH_APP_CREATE, PATH_APP_LST, PATH_APP_DELETE
 from logsight.api_client import APIClient
@@ -7,17 +5,20 @@ from logsight.api_client import APIClient
 
 class LogsightApplication(APIClient):
 
-    def __init__(self, private_key, email):
+    def __init__(self, user_id, token):
         """Class to manage applications (apps).
 
         Args:
-            private_key (str): Private key associated with the subscription.
-            email (str): Private key associated with the subscription.
+            user_id (str): Identifier of the user.
+            token (str): Access token.
 
         """
         super().__init__()
-        self.private_key = private_key
-        self.email = email
+        self.user_id = user_id
+        self.token = token
+
+    def __str__(self):
+        return f'user id = {self.user_id}, token = {self.token}'
 
     def create(self, app_name):
         """Creates a new application.
@@ -26,7 +27,11 @@ class LogsightApplication(APIClient):
             app_name (str): Application name.
 
         Returns:
-            dict: ???.
+            dict.
+                {
+                  "applicationId": "string",
+                  "applicationName": "string"
+                }
 
         Raises:
             BadRequest: if the app_name is invalid, it is duplicated, or
@@ -34,53 +39,55 @@ class LogsightApplication(APIClient):
             Unauthorized: If the private_key is invalid.
 
         """
-        data = {"key": self.private_key, "name": app_name}
-        return self._post(HOST_API, PATH_APP_CREATE, data)
+        payload = {'applicationName': app_name}
+        headers = {'content-type': 'application/json', 'Authorization': f'Bearer {self.token}'}
+        return self._post(host=HOST_API,
+                          path=PATH_APP_CREATE.format(userId=self.user_id),
+                          json=payload,
+                          headers=headers)
 
     def lst(self):
         """Lists existing applications.
 
         Returns:
-            dict: xxxx.
+            dict:
+                {
+                  "applications": [
+                    {
+                      "applicationId": "string",
+                      "name": "string"
+                    }
+                  ]
+                }
 
         Raises:
             Unauthorized: If the private_key is invalid.
 
         """
-        payload = {}
-        query = f"{self.private_key}"
-        return self._get(HOST_API, "/".join([PATH_APP_LST, query]), payload)
+        headers = {'Authorization': f'Bearer {self.token}'}
+        return self._get(host=HOST_API,
+                         path=PATH_APP_LST.format(userId=self.user_id),
+                         headers=headers)
 
     def delete(self, app_id):
         """Deletes an existing  application.
 
         Args:
-            app_id (str): Application name.
+            app_id (str): Application id.
 
         Returns:
-            dict: xxxx.
+            dict:
+                {
+                  "applicationId": "string",
+                  "applicationName": "string"
+                }
 
         Raises:
             NotFound: if the app_name does not exist.
             Unauthorized: If the private_key is invalid.
 
         """
-        data = {}
-        query = f"{app_id}?key={self.private_key}"
-        return self._post(HOST_API, "/".join([PATH_APP_DELETE, query]), data)
-
-    @staticmethod
-    def _extract_elasticsearch_error(err):
-        start_idx = err.response.text.find("<title>")
-        end_idx = err.response.text.find("</title>")
-
-        if start_idx != -1 and end_idx != -1:
-            end_idx = end_idx + len("</title>")
-            err = (
-                str(err)
-                + " ("
-                + html.unescape(err.response.text[start_idx:end_idx])
-                + ")"
-            )
-
-        return err
+        headers = {'Authorization': f'Bearer {self.token}'}
+        return self._delete(host=HOST_API,
+                            path=PATH_APP_DELETE.format(userId=self.user_id, applicationId=app_id),
+                            headers=headers)

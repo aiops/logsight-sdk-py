@@ -3,4 +3,6 @@ pyparsing               # MIT License
 requests                # Apache Software License (Apache 2.0)
 gitchangelog            # BSD License (BSD 3-Clause License)
 twine                   # Apache Software License
-sphinx_rtd_theme        # MIT License (MIT)
+click                   # BSD License (BSD-3-Clause)
+tqdm
+prettytable

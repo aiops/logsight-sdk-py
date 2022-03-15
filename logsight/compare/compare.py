@@ -1,59 +1,94 @@
 from logsight.config import HOST_API
-from logsight.config import PATH_COMPARE
+from logsight.config import PATH_COMPARE, PATH_COMPARE_TAGS
 from logsight.api_client import APIClient
 
 
 class LogsightCompare(APIClient):
 
-    def __init__(self, private_key, email, app_name):
-        super().__init__()
-        self.private_key = private_key
-        self.email = email
-        self.app_name = app_name
-
-    def compare_time(self,
-                     baseline_start_time, baseline_end_time,
-                     test_start_time, test_end_time):
-        data = {
-            "private-key": self.private_key,
-            "email": self.email,
-            "app": self.app_name,
-            "baseline": {
-                "start-time": baseline_start_time,
-                "end-time": baseline_end_time
-            },
-            "test": {
-                "start-time": test_start_time,
-                "end-time": test_end_time
-            }
-        }
-        return self._get(HOST_API, PATH_COMPARE, data)
-
-    def compare_tags(self, baseline_tag, test_tag):
-        """Compare two log segments of an application using tags to identify
-        the segments.
+    def __init__(self, user_id, token):
+        """Class to compare logs.
 
         Args:
-            baseline_tag (str): Name of the baseline tag.
-            test_tag (str): Name of the test tag.
+            user_id (str): Identifier of the user.
+            token (str): Access token.
+
+        """
+        super().__init__()
+        self.user_id = user_id
+        self.token = token
+
+    def __str__(self):
+        return f'user id = {self.user_id}, token = {self.token}'
+
+    def compare(self, app_id, baseline_tag, candidate_tag, flush_id=None, verbose=False):
+        """Compares the logs on an application.
+
+        Args:
+            app_id (str): Application id.
+            baseline_tag (str): Tag of the baseline logs.
+            candidate_tag (str): Tag of the candidate logs.
 
         Returns:
-            dict: ???.
+            dict.
+                {
+                  "addedStatesFaultPercentage": 0,
+                  "addedStatesReportPercentage": 0,
+                  "addedStatesTotalCount": 0,
+                  "applicationId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  "baselineLogCount": 0,
+                  "candidateChangePercentage": 0,
+                  "candidateLogCount": 0,
+                  "deletedStatesFaultPercentage": 0,
+                  "deletedStatesReportPercentage": 0,
+                  "deletedStatesTotalCount": 0,
+                  "flushId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  "frequencyChangeFaultPercentage": {},
+                  "frequencyChangeReportPercentage": {},
+                  "frequencyChangeTotalCount": 0,
+                  "link": "string",
+                  "recurringStatesFaultPercentage": 0,
+                  "recurringStatesReportPercentage": 0,
+                  "recurringStatesTotalCount": 0,
+                  "risk": 0,
+                  "totalLogCount": 0
+                }
+
+        Raises:
+            BadRequest: if the app_name is invalid, it is duplicated, or
+                too the maximum number of applications has been reached
+            Unauthorized: If the private_key is invalid.
+
+        """
+        payload = {'applicationId': app_id,
+                   'baselineTag': baseline_tag,
+                   'candidateTag': candidate_tag,
+                   'flushId': flush_id}
+        headers = {'content-type': 'application/json', 'Authorization': f'Bearer {self.token}'}
+        return self._post(host=HOST_API,
+                          path=PATH_COMPARE,
+                          json=payload,
+                          headers=headers,
+                          verbose=verbose)
+
+    def tags(self, app_id):
+        """Lists of the tags of an application.
+
+        Returns:
+            List:
+                [
+                  {
+                    "tag": "string",
+                    "tagView": "string"
+                  }
+                ]
 
         Raises:
             Unauthorized: If the private_key is invalid.
-            Conflict: If the app_name already exists.
 
         """
-        data = {
-            "private-key": self.private_key,
-            "email": self.email,
-            "app": self.app_name,
-            "baseline": {
-                "tag": baseline_tag
-            },
-            "test": {
-                "tag": test_tag
-            }
-        }
-        return self._get(HOST_API, PATH_COMPARE, data)
+        params = {'applicationId': app_id, 'userId': self.user_id}
+        headers = {'Authorization': f'Bearer {self.token}'}
+        return self._get(host=HOST_API,
+                         path=PATH_COMPARE_TAGS,
+                         params=params,
+                         headers=headers)

@@ -1,14 +1,20 @@
-# HOST_API = "http://wally113.cit.tu-berlin.de:4200/"
-# HOST_API_V1 = "http://wally113.cit.tu-berlin.de:5444/"
 
-HOST_API_V1 = "https://demo.logsight.ai/api_v1/"
-HOST_API_V1 = "https://logsight.ai/api_v1/"
-PATH_DATA = "/api_v1/data"
-PATH_RESULTS = "/api_v1/results"
+HOST_API = "https://demo.logsight.ai/api/v1/"
 
-HOST_API = "https://logsight.ai/api_v1/"
-PATH_APP_CREATE = "/api/applications/create"
-PATH_APP_LST = "/api/applications/user"
-PATH_APP_DELETE = "/api/applications"
+PATH_USERS = "users"
+PATH_USERS_DELETE = "users/{userId}"
+PATH_LOGIN = "auth/login"
 
-PATH_COMPARE = "/api_v1/compare"
+PATH_APP_CREATE = "users/{userId}/applications"
+PATH_APP_LST = "users/{userId}/applications"
+PATH_APP_DELETE = "users/{userId}/applications/{applicationId}"
+
+PATH_LOGS = "logs"
+PATH_LOGS_FILE = "logs/file?applicationId={applicationId}&tag={tag}"
+
+PATH_LOGS_FLUSH = "logs/flush"
+PATH_LOGS_INCIDENTS = "logs/incidents"
+
+PATH_COMPARE = "logs/compare"
+PATH_COMPARE_TAGS = "logs/compare/tags"
+
