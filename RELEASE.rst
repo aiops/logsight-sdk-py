@@ -218,7 +218,7 @@ Bash workflow
 
 .. code-block:: console
 
-    #. Update develop branch in case someone made changes
+    #. Update the local develop branch in case someone made changes
     git checkout develop
     git pull --rebase
     git push
