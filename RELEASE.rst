@@ -221,7 +221,6 @@ Bash workflow
     #. Update the local develop branch in case someone made changes
     git checkout develop
     git pull --rebase
-    git push
 
     #. Created a new release id
     prev_version=$(python setup.py --version)
@@ -262,9 +261,9 @@ Bash workflow
     #. Update main branch
     git checkout main
     git merge --no-ff release/$version -m "Release $version"
-    git push origin main
     git tag -a $version -m "Release $version"
     git push --tags
+    git push origin main
 
     #. Update develop branch
     git checkout develop
