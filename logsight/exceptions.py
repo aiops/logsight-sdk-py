@@ -1,11 +1,4 @@
-from typing import (Any,
-                    Awaitable,
-                    Callable,
-                    Dict,
-                    Mapping,
-                    Optional,
-                    Sequence,
-                    Union)
+from typing import Any, Dict
 from http import HTTPStatus as status
 
 
@@ -48,7 +41,7 @@ class BadRequest(APIException):
 
 class Unauthorized(APIException):
     status_code = status.UNAUTHORIZED
-    message = """Unauthorized: the request has not been applied 
+    message = """Unauthorized: the request has not been applied
     because it lacks valid authentication credentials for the
     target resource."""
 
@@ -61,13 +54,13 @@ class Forbidden(APIException):
 
 class NotFound(APIException):
     status_code = status.NOT_FOUND
-    message = """NotFound: the server can't find the requested 
+    message = """NotFound: the server can't find the requested
     resource."""
 
 
 class Conflict(APIException):
     status_code = status.CONFLICT
-    message = """Conflict: a request conflict with current state 
+    message = """Conflict: a request conflict with current state
     of the target resource."""
 
 
@@ -79,18 +72,18 @@ class InternalServerError(APIException):
 
 class ServiceUnavailable(APIException):
     status_code = status.SERVICE_UNAVAILABLE
-    message = """ServiceUnavailable: the server is not ready to 
+    message = """ServiceUnavailable: the server is not ready to
     handle the request."""
 
 
 class BadGateway(APIException):
     status_code = status.BAD_GATEWAY
-    message = """the server, while acting as a gateway or proxy, 
+    message = """the server, while acting as a gateway or proxy,
     received an invalid response from the upstream server."""
 
 
 class DataCorruption(APIException):
-    message = """DataCorruption: the client was unable to parse a 
+    message = """DataCorruption: the client was unable to parse a
     data structured received from the server."""
 
 
