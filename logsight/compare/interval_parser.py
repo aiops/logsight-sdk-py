@@ -34,20 +34,24 @@ class ParserAppInterval:
 
     @classmethod
     def _convert_to_seconds(cls, s):
-        seconds_per_unit = {"s": 1, "m": 60, "h": 3600, "d": 86400, "w": 604800, "y": 31536000}
+        seconds_per_unit = {
+            "s": 1, "m": 60, "h": 3600, "d": 86400, "w": 604800, "y": 31536000
+        }
         return int(s[:-1]) * seconds_per_unit[s[-1]]
 
     @classmethod
     def _replace_offset(cls, t):
         seconds = cls._convert_to_seconds(t[0])
-        return str((datetime.now(tz=tzlocal()) - timedelta(seconds=seconds)).isoformat())
+        return str((datetime.now(tz=tzlocal()) -
+                    timedelta(seconds=seconds)).isoformat())
 
     @classmethod
     def _replace_interval(cls, t):
         if t[0][0] == cls.INTERVAL:
             seconds = cls._convert_to_seconds(t[0][1])
             date = parser.parse(t[1][0])
-            return [[str((date - timedelta(seconds=seconds)).isoformat())], t[1]]
+            return \
+                [[str((date - timedelta(seconds=seconds)).isoformat())], t[1]]
         return t
 
     def _create_tokens(self):

@@ -1,4 +1,5 @@
 import unittest
+import os
 
 from tests.config import EMAIL, PASSWORD
 from tests.utils import generate_logs
@@ -36,13 +37,11 @@ class TestLogs(unittest.TestCase):
         self.assertTrue('status' in r)
 
     def test_send_log_file_and_flush(self):
-        file_name = 'hadoop_name_node_v1_1loc'
-        file_path = './integration/fixtures/' + file_name
-        with open(file_path, 'rb') as f:
-            files = {'file': (file_name, f, 'text/csv')}
-            g = LogsightLogs(self.u.token)
-            r1 = g.upload(self.app_id, files=files, tag='v1.1.3')
-            self.assertEqual(r1['source'], 'FILE')
+        file_name = 'hadoop_name_node_v1_1kloc'
+        file_path = os.path.join('./integration/fixtures/', file_name)
+        g = LogsightLogs(self.u.token)
+        r1 = g.upload(self.app_id, file=file_path, tag='v1.1.3')
+        self.assertEqual(r1['source'], 'FILE')
 
         r = g.flush(r1['receiptId'])
         self.assertTrue('status' in r)

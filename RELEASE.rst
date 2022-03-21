@@ -222,19 +222,18 @@ Bash workflow
     git checkout develop
     git pull --rebase
 
-    #. Created a new release id
+    #. Created a new release version
+    # Tags follow Semantic Versioning (https://semver.org): Major, Minor, Patch.
     prev_version=$(python setup.py --version)
     echo "Previous release: $prev_version"
-    # update release version
     version=$(echo $prev_version | perl -pe 's/^((\d+\.)*)(\d+)(.*)$/$1.($3+1).$4/e')
     echo "New release: $version"
 
     # Create a branch from the current HEAD (does not touch local changes)
     git checkout -b release/$version develop
 
-    # Warning: The following commands should be executed manually
-    # Execute tests
-    # $ python -m unittest discover tests`
+    # Warning: Execute the tests manually
+    # tox
 
     # Update the changelog
     # add commit message from HEAD to the previous tag
@@ -242,19 +241,20 @@ Bash workflow
     # Run gitchangelog to manually add changelog entries
     gitchangelog ^$prev_version HEAD
 
-    # Update the version in setup.py
-    # $ vi setup.py or
-    sed -i "/^version/s;[^ ]*$;'$version';" setup.py
-    # BSD/MacOS: sed -i "" "/^version/s;[^ ]*$;'$version';" setup.py
+    # Update automatically or manually the version in setup.py and ./src/logsight-cli.py
+    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        sed -i "/^VERSION/s;[^ ]*$;'$version';" setup.py
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
+        sed -i "" "/^VERSION/s;[^ ]*$;'$version';" setup.py
+    else
+        echo "OS is not supported"
+    fi
 
     # Make the documentation
     # Documentation is at:
     # - https://www.sphinx-doc.org/en/master/tutorial/
     # - https://www.sphinx-doc.org/_/downloads/en/master/pdf/
     cd docs ; make clean ; make html ; cd ..
-
-    # Execute tests
-    # tox
 
     git commit -a -m "Preparation for release $version"
 
@@ -267,7 +267,10 @@ Bash workflow
 
     #. Update develop branch
     git checkout develop
+    git pull
     git merge --no-ff release/$version -m "Release $version"
+    # This step may well lead to a merge conflict (probably even, since we have changed the version number).
+    # If so, fix it and commit.
     git push origin develop
 
     #. Remove release branch

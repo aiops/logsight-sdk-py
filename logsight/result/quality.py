@@ -34,11 +34,12 @@ class Quality(Template):
 
     @property
     def suggestions(self):
-        """List[List[str], str]: list of suggestions to improve the quality of the message
+        """List[List[str], str]: list of suggestions to improve the quality of
+         the message
 
         Examples:
-            [['VERB NOUN NOUN ADP NOUN PUNCT', 'VERB NOUN NOUN PUNCT ADP NOUN',
-              'AUX PART VERB NOUN NOUN PUNCT', 'VERB NOUN NOUN NOUN NOUN NOUN'],
+            [['VERB NOUN NOUN ADP NOUN PUNCT', 'VERB NOUN NOUN PUNCT ADP',
+              'AUX PART VERB NOUN NOUN PUNCT', 'VERB NOUN NOUN NOUN NOUN'],
               'X PUNCT PUNCT PROPN PROPN PUNCT'
             ]
 

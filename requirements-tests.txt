@@ -1,4 +1,0 @@
-flake8                    # Apache Software License (Apache 2.0)
-pylint                    # GNU General Public License v2 (GPLv2)
-pytest                    # MIT License
-tox                       # MIT License

@@ -5,7 +5,7 @@ from tests.config import EMAIL, PASSWORD
 from logsight.user import LogsightUser
 from logsight.exceptions import (BadRequest,
                                  Unauthorized,
-                                 Conflict)
+                                 NotFound)
 
 
 class TestUserManagement(unittest.TestCase):
@@ -32,7 +32,7 @@ class TestUserManagement(unittest.TestCase):
             LogsightUser(email=EMAIL, password='invalid_password').token
 
     def test_invalid_email(self):
-        with self.assertRaises(BadRequest):
+        with self.assertRaises(NotFound):
             LogsightUser(email='invalid_email@gmail.com', password='at_least_8_characters').token
 
     # def test_create_existing_user(self):
