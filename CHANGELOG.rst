@@ -1,6 +1,20 @@
 CHANGELOG
 *********
 
+0.1.22 (2022-03-24)
+-------------------
+
+Changes
+~~~~~~~
+- Demo change to logsight.ai. [snedelkoski]
+- Made changes to be compliant with flake8. [Jorge Cardoso]
+- Requirements with sphinx packages. [Jorge Cardoso]
+
+Fix
+~~~
+- Links in setup and requirements. [Jorge Cardoso]
+
+
 Release 0.1.20
 ==============
 
