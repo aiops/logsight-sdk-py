@@ -1,8 +1,8 @@
 import unittest
 import time
 
-from config import EMAIL, PASSWORD
-from utils import generate_logs
+from tests.config import EMAIL, PASSWORD
+from tests.utils import generate_logs
 from logsight.user import LogsightUser
 from logsight.application import LogsightApplication
 from logsight.logs import LogsightLogs

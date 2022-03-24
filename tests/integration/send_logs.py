@@ -4,7 +4,7 @@ from dateutil.tz import tzlocal
 import datetime
 
 from logsight.logger.logger import LogsightLogger
-from logsight.utils import now, create_apps, delete_apps
+from logsight.utils import now
 
 
 if __name__ == '__main__':
@@ -68,7 +68,8 @@ class SendLogs:
     #     except LogsightException as e:
     #         print(e)
 
-    def send_log_messages(self, log_file_name, n_messages, tag=None, verbose=False):
+    def send_log_messages(self, log_file_name, n_messages,
+                          tag=None, verbose=False):
         self.dt_start = now()
         print('Starting message sending', self.dt_start)
 

@@ -16,7 +16,7 @@ setup(
     author_email='jorge.cardoso.pt@gmail.com',
     url="https://github.com/aiops/logsight-sdk-py",
     project_urls={
-        "Documentation": "http://logsight.readthedocs.io/en/latest/",
+        "Documentation": "https://logsight-sdk-py.readthedocs.io/en/latest/",
         "Source": "https://github.com/aiops/logsight-sdk-py",
         "Tracker": "https://github.com/aiops/logsight-sdk-py/issues",
     },

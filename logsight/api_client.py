@@ -22,7 +22,8 @@ class APIClient:
                 "Content could not be converted from JSON: %s" % r.text
             )
 
-    def _post(self, host, path, json=None, files=None, headers=None, verbose=False):
+    def _post(self, host, path, json=None, files=None, headers=None,
+              verbose=False):
         try:
             url = urllib.parse.urljoin(host, path)
             if json:

@@ -4,13 +4,14 @@ from itertools import cycle
 import ntpath
 
 
+ABSPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fixtures')
 LOG_FILES = {
-    'hadoop': os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fixtures/Hadoop_2k.log'),
-    'openstack': os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fixtures/OpenStack_2k.log'),
-    'mac': os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fixtures/Mac_2k.log'),
-    'zookeeper': os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fixtures/Zookeeper_2k.log'),
-    'openssh': os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fixtures/OpenSSH_2k.log'),
-    'helloworld': os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fixtures/HelloWorld_15.log'),
+    'hadoop': os.path.join(ABSPATH, 'Hadoop_2k.log'),
+    'openstack': os.path.join(ABSPATH, 'OpenStack_2k.log'),
+    'mac': os.path.join(ABSPATH, 'Mac_2k.log'),
+    'zookeeper': os.path.join(ABSPATH, 'Zookeeper_2k.log'),
+    'openssh': os.path.join(ABSPATH, 'OpenSSH_2k.log'),
+    'helloworld': os.path.join(ABSPATH, 'HelloWorld_15.log'),
 }
 
 
@@ -30,7 +31,8 @@ def parse_generic(f, mappings, level_idx, msg_idx, max_log_messages):
             if tokens[level_idx] in mappings:
                 level = mappings[tokens[level_idx]]
             else:
-                sys.exit('Unknown level, line: %d, %s (%s)' % (i, level_idx, f.name))
+                sys.exit('Unknown level, line: %d, %s (%s)'
+                         % (i, level_idx, f.name))
 
         level_msg.append((level, ' '.join(tokens[msg_idx:])))
 

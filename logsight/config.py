@@ -1,5 +1,4 @@
-
-HOST_API = "https://demo.logsight.ai/api/v1/"
+HOST_API = "https://logsight.ai/api/v1/"
 
 PATH_USERS = "users"
 PATH_USERS_DELETE = "users/{userId}"
@@ -17,4 +16,3 @@ PATH_LOGS_INCIDENTS = "logs/incidents"
 
 PATH_COMPARE = "logs/compare"
 PATH_COMPARE_TAGS = "logs/compare/tags"
-
