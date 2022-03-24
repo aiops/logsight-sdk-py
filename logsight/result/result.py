@@ -42,12 +42,14 @@ class LogsightResult(APIClient):
         """Obtains the results from processing.
 
         Args:
-            start_time (str): Timestamp of the start time of the interval requested.
+            start_time (str): Timestamp of the start time of the interval
+                requested.
             end_time (str): Timestamp of end time of the interval requested.
             anomaly_type (str): One of: incidents, log_quality, log_ad
 
         Returns:
-            Union[Template, Incident, Quality]: Object that encapsulates the response.
+            Union[Template, Incident, Quality]: Object that encapsulates
+            the response.
 
         Raises:
             Unauthorized: If the private_key is invalid.

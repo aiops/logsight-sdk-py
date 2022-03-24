@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-version = '0.1.21'
+version = '0.1.22'
 
 
 with open("README.rst", "r", encoding="utf-8") as fh:
@@ -16,7 +16,7 @@ setup(
     author_email='jorge.cardoso.pt@gmail.com',
     url="https://github.com/aiops/logsight-sdk-py",
     project_urls={
-        "Documentation": "http://logsight.readthedocs.io/en/latest/",
+        "Documentation": "https://logsight-sdk-py.readthedocs.io/en/latest/",
         "Source": "https://github.com/aiops/logsight-sdk-py",
         "Tracker": "https://github.com/aiops/logsight-sdk-py/issues",
     },

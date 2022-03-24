@@ -19,7 +19,8 @@ class LogsightUser(APIClient):
         self._token = None
 
     def __str__(self):
-        return f'email = {self.email}, user id = {self.user_id}, token = {self.token}'
+        return f'email = {self.email}, user id = {self.user_id},' \
+               f'token = {self.token}'
 
     def create(self):
         """Creates a new user.
@@ -42,7 +43,10 @@ class LogsightUser(APIClient):
         Returns:
             userId (str): Identifier for the user created
         """
-        headers = {'content-type': 'application/json', 'Authorization': f'Bearer {self.token}'}
+        headers = {
+            'content-type': 'application/json',
+            'Authorization': f'Bearer {self.token}'
+        }
         return self._delete(HOST_API,
                             path=PATH_USERS_DELETE.format(userId=self.user_id),
                             headers=headers)

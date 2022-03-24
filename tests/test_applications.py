@@ -59,7 +59,8 @@ class TestAppManagement(unittest.TestCase):
         self._delete_app(content['applicationId'])
 
     def test_create_app_invalid_name(self):
-        """applicationName must contain only lowercase letters, numbers, and an underscore ([a-z0-9_])"""
+        """applicationName must contain only lowercase letters, numbers, and
+        an underscore ([a-z0-9_])"""
 
         app_name = 'test-create-app'
         with self.assertRaises(BadRequest):

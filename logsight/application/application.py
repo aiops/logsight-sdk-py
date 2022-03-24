@@ -40,9 +40,13 @@ class LogsightApplication(APIClient):
 
         """
         payload = {'applicationName': app_name}
-        headers = {'content-type': 'application/json', 'Authorization': f'Bearer {self.token}'}
+        headers = {
+            'content-type': 'application/json',
+            'Authorization': f'Bearer {self.token}'
+        }
+        path = PATH_APP_CREATE.format(userId=self.user_id)
         return self._post(host=HOST_API,
-                          path=PATH_APP_CREATE.format(userId=self.user_id),
+                          path=path,
                           json=payload,
                           headers=headers)
 
@@ -88,6 +92,7 @@ class LogsightApplication(APIClient):
 
         """
         headers = {'Authorization': f'Bearer {self.token}'}
+        path = PATH_APP_DELETE.format(userId=self.user_id, applicationId=app_id)
         return self._delete(host=HOST_API,
-                            path=PATH_APP_DELETE.format(userId=self.user_id, applicationId=app_id),
+                            path=path,
                             headers=headers)
