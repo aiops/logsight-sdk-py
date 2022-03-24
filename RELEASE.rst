@@ -260,6 +260,7 @@ Bash workflow
 
     #. Update main branch
     git checkout main
+    git pull
     git merge --no-ff release/$version -m "Release $version"
     git tag -a $version -m "Release $version"
     git push --tags
