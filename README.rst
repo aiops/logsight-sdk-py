@@ -25,6 +25,7 @@ README
     :alt: logsight.ai on Twitter
 
 
+
 Logsight SDK Python is a set of open source libraries, tools, documentation,
 and code samples that provides an easy, lightweight solution to instrument
 the source code of custom applications so that you can monitor their behavior
