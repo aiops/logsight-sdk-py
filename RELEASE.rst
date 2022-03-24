@@ -243,9 +243,9 @@ Bash workflow
 
     # Update automatically or manually the version in setup.py and ./src/logsight-cli.py
     if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        sed -i "/^VERSION/s;[^ ]*$;'$version';" setup.py
+        sed -i "/^version/s;[^ ]*$;'$version';" setup.py
     elif [[ "$OSTYPE" == "darwin"* ]]; then
-        sed -i "" "/^VERSION/s;[^ ]*$;'$version';" setup.py
+        sed -i "" "/^version/s;[^ ]*$;'$version';" setup.py
     else
         echo "OS is not supported"
     fi
