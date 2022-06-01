@@ -8,7 +8,7 @@ from logsight.user import LogsightUser
 from logsight.application import LogsightApplication
 from logsight.logs import LogsightLogs
 from logsight.incidents import LogsightIncident
-from logsight.exceptions import Conflict
+from logsight.exceptions import Conflict, InternalServerError
 
 APP_NAME = 'class_test_incidents'
 
@@ -37,8 +37,8 @@ class TestIncidents(unittest.TestCase):
         logs = generate_logs(delta=0, n=n_log_messages)
         cls.start_time, cls.stop_time = logs[0]['timestamp'], logs[-1]['timestamp']
         g = LogsightLogs(cls.u.token)
-        r = g.send(cls.app_id, logs, tag='v1.1.1')
-        cls.flush_id = g.flush(r['receiptId'])['flushId']
+        r = g.send(cls.app_id, logs, tag={"main":'v1.1.1'})
+        cls.receipt_id = r['receiptId']
 
     def test_incidents(self):
         i = LogsightIncident(self.u.user_id, self.u.token)
@@ -46,15 +46,22 @@ class TestIncidents(unittest.TestCase):
         self.stop_time = now.isoformat()
         self.start_time = (now - datetime.timedelta(days=1)).isoformat()
 
-        while True:
+        max_attempts = 5
+        attempt = 0
+        r = None
+        while attempt < max_attempts:
             try:
                 r = i.incidents(app_id=self.app_id,
                                 start_time=self.start_time,
                                 stop_time=self.stop_time,
-                                flush_id=self.flush_id)
+                                flush_id=self.receipt_id)
                 break
             except Conflict:
                 time.sleep(10)
+                attempt += 1
+            except InternalServerError:
+                time.sleep(10)
+                attempt += 1
 
         self.assertEqual('data' in r, True)
 

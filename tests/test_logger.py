@@ -47,7 +47,7 @@ class TestLogger(unittest.TestCase):
         for tag in ['v1.1.1', 'v2.2.2']:
             self._send_log_messages(log_file_name=LOG_FILES['helloworld'],
                                     n_messages=N_LOG_MESSAGES_TO_SEND,
-                                    tag=tag)
+                                    tag={"main":tag})
 
     @classmethod
     def __setup_handler(cls):

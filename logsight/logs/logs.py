@@ -43,7 +43,7 @@ class LogsightLogs(APIClient):
                         'timestamp': 'string'
                     }
                 ],
-            tag (str): Tag to associate with log records.
+            tag (dict): Tag to associate with log records.
 
         Returns:
             dict:
@@ -61,7 +61,7 @@ class LogsightLogs(APIClient):
         payload = {
             'applicationId': app_id,
             'logs': log_lst,
-            'tag': tag
+            'tags': tag
         }
         headers = {
             "content-type": "application/json",

@@ -21,13 +21,13 @@ class LogsightCompare(APIClient):
         return f'user id = {self.user_id}, token = {self.token}'
 
     def compare(self, app_id, baseline_tag, candidate_tag,
-                flush_id=None, verbose=False):
+                log_receipt_id=None, verbose=False):
         """Compares the logs on an application.
 
         Args:
             app_id (str): Application id.
-            baseline_tag (str): Tag of the baseline logs.
-            candidate_tag (str): Tag of the candidate logs.
+            baseline_tag (dict): Tag of the baseline logs.
+            candidate_tag (dict): Tag of the candidate logs.
 
         Returns:
             dict.
@@ -61,9 +61,9 @@ class LogsightCompare(APIClient):
 
         """
         payload = {'applicationId': app_id,
-                   'baselineTag': baseline_tag,
-                   'candidateTag': candidate_tag,
-                   'flushId': flush_id}
+                   'baselineTags': baseline_tag,
+                   'candidateTags': candidate_tag,
+                   'logsReceiptId': log_receipt_id}
         headers = {
             'content-type': 'application/json',
             'Authorization': f'Bearer {self.token}'

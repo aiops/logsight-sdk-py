@@ -59,21 +59,12 @@ class TestAppManagement(unittest.TestCase):
         self._delete_app(content['applicationId'])
 
     def test_create_app_invalid_name(self):
-        """applicationName must contain only lowercase letters, numbers, and
-        an underscore ([a-z0-9_])"""
+        """applicationName must follow the following regex pattern ^[a-zA-Z0-9][a-zA-Z0-9_.-]+"""
 
-        app_name = 'test-create-app'
+        app_name = '-_test-create-app'
         with self.assertRaises(BadRequest):
             self.app_mng.create(app_name)
 
-    def test_create_duplicate(self):
-        app_name = 'test_create_dup_app'
-        content = self._create_app(app_name)
-
-        with self.assertRaises(Conflict):
-            self.app_mng.create(app_name)
-
-        self._delete_app(content['applicationId'])
 
     def test_delete_inexistent_app_id(self):
         app_id = '3fa85f64-5717-4562-b3fc-2c963f66afa6'
