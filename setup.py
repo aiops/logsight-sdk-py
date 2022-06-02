@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-version = '0.1.25'
+version = '0.1.26'
 
 
 with open("README.rst", "r", encoding="utf-8") as fh:
