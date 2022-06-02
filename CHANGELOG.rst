@@ -1,6 +1,10 @@
 CHANGELOG
 *********
 
+0.1.27 (2022-06-02)
+-------------------
+- small bug fixes
+
 0.1.26 (2022-06-02)
 -------------------
 - File upload is no longer supported. Its being reworked and available once again in the next releases. [snedelkoski]
