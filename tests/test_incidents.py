@@ -37,7 +37,7 @@ class TestIncidents(unittest.TestCase):
         logs = generate_logs(delta=0, n=n_log_messages)
         cls.start_time, cls.stop_time = logs[0]['timestamp'], logs[-1]['timestamp']
         g = LogsightLogs(cls.u.token)
-        r = g.send(cls.app_id, logs, tag={"main":'v1.1.1'})
+        r = g.send(logs, tags={"main": 'v1.1.1'}, app_id=cls.app_id)
         cls.receipt_id = r['receiptId']
 
     def test_incidents(self):

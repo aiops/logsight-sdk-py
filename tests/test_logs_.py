@@ -29,7 +29,8 @@ class TestLogs(unittest.TestCase):
         n_log_messages = 60
         g = LogsightLogs(self.u.token)
         p = generate_logs(n=n_log_messages)
-        r1 = g.send(self.app_id, p, tag={"main":'v1.1.3'})
+        r1 = g.send(p, tags={"main": 'v1.1.3'}, app_id=self.app_id)
+        print(r1)
         self.assertEqual(r1['logsCount'], n_log_messages)
 
     # def test_send_log_file_and_flush(self):

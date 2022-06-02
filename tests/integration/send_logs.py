@@ -85,7 +85,7 @@ class SendLogs:
 
     def send_log_message(self, i, level, message, tag):
 
-        self.handler.set_tag(tag)
+        self.handler.set_tags(tag)
 
         if level.upper() == 'INFO':
             self.logger.info(message)

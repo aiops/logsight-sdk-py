@@ -1,5 +1,5 @@
 from logsight.config import HOST_API
-from logsight.config import PATH_COMPARE, PATH_COMPARE_TAGS
+from logsight.config import PATH_COMPARE
 from logsight.api_client import APIClient
 
 
@@ -20,14 +20,13 @@ class LogsightCompare(APIClient):
     def __str__(self):
         return f'user id = {self.user_id}, token = {self.token}'
 
-    def compare(self, app_id, baseline_tag, candidate_tag,
+    def compare(self, baseline_tags, candidate_tags,
                 log_receipt_id=None, verbose=False):
         """Compares the logs on an application.
 
         Args:
-            app_id (str): Application id.
-            baseline_tag (dict): Tag of the baseline logs.
-            candidate_tag (dict): Tag of the candidate logs.
+            baseline_tags (dict): Tag of the baseline logs.
+            candidate_tags (dict): Tag of the candidate logs.
 
         Returns:
             dict.
@@ -60,9 +59,8 @@ class LogsightCompare(APIClient):
             Unauthorized: If the private_key is invalid.
 
         """
-        payload = {'applicationId': app_id,
-                   'baselineTags': baseline_tag,
-                   'candidateTags': candidate_tag,
+        payload = {'baselineTags': baseline_tags,
+                   'candidateTags': candidate_tags,
                    'logsReceiptId': log_receipt_id}
         headers = {
             'content-type': 'application/json',
@@ -73,26 +71,3 @@ class LogsightCompare(APIClient):
                           json=payload,
                           headers=headers,
                           verbose=verbose)
-
-    def tags(self, app_id):
-        """Lists of the tags of an application.
-
-        Returns:
-            List:
-                [
-                  {
-                    "tag": "string",
-                    "tagView": "string"
-                  }
-                ]
-
-        Raises:
-            Unauthorized: If the private_key is invalid.
-
-        """
-        params = {'applicationId': app_id, 'userId': self.user_id}
-        headers = {'Authorization': f'Bearer {self.token}'}
-        return self._get(host=HOST_API,
-                         path=PATH_COMPARE_TAGS,
-                         params=params,
-                         headers=headers)

@@ -1,23 +1,21 @@
-import unittest
 import time
+import unittest
 
+from logsight.application import LogsightApplication
+from logsight.compare import LogsightCompare
+from logsight.exceptions import Conflict, InternalServerError
+from logsight.logs import LogsightLogs
+from logsight.user import LogsightUser
 from tests.config import EMAIL, PASSWORD
 from tests.utils import generate_logs
-from logsight.user import LogsightUser
-from logsight.application import LogsightApplication
-from logsight.logs import LogsightLogs
-from logsight.compare import LogsightCompare
-
-from logsight.exceptions import Conflict, InternalServerError
 
 APP_NAME = 'unittest_compare_app'
 
 
 class TestLogs(unittest.TestCase):
-
     app_id = None
-    tag_v1 = {"main":"v1.0.0"}
-    tag_v2 = {"main":"v2.0.0"}
+    tag_v1 = {"main": "v1.0.0"}
+    tag_v2 = {"main": "v2.0.0"}
     receipt_id = None
 
     @classmethod
@@ -36,8 +34,8 @@ class TestLogs(unittest.TestCase):
     def _send_logs(cls):
         n_log_messages = 60
         g = LogsightLogs(cls.user.token)
-        g.send(cls.app_id, generate_logs(delta=0, n=n_log_messages), tag=cls.tag_v1)
-        r2 = g.send(cls.app_id, generate_logs(delta=-2, n=n_log_messages), tag=cls.tag_v2)
+        g.send(generate_logs(delta=0, n=n_log_messages), tags=cls.tag_v1, app_id=cls.app_id)
+        r2 = g.send(generate_logs(delta=-2, n=n_log_messages), tags=cls.tag_v2, app_id=cls.app_id)
         cls.receipt_id = r2['receiptId']
 
     def test_compare(self):
@@ -47,9 +45,8 @@ class TestLogs(unittest.TestCase):
         r = None
         while attempt < max_attempts:
             try:
-                r = comp.compare(app_id=self.app_id,
-                                 baseline_tag=self.tag_v1,
-                                 candidate_tag=self.tag_v2,
+                r = comp.compare(baseline_tags=self.tag_v1,
+                                 candidate_tags=self.tag_v2,
                                  log_receipt_id=self.receipt_id)
                 break
             except Conflict:
