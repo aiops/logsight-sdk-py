@@ -1,3 +1,3 @@
-EMAIL = 'jorge.cardoso.pt@gmail.com'
-USER_ID = '79cc4a8a-c1ff-4852-9486-62fd8e618623'
-PASSWORD = 'ginrom-xUrfib-2sumfa'
+EMAIL = 'sashonedelkoski@gmail.com'
+USER_ID = '06f35835-ccc8-4bd3-a3ef-27d92f118f01'
+PASSWORD = 'sasho123'

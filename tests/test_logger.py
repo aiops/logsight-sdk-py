@@ -1,14 +1,13 @@
-import sys
 import logging
 import logging.handlers
+import sys
 import unittest
 
-from tests.config import EMAIL, PASSWORD
 from logsight.application import LogsightApplication
-
-from tests.integration.load_logs import LOG_FILES
-from logsight.user import LogsightUser
 from logsight.logger.logger import LogsightLogger
+from logsight.user import LogsightUser
+from tests.config import EMAIL, PASSWORD
+from tests.integration.load_logs import LOG_FILES
 
 APP_NAME = 'test_logger'
 N_LOG_MESSAGES_TO_SEND = 450
@@ -21,7 +20,6 @@ else:
 
 
 class TestLogger(unittest.TestCase):
-
     app_id = None
     user = None
     logger = None
@@ -47,11 +45,11 @@ class TestLogger(unittest.TestCase):
         for tag in ['v1.1.1', 'v2.2.2']:
             self._send_log_messages(log_file_name=LOG_FILES['helloworld'],
                                     n_messages=N_LOG_MESSAGES_TO_SEND,
-                                    tag=tag)
+                                    tags={"main": tag})
 
     @classmethod
     def __setup_handler(cls):
-        logsight_handler = LogsightLogger(cls.user.token, cls.app_id, tag='v1.1.2')
+        logsight_handler = LogsightLogger(token=cls.user.token, tags={"main": 'v1.1.2'}, app_id=cls.app_id)
         logsight_handler.setLevel(logging.DEBUG)
 
         logger = logging.getLogger(__name__)
@@ -71,12 +69,12 @@ class TestLogger(unittest.TestCase):
         logger.removeHandler(handler)
 
     def _send_log_messages(self, log_file_name, n_messages,
-                           tag=None, verbose=False):
-        self.handler.set_tag(tag)
+                           tags=None, verbose=False):
+        self.handler.set_tags(tags)
         for i, (level, message) in enumerate(load_log_file(log_file_name, n_messages)):
             if verbose and i % 100 == 0:
                 print(f'Sending message # (app_name: {self.app_id}): {i}')
-            self._send_log_message(i, level, message, tag)
+            self._send_log_message(i, level, message, tags)
 
     def _send_log_message(self, i, level, message, tag):
         if level.lower() not in ['info', 'warning', 'error', 'debug', 'critical']:

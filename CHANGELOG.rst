@@ -1,6 +1,13 @@
 CHANGELOG
 *********
 
+0.1.26 (2022-06-02)
+-------------------
+- File upload is no longer supported. Its being reworked and available once again in the next releases. [snedelkoski]
+- Sending logs no longer requires sending applicationID. Sending logs can be achieved with applicationName and without creating application.
+- Compare and Logger, are changed to fit these changes.
+
+
 0.1.23 (2022-03-24)
 -------------------
 - Readme change. [snedelkoski]

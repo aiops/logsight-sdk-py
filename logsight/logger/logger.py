@@ -5,16 +5,16 @@ from logsight.logs import LogsightLogs, create_log_record
 
 
 class LogsightLogger(BufferingHandler):
-
     buffer_lifespan_seconds = 1
 
-    def __init__(self, token, app_id, tag, metadata=None):
+    def __init__(self, token, tags, app_name=None, app_id=None, metadata=None):
         """Creates an logger handler.
 
         Args:
             token (str): Token.
+            app_name (str): Application name.
             app_id (str): Application id.
-            tag (str): Tag.
+            tags (dict): Tags.
             metadata (str): Metadata.
 
         """
@@ -23,16 +23,17 @@ class LogsightLogger(BufferingHandler):
 
         self.last_emit = 0
         self.token = token
+        self.app_name = app_name
         self.app_id = app_id
-        self.tag = tag
+        self.tags = tags
         self.metadata = metadata or ''
 
     def __str__(self):
-        return f'app id = {self.app_id}, token = {self.token}'
+        return f'app name = {self.app_name}, app id = {self.app_id}, token = {self.token}'
 
-    def set_tag(self, tag):
+    def set_tags(self, tags):
         self.flush()
-        self.tag = tag
+        self.tags = tags
 
     def set_metadata(self, metadata):
         self.metadata = metadata
@@ -43,7 +44,7 @@ class LogsightLogger(BufferingHandler):
             msgs = [create_log_record(record.levelname, self.format(record))
                     for record in self.buffer]
             if msgs:
-                self.logsight_logs.send(self.app_id, msgs, tag=self.tag)
+                self.logsight_logs.send(log_lst=msgs, tags=self.tags, app_id=self.app_id, app_name=self.app_name)
             self.buffer = []
         finally:
             self.release()
@@ -56,6 +57,6 @@ class LogsightLogger(BufferingHandler):
         return (
             True
             if super().shouldFlush(record)
-            or time.time() - self.last_emit > self.buffer_lifespan_seconds
+               or time.time() - self.last_emit > self.buffer_lifespan_seconds
             else False
         )
