@@ -1,4 +1,4 @@
-HOST_API = "https://logsight.ai/api/v1/"
+HOST_API = "https://demo.logsight.ai/api/v1/"
 
 PATH_USERS = "users"
 PATH_USERS_DELETE = "users/{userId}"
