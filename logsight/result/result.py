@@ -1,4 +1,4 @@
-from logsight.config import HOST_API_V1, PATH_RESULTS
+import logsight.config
 from logsight.api_client import APIClient
 from logsight.result.result_seq import ResultSeq
 from logsight.result.template import Template
@@ -64,5 +64,6 @@ class LogsightResult(APIClient):
             "end-time": end_time,
             "anomaly-type": anomaly_type,
         }
+        PATH_RESULTS = 'Deprecated'
         return _object_factory(anomaly_type,
-                               self._post(HOST_API_V1, PATH_RESULTS, data))
+                               self._post(logsight.config.HOST_API, PATH_RESULTS, data))

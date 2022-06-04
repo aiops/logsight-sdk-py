@@ -1,5 +1,5 @@
-from logsight.config import HOST_API
-from logsight.config import PATH_COMPARE
+import logsight.config
+from logsight.endpoints import PATH_COMPARE
 from logsight.api_client import APIClient
 
 
@@ -66,7 +66,7 @@ class LogsightCompare(APIClient):
             'content-type': 'application/json',
             'Authorization': f'Bearer {self.token}'
         }
-        return self._post(host=HOST_API,
+        return self._post(host=logsight.config.HOST_API,
                           path=PATH_COMPARE,
                           json=payload,
                           headers=headers,

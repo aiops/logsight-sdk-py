@@ -65,7 +65,6 @@ class TestAppManagement(unittest.TestCase):
         with self.assertRaises(BadRequest):
             self.app_mng.create(app_name)
 
-
     def test_delete_inexistent_app_id(self):
         app_id = '3fa85f64-5717-4562-b3fc-2c963f66afa6'
         with self.assertRaises(NotFound):

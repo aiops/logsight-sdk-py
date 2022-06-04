@@ -1,5 +1,5 @@
-from logsight.config import HOST_API
-from logsight.config import PATH_APP_CREATE, PATH_APP_LST, PATH_APP_DELETE
+import logsight.config
+from logsight.endpoints import PATH_APP_CREATE, PATH_APP_LST, PATH_APP_DELETE
 from logsight.api_client import APIClient
 
 
@@ -45,7 +45,7 @@ class LogsightApplication(APIClient):
             'Authorization': f'Bearer {self.token}'
         }
         path = PATH_APP_CREATE.format(userId=self.user_id)
-        return self._post(host=HOST_API,
+        return self._post(host=logsight.config.HOST_API,
                           path=path,
                           json=payload,
                           headers=headers)
@@ -69,7 +69,7 @@ class LogsightApplication(APIClient):
 
         """
         headers = {'Authorization': f'Bearer {self.token}'}
-        return self._get(host=HOST_API,
+        return self._get(host=logsight.config.HOST_API,
                          path=PATH_APP_LST.format(userId=self.user_id),
                          headers=headers)
 
@@ -93,6 +93,6 @@ class LogsightApplication(APIClient):
         """
         headers = {'Authorization': f'Bearer {self.token}'}
         path = PATH_APP_DELETE.format(userId=self.user_id, applicationId=app_id)
-        return self._delete(host=HOST_API,
+        return self._delete(host=logsight.config.HOST_API,
                             path=path,
                             headers=headers)
