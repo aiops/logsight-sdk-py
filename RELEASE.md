@@ -75,6 +75,9 @@ echo "Previous release: $prev_version"
 version=$(echo $prev_version | perl -pe 's/^((\d+\.)*)(\d+)(.*)$/$1.($3+1).$4/e')
 echo "New release: $version"
 
+# In case you need to set the new version manually, do it here
+version='0.2.0'
+
 # Create a branch from the current HEAD (does not touch local changes)
 git checkout -b release/$version develop
 
