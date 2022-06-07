@@ -2,7 +2,7 @@ import datetime
 from dateutil.tz import tzlocal
 
 from logsight.exceptions import LogsightException
-from logsight.applications.application import LogsightApplication
+from logsight.applications.applications import LogsightApplications
 
 
 def n_seconds_ago(seconds=60):
@@ -15,12 +15,12 @@ def now():
 
 
 def create_apps(private_key, email, app_names):
-    app_mng = LogsightApplication(private_key, email)
+    app_mng = LogsightApplications(private_key, email)
     return [app_mng.create(app_name) for app_name in app_names]
 
 
 def delete_apps(private_key, email, app_names):
-    app_mng = LogsightApplication(private_key, email)
+    app_mng = LogsightApplications(private_key, email)
     return [delete_app(app_mng, app_name) for app_name in app_names]
 
 

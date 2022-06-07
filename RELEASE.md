@@ -80,9 +80,9 @@ git checkout -b release/$version develop
 
 # Update automatically or manually the version in setup.py and ./logsight_cli/logsight-cli.py
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    sed -i "/^VERSION/s;[^ ]*$;'$version';" setup.py ./logsight_cli/logsight_cli.py
+    sed -i "/^VERSION/s;[^ ]*$;'$version';" setup.py
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-    sed -i "" "/^VERSION/s;[^ ]*$;'$version';" setup.py ./logsight_cli/logsight_cli.py
+    sed -i "" "/^VERSION/s;[^ ]*$;'$version';" setup.py
 else
     echo "OS is not supported"
 fi
