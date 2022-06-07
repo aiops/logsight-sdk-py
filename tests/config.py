@@ -1,3 +1,4 @@
-EMAIL = 'sashonedelkoski@gmail.com'
-USER_ID = '06f35835-ccc8-4bd3-a3ef-27d92f118f01'
-PASSWORD = 'sasho123'
+HOST_API = "https://demo.logsight.ai/api/v1/"
+EMAIL = 'jorge.cardoso.pt@gmail.com'
+USER_ID = '2fcfd284-92fa-44b4-8351-10a531c6505c'
+PASSWORD = 'jambus-kujdog-jexGe4'

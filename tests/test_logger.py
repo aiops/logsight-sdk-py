@@ -3,11 +3,13 @@ import logging.handlers
 import sys
 import unittest
 
-from logsight.application import LogsightApplication
-from logsight.logger.logger import LogsightLogger
-from logsight.user import LogsightUser
-from tests.config import EMAIL, PASSWORD
+from tests.config import HOST_API, EMAIL, PASSWORD
 from tests.integration.load_logs import LOG_FILES
+
+from logsight.config import set_host
+from logsight.authentication import LogsightAuthentication
+from logsight.applications import LogsightApplications
+from logsight.logger.logger import LogsightLogger
 
 APP_NAME = 'test_logger'
 N_LOG_MESSAGES_TO_SEND = 450
@@ -28,8 +30,9 @@ class TestLogger(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         super(TestLogger, cls).setUpClass()
-        cls.user = LogsightUser(email=EMAIL, password=PASSWORD)
-        cls.app_mng = LogsightApplication(cls.user.user_id, cls.user.token)
+        set_host(HOST_API)
+        cls.auth = LogsightAuthentication(email=EMAIL, password=PASSWORD)
+        cls.app_mng = LogsightApplications(cls.auth.user_id, cls.auth.token)
         cls.app_id = cls.app_mng.create(APP_NAME)['applicationId']
         cls.logger, cls.handler = cls.__setup_handler()
 
@@ -49,7 +52,7 @@ class TestLogger(unittest.TestCase):
 
     @classmethod
     def __setup_handler(cls):
-        logsight_handler = LogsightLogger(token=cls.user.token, tags={"main": 'v1.1.2'}, app_id=cls.app_id)
+        logsight_handler = LogsightLogger(token=cls.auth.token, tags={"main": 'v1.1.2'}, app_id=cls.app_id)
         logsight_handler.setLevel(logging.DEBUG)
 
         logger = logging.getLogger(__name__)

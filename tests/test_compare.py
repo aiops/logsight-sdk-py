@@ -1,28 +1,31 @@
 import time
 import unittest
 
-from logsight.application import LogsightApplication
+from tests.config import HOST_API, EMAIL, PASSWORD
+from tests.utils import generate_logs
+
+from logsight.config import set_host
+from logsight.authentication import LogsightAuthentication
+from logsight.applications import LogsightApplications
 from logsight.compare import LogsightCompare
 from logsight.exceptions import Conflict, InternalServerError
 from logsight.logs import LogsightLogs
-from logsight.user import LogsightUser
-from tests.config import EMAIL, PASSWORD
-from tests.utils import generate_logs
 
 APP_NAME = 'unittest_compare_app'
 
 
-class TestLogs(unittest.TestCase):
+class TestCompare(unittest.TestCase):
     app_id = None
-    tag_v1 = {"main": "v1.0.0"}
-    tag_v2 = {"main": "v2.0.0"}
+    tag_v1 = {'version': 'v1.0.0'}
+    tag_v2 = {'version': 'v2.0.0'}
     receipt_id = None
 
     @classmethod
     def setUpClass(cls):
-        super(TestLogs, cls).setUpClass()
-        cls.user = LogsightUser(email=EMAIL, password=PASSWORD)
-        cls.app_mng = LogsightApplication(cls.user.user_id, cls.user.token)
+        super(TestCompare, cls).setUpClass()
+        set_host(HOST_API)
+        cls.auth = LogsightAuthentication(email=EMAIL, password=PASSWORD)
+        cls.app_mng = LogsightApplications(cls.auth.user_id, cls.auth.token)
         cls.app_id = cls.app_mng.create(APP_NAME)['applicationId']
         cls._send_logs()
 
@@ -33,13 +36,13 @@ class TestLogs(unittest.TestCase):
     @classmethod
     def _send_logs(cls):
         n_log_messages = 60
-        g = LogsightLogs(cls.user.token)
+        g = LogsightLogs(cls.auth.token)
         g.send(generate_logs(delta=0, n=n_log_messages), tags=cls.tag_v1, app_id=cls.app_id)
         r2 = g.send(generate_logs(delta=-2, n=n_log_messages), tags=cls.tag_v2, app_id=cls.app_id)
         cls.receipt_id = r2['receiptId']
 
     def test_compare(self):
-        comp = LogsightCompare(self.user.user_id, self.user.token)
+        comp = LogsightCompare(self.auth.user_id, self.auth.token)
         max_attempts = 5
         attempt = 0
         r = None

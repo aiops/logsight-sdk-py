@@ -2,25 +2,26 @@ import unittest
 import random
 import string
 
-from tests.config import EMAIL, PASSWORD
-from logsight.user import LogsightUser
-from logsight.application import LogsightApplication
+from tests.config import HOST_API, EMAIL, PASSWORD
+from logsight.config import set_host
+from logsight.authentication import LogsightAuthentication
+from logsight.applications import LogsightApplications
 from logsight.exceptions import (LogsightException,
                                  Unauthorized,
                                  BadRequest,
-                                 Conflict,
                                  NotFound)
 
 
-class TestAppManagement(unittest.TestCase):
+class TestApplications(unittest.TestCase):
 
     app_mng = None
 
     @classmethod
     def setUpClass(cls):
-        super(TestAppManagement, cls).setUpClass()
-        cls.u = LogsightUser(email=EMAIL, password=PASSWORD)
-        cls.app_mng = LogsightApplication(cls.u.user_id, cls.u.token)
+        super(TestApplications, cls).setUpClass()
+        set_host(HOST_API)
+        cls.auth = LogsightAuthentication(email=EMAIL, password=PASSWORD)
+        cls.app_mng = LogsightApplications(cls.auth.user_id, cls.auth.token)
         cls._delete_all_apps()
 
     @classmethod
@@ -93,12 +94,12 @@ class TestAppManagement(unittest.TestCase):
             self._delete_app(str(_id))
 
     def test_invalid_token(self):
-        n = len(self.u.token)
+        n = len(self.auth.token)
         token = 'a' * n
-        while token == self.u.token:
+        while token == self.auth.token:
             token = ''.join(random.choices(string.ascii_uppercase + string.digits, k=n))
         with self.assertRaises(Unauthorized):
-            LogsightApplication(self.u.user_id, token).lst()
+            LogsightApplications(self.auth.user_id, token).lst()
 
 
 if __name__ == '__main__':

@@ -1,45 +1,25 @@
 import unittest
-from datetime import datetime
 
 from tests.config import EMAIL, PASSWORD
-import logsight.config
-from logsight.user import LogsightUser
-from logsight.exceptions import (Unauthorized,
-                                 NotFound,
-                                 ServiceUnavailable)
+from logsight.users import LogsightUsers
+from logsight.exceptions import Conflict, Unauthorized
 
 
-class TestUserManagement(unittest.TestCase):
-
-    user_mng = None
+class TestUsers(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        super(TestUserManagement, cls).setUpClass()
-        e = 'email_unit_test@' + datetime.now().strftime("%m%d%Y_%H%M%S") + '.com'
-        p = 'password.unit.test'
-        cls.user_mng = LogsightUser(email=e, password=p)
+        super(TestUsers, cls).setUpClass()
 
-    def test_set_invalid_host(self):
-        logsight.config.set_host('https://invalid_host_logsight.ai/api/v1/')
-        with self.assertRaises(ServiceUnavailable):
-            LogsightUser(email=EMAIL, password=PASSWORD).token
+    def test_create_user_exists(self):
+        users = LogsightUsers()
+        with self.assertRaises(Conflict):
+            users.create(email=EMAIL, password=PASSWORD)
 
-    def test_token(self):
-        user = LogsightUser(email=EMAIL, password=PASSWORD)
-        self.assertIsInstance(user.token, str)
-
-    def test_user_id(self):
-        user = LogsightUser(email=EMAIL, password=PASSWORD)
-        self.assertIsInstance(user.user_id, str)
-
-    def test_invalid_password(self):
+    def test_delete_invalid_user_id_token(self):
+        users = LogsightUsers()
         with self.assertRaises(Unauthorized):
-            LogsightUser(email=EMAIL, password='invalid_password').token
-
-    def test_invalid_email(self):
-        with self.assertRaises(NotFound):
-            LogsightUser(email='invalid_email@gmail.com', password='at_least_8_characters').token
+            users.delete(user_id='INVALID_USER_ID', token='INVALID_TOKEN')
 
 
 if __name__ == '__main__':

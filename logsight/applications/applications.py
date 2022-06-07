@@ -3,7 +3,7 @@ from logsight.endpoints import PATH_APP_CREATE, PATH_APP_LST, PATH_APP_DELETE
 from logsight.api_client import APIClient
 
 
-class LogsightApplication(APIClient):
+class LogsightApplications(APIClient):
 
     def __init__(self, user_id, token):
         """Class to manage applications (apps).

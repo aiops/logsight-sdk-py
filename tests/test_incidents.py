@@ -2,10 +2,12 @@ import unittest
 import datetime
 import time
 
-from tests.config import EMAIL, PASSWORD
+from tests.config import HOST_API, EMAIL, PASSWORD
 from tests.utils import generate_logs
-from logsight.user import LogsightUser
-from logsight.application import LogsightApplication
+
+from logsight.config import set_host
+from logsight.authentication import LogsightAuthentication
+from logsight.applications import LogsightApplications
 from logsight.logs import LogsightLogs
 from logsight.incidents import LogsightIncident
 from logsight.exceptions import Conflict, InternalServerError
@@ -22,8 +24,9 @@ class TestIncidents(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         super(TestIncidents, cls).setUpClass()
-        cls.u = LogsightUser(email=EMAIL, password=PASSWORD)
-        cls.app_mng = LogsightApplication(cls.u.user_id, cls.u.token)
+        set_host(HOST_API)
+        cls.auth = LogsightAuthentication(email=EMAIL, password=PASSWORD)
+        cls.app_mng = LogsightApplications(cls.auth.user_id, cls.auth.token)
         cls.app_id = cls.app_mng.create(APP_NAME)['applicationId']
         cls._send_logs()
 
@@ -36,12 +39,12 @@ class TestIncidents(unittest.TestCase):
         n_log_messages = 60
         logs = generate_logs(delta=0, n=n_log_messages)
         cls.start_time, cls.stop_time = logs[0]['timestamp'], logs[-1]['timestamp']
-        g = LogsightLogs(cls.u.token)
-        r = g.send(logs, tags={"main": 'v1.1.1'}, app_id=cls.app_id)
+        g = LogsightLogs(cls.auth.token)
+        r = g.send(logs, tags={'version': 'v1.1.1'}, app_id=cls.app_id)
         cls.receipt_id = r['receiptId']
 
     def test_incidents(self):
-        i = LogsightIncident(self.u.user_id, self.u.token)
+        i = LogsightIncident(self.auth.user_id, self.auth.token)
         now = datetime.datetime.utcnow()
         self.stop_time = now.isoformat()
         self.start_time = (now - datetime.timedelta(days=1)).isoformat()
