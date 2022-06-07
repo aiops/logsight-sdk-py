@@ -75,14 +75,17 @@ echo "Previous release: $prev_version"
 version=$(echo $prev_version | perl -pe 's/^((\d+\.)*)(\d+)(.*)$/$1.($3+1).$4/e')
 echo "New release: $version"
 
+# In case you need to set the new version manually, do it here
+version='0.2.0'
+
 # Create a branch from the current HEAD (does not touch local changes)
 git checkout -b release/$version develop
 
 # Update automatically or manually the version in setup.py and ./logsight_cli/logsight-cli.py
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    sed -i "/^VERSION/s;[^ ]*$;'$version';" setup.py ./logsight_cli/logsight_cli.py
+    sed -i "/^VERSION/s;[^ ]*$;'$version';" setup.py
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-    sed -i "" "/^VERSION/s;[^ ]*$;'$version';" setup.py ./logsight_cli/logsight_cli.py
+    sed -i "" "/^VERSION/s;[^ ]*$;'$version';" setup.py
 else
     echo "OS is not supported"
 fi

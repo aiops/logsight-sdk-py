@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-version = '0.1.27'
+VERSION = '0.2.0'
 
 
 with open("README.rst", "r", encoding="utf-8") as fh:
@@ -8,7 +8,7 @@ with open("README.rst", "r", encoding="utf-8") as fh:
 
 setup(
     name='logsight-sdk-py',
-    version=version,
+    version=VERSION,
     description='Logsight SDK Python',
     long_description=long_description,
     long_description_content_type='text/x-rst',
