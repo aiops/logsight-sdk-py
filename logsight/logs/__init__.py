@@ -1,1 +1,1 @@
-from .logs import LogsightLogs, create_log_record
+from .logs import LogsightLogs, create_single

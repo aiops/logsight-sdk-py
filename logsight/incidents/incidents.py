@@ -63,5 +63,4 @@ class LogsightIncident(APIClient):
         return self._post(host=logsight.config.HOST_API,
                           path=PATH_LOGS_INCIDENTS.format(userId=self.user_id),
                           json=payload,
-                          headers=headers,
-                          verbose=verbose)
+                          headers=headers)

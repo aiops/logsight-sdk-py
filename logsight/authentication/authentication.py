@@ -1,5 +1,5 @@
 import logsight.config
-from logsight.endpoints import PATH_LOGIN
+from logsight.endpoints import PATH_AUTH_LOGIN
 from logsight.api_client import APIClient
 
 
@@ -34,7 +34,7 @@ class LogsightAuthentication(APIClient):
                    "password": self.password}
         headers = {"content-type": "application/json"}
         r = self._post(logsight.config.HOST_API,
-                       PATH_LOGIN,
+                       PATH_AUTH_LOGIN,
                        json=payload,
                        headers=headers)
 
