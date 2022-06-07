@@ -36,12 +36,7 @@ The bash script code below can be executed by running the following command:
 
 CI/CD workflow
 ---------------
-Once the previous step is executed and the code is pushed to GitHub, the git action `.github/workflows/cicd.yaml` runs.
-The workflow will execute a pipeline of 4 steps:
-+ code-analysis
-+ build
-+ test-environment
-+ publish-pypi and publish-github
+Once the previous step is executed and the code is pushed to GitHub, the git actions in `.github/workflows/` run.
 
 
 Bash workflow
