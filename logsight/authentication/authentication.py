@@ -1,8 +1,9 @@
-from logsight.config import HOST_API, PATH_USERS, PATH_USERS_DELETE, PATH_LOGIN
+import logsight.config
+from logsight.endpoints import PATH_LOGIN
 from logsight.api_client import APIClient
 
 
-class LogsightUser(APIClient):
+class LogsightAuthentication(APIClient):
 
     def __init__(self, email, password):
         """Class to manage users.
@@ -19,37 +20,8 @@ class LogsightUser(APIClient):
         self._token = None
 
     def __str__(self):
-        return f'email = {self.email}, user id = {self.user_id},' \
-               f'token = {self.token}'
-
-    def create(self):
-        """Creates a new user.
-
-        Returns:
-            userId (str): Identifier for the user created
-        """
-        payload = {"email": self.email,
-                   "password": self.password,
-                   "repeatPassword": self.password}
-        headers = {"content-type": "application/json"}
-        return self._post(HOST_API,
-                          PATH_USERS,
-                          json=payload,
-                          headers=headers)['userId']
-
-    def delete(self):
-        """Deletes a new user.
-
-        Returns:
-            userId (str): Identifier for the user created
-        """
-        headers = {
-            'content-type': 'application/json',
-            'Authorization': f'Bearer {self.token}'
-        }
-        return self._delete(HOST_API,
-                            path=PATH_USERS_DELETE.format(userId=self.user_id),
-                            headers=headers)
+        return f'email = {self.email}, user id = {self._user_id}, ' \
+               f'token = {self._token}'
 
     def _authenticate(self):
         """Authenticate the user.
@@ -61,7 +33,7 @@ class LogsightUser(APIClient):
         payload = {"email": self.email,
                    "password": self.password}
         headers = {"content-type": "application/json"}
-        r = self._post(HOST_API,
+        r = self._post(logsight.config.HOST_API,
                        PATH_LOGIN,
                        json=payload,
                        headers=headers)

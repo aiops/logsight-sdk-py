@@ -2,7 +2,7 @@ import requests
 import urllib.parse
 import json as js
 
-from logsight.exceptions import from_dict, DataCorruption
+from logsight.exceptions import from_dict, DataCorruption, ServiceUnavailable
 
 
 class APIClient:
@@ -33,6 +33,10 @@ class APIClient:
             r.raise_for_status()
         except requests.exceptions.HTTPError as err:
             raise from_dict(js.loads(err.response.text))
+        except requests.exceptions.ConnectionError as err:
+            raise ServiceUnavailable(
+                message=f"Failed to connect to: {err.request.url}. {err}"
+            )
 
         try:
             return js.loads(r.text)

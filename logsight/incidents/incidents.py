@@ -1,4 +1,5 @@
-from logsight.config import HOST_API, PATH_LOGS_INCIDENTS
+import logsight.config
+from logsight.endpoints import PATH_LOGS_INCIDENTS
 from logsight.api_client import APIClient
 
 
@@ -59,7 +60,7 @@ class LogsightIncident(APIClient):
             payload.update({'flushId': flush_id})
 
         headers = {'content-type': 'application/json', 'Authorization': f'Bearer {self.token}'}
-        return self._post(host=HOST_API,
+        return self._post(host=logsight.config.HOST_API,
                           path=PATH_LOGS_INCIDENTS.format(userId=self.user_id),
                           json=payload,
                           headers=headers,

@@ -3,6 +3,7 @@ name: Build
 on:
   push:
     tags:
+      # Only execute action if tags are attached to commit
       - '*.*.*'
 
 jobs:

@@ -1,13 +1,14 @@
 import unittest
-import os
 
-from tests.config import EMAIL, PASSWORD
+from tests.config import HOST_API, EMAIL, PASSWORD
 from tests.utils import generate_logs
-from logsight.user import LogsightUser
-from logsight.application import LogsightApplication
+
+from logsight.config import set_host
+from logsight.authentication import LogsightAuthentication
+from logsight.applications import LogsightApplications
 from logsight.logs import LogsightLogs
 
-APP_NAME = 'class_testlogs'
+APP_NAME = 'unittest_TestLogs'
 
 
 class TestLogs(unittest.TestCase):
@@ -17,8 +18,9 @@ class TestLogs(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         super(TestLogs, cls).setUpClass()
-        cls.u = LogsightUser(email=EMAIL, password=PASSWORD)
-        cls.app_mng = LogsightApplication(cls.u.user_id, cls.u.token)
+        set_host(HOST_API)
+        cls.auth = LogsightAuthentication(email=EMAIL, password=PASSWORD)
+        cls.app_mng = LogsightApplications(cls.auth.user_id, cls.auth.token)
         cls.app_id = cls.app_mng.create(APP_NAME)['applicationId']
 
     @classmethod
@@ -27,20 +29,11 @@ class TestLogs(unittest.TestCase):
 
     def test_send_logs_and_flush(self):
         n_log_messages = 60
-        g = LogsightLogs(self.u.token)
+        g = LogsightLogs(self.auth.token)
         p = generate_logs(n=n_log_messages)
-        r1 = g.send(p, tags={"main": 'v1.1.3'}, app_id=self.app_id)
+        r1 = g.send(p, tags={'main': 'v1.1.3'}, app_id=self.app_id)
         print(r1)
         self.assertEqual(r1['logsCount'], n_log_messages)
-
-    # def test_send_log_file_and_flush(self):
-    #     file_name = 'hadoop_name_node_v1_1kloc'
-    #     file_path = os.path.join('./integration/fixtures/', file_name)
-    #     g = LogsightLogs(self.u.token)
-    #     r1 = g.upload(self.app_id, file=file_path, tag='v1.1.3')
-    #
-    #     r = g.flush(r1['receiptId'])
-    #     self.assertTrue('status' in r)
 
 
 if __name__ == '__main__':
