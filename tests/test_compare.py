@@ -90,7 +90,9 @@ class TestCompare(unittest.TestCase):
         self.assertTrue('compareId' in r1)
         self.assertIsInstance(r1['compareId'], str)
 
-        r2 = comp.set_status(comp_id=r1['compareId'], status=0)
+        # changing the status to 1 give an error since currently it is not possible
+        # to update status to the same value. To be fixed at the server level
+        r2 = comp.set_status(comp_id=r1['compareId'], status=2)
 
         self.assertIsInstance(r2, dict)
         self.assertTrue('compareId' in r2)
