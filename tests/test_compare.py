@@ -86,10 +86,11 @@ class TestCompare(unittest.TestCase):
         comp = LogsightCompare(self.auth.token)
         r1 = self._retry_compare(comp, self.tags_v1, self.tags_v2, self.receipt_id)
 
-        import time
-        time.sleep(10)
+        self.assertIsInstance(r1, dict)
+        self.assertTrue('compareId' in r1)
+        self.assertIsInstance(r1['compareId'], str)
 
-        r2 = comp.set_status(comp_id=r1['compareId'], status=1)
+        r2 = comp.set_status(comp_id=r1['compareId'], status=0)
 
         self.assertIsInstance(r2, dict)
         self.assertTrue('compareId' in r2)

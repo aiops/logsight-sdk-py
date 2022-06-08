@@ -4,7 +4,6 @@ from dateutil.tz import tzlocal
 import datetime
 
 from logsight.logger.logger import LogsightLogger
-from logsight.utils import now
 
 
 if __name__ == '__main__':
@@ -13,6 +12,10 @@ else:
     from tests.integration.load_logs import load_log_file
 
 LOGGING_TO_SYS_STDOUT = True
+
+
+def now():
+    return datetime.datetime.now(tz=tzlocal()).isoformat()
 
 
 class SendLogs:

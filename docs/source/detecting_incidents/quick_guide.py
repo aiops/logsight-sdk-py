@@ -3,9 +3,11 @@ import sys
 import time
 import logging
 
+import datetime
+from dateutil.tz import tzlocal
+
 from logsight.logger.logger import LogsightLogger
 from logsight.result.result import LogsightResult
-from logsight.utils import now
 
 
 PRIVATE_KEY = os.getenv('LOGSIGHT_PRIVATE_KEY') or 'mgewxky59zm1euavowtjon9igc'
@@ -19,6 +21,11 @@ handler.setLevel(logging.DEBUG)
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 logger.addHandler(handler)
+
+
+def now():
+    return datetime.datetime.now(tz=tzlocal()).isoformat()
+
 
 log_records = []
 try:
