@@ -41,10 +41,11 @@ handler.flush()
 
 print('Verify application v2.1.2 with respect to v1.1.2 ...')
 comp = LogsightCompare(auth.token)
+result = {}
 retry = 5
 while retry:
     try:
-        r = comp.compare(baseline_tags=tags_1, candidate_tags=tags_2)
+        result = comp.compare(baseline_tags=tags_1, candidate_tags=tags_2)
         break
     except InternalServerError as e:
         print(e)
@@ -53,4 +54,4 @@ while retry:
         retry -= 1
 
 print('Verification results')
-print(json.dumps(r, sort_keys=True, indent=4))
+print(json.dumps(result, sort_keys=True, indent=4))
