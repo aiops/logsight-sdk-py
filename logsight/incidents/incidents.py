@@ -5,23 +5,20 @@ from logsight.api_client import APIClient
 
 class LogsightIncident(APIClient):
 
-    def __init__(self, user_id, token):
+    def __init__(self, token):
         """Class to manage applications (apps).
 
         Args:
-            user_id (str): Identifier of the user.
             token (str): Access token.
 
         """
         super().__init__()
-        self.user_id = user_id
         self.token = token
 
     def __str__(self):
-        return f'user id = {self.user_id}, token = {self.token}'
+        return f'token = {self.token}'
 
-    def incidents(self, app_id, start_time, stop_time,
-                  flush_id=None, verbose=False):
+    def incidents(self, app_id, start_time, stop_time, flush_id=None):
         """Retrieves the incidents of logs.
 
         Args:
@@ -29,7 +26,6 @@ class LogsightIncident(APIClient):
             start_time (str): Start time.
             stop_time (str): Stop time.
             flush_id (Union[str, None]): Flush id.
-            verbose (bool): provides additional information.
 
         Returns:
             dict.
@@ -61,6 +57,6 @@ class LogsightIncident(APIClient):
 
         headers = {'content-type': 'application/json', 'Authorization': f'Bearer {self.token}'}
         return self._post(host=logsight.config.HOST_API,
-                          path=PATH_LOGS_INCIDENTS.format(userId=self.user_id),
+                          path=PATH_LOGS_INCIDENTS,
                           json=payload,
                           headers=headers)

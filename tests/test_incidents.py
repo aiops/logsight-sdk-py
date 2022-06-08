@@ -50,7 +50,7 @@ class TestIncidents(unittest.TestCase):
         cls.receipt_id = res['receiptId']
 
     def test_incidents(self):
-        i = LogsightIncident(self.auth.user_id, self.auth.token)
+        i = LogsightIncident(self.auth.token)
         now = datetime.datetime.utcnow()
         self.stop_time = now.isoformat()
         self.start_time = (now - datetime.timedelta(days=1)).isoformat()
