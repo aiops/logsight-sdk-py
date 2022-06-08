@@ -6,7 +6,7 @@ from logsight.api_client import APIClient
 class LogsightAuthentication(APIClient):
 
     def __init__(self, email, password):
-        """Class to manage users.
+        """Class to authenticate users.
 
         Args:
             email (str): Email associated with the subscription.

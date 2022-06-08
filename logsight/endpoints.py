@@ -16,13 +16,3 @@ PATH_DELETE_COMPARE = "logs/compare/{compareId}"
 PATH_POST_STATUS = "logs/compare/status"
 
 PATH_LOGS_INCIDENTS = "logs/incidents"
-
-
-# Deprecated in v1.1.0
-# PATH_LOGS_FILE = "logs/file?applicationId={applicationId}&tag={tag}"
-
-# Deprecated in v1.1.0
-# PATH_LOGS_FLUSH = "logs/flush"
-
-# Deprecated in v1.1.0
-# PATH_COMPARE_TAGS = "logs/compare/tags"
