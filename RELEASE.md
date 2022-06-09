@@ -98,7 +98,7 @@ git commit -a -m "Preparation for release $version"
 
 #. Update main branch
 git checkout main
-git pull
+git fetch
 git merge --no-ff release/$version -m "Release $version"
 git tag -a $version -m "Release $version"
 git push --atomic --tags
@@ -106,7 +106,7 @@ git push origin main
 
 #. Update develop branch
 git checkout develop
-git pull
+git fetch
 git merge --no-ff release/$version -m "Release $version"
 git push origin develop
 

@@ -10,5 +10,3 @@ CHANGELOG
 -------------------
 - File upload is no longer supported. Its being reworked and available once again in the next releases.
 - Sending logs no longer requires sending applicationID. Sending logs can be achieved with applicationName and without creating application.
-
-
