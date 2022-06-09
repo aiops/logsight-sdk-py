@@ -13,7 +13,7 @@ PASSWORD = os.getenv('LOGSIGHT_PASSWORD') or 'jambus-kujdog-jexGe4'
 set_host("https://demo.logsight.ai/api/v1/")
 
 auth = LogsightAuthentication(email=EMAIL, password=PASSWORD)
-handler = LogsightLogger(auth.token, "myapp")
+handler = LogsightLogger(auth.token, 'my_app')
 handler.setLevel(logging.DEBUG)
 
 logger = logging.getLogger(__name__)
@@ -22,7 +22,7 @@ logger.addHandler(handler)
 
 
 print('Redis running (v1.1.2)')
-tags_1 = {'service': 'redis', 'version': 'v1.1.50'}
+tags_1 = {'service': 'redis', 'version': 'v1.1.52'}
 handler.set_tags(tags=tags_1)
 for i in range(10):
     logger.info(f'Connecting to database (instance ID: {i % 4})')
@@ -30,7 +30,7 @@ for i in range(10):
     logger.info(f'Closing connection (instance ID: {i % 4})')
 
 print('Redis running (v2.1.2)')
-tags_2 = {'service': 'redis', 'version': 'v2.1.51'}
+tags_2 = {'service': 'redis', 'version': 'v2.1.53'}
 handler.set_tags(tags=tags_2)
 for i in range(15):
     logger.info(f'Connecting to database (instance ID: {i % 4})')
