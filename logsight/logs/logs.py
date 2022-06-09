@@ -9,7 +9,7 @@ from logsight.endpoints import PATH_LOGS_SINGLES
 def create_single(app_id, level, message, tags, timestamp=None, metadata=None):
     timestamp = timestamp or datetime.datetime.now(tz=tzlocal()).isoformat()
     r = {
-        'applicationId': 'c292be3d-1543-4f36-a924-ad727ae9e915',
+        'applicationId': app_id,
         'timestamp': timestamp,
         'level': level,
         'message': message,
