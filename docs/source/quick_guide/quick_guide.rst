@@ -2,30 +2,27 @@
 Quickstart
 **********
 
-*27/09/2021, 30 minutes to complete*
+*09/06/2022, 30 minutes to complete*
 
-Get started with the Logsight SDK for Python and client library to detect incidents.
+Get started with the Logsight SDK for Python and client library to verify deployments.
 Follow these steps to install the package and start using the algorithms provided by logsight.ai service.
-The incident detector client library enables you to find incidents in your logs
+The verification library enables you to evaluate the risk of a deployment of a new version of an application
 by automatically using deep learning models trained on millions lines of code, regardless of the underlying IT system, failure scenario, or data volume.
 
 Use the Logsight SDK for Python to:
 
 + Send data logs to your logsight.ai account
-+ Detect incidents in your data logs
-+ Retrieve and display the log records associated with an incident
++ Verify deployments using application data logs
++ Retrieve and display the verification risk of your new deployment
 
 
 Prerequisites
 *************
 + logsight.ai_ subscription (create one for free to get your private key)
-+ Once you have your subscription, create an application_ named detecting_incidents_app in the integration tab
-+ You will need the `private key`_ to connect your application to the Incident Detector API
-+ You'll paste your private key into the code below later
++ You will need the `login` and `password` to paste into the code below, later
 
 .. _logsight.ai: https://logsight.ai/
-.. _application: https://demo.logsight.ai/pages/integration
-.. _private key: https://demo.logsight.ai/pages/integration
+
 
 
 Setting up
@@ -38,8 +35,8 @@ Create a directory to store your exercise:
 
 .. code-block:: console
 
-    $ mkdir detecting_incidents
-    $ cd detecting_incidents
+    $ mkdir quick_guide
+    $ cd quick_guide
 
 
 Create a virtual env
@@ -60,23 +57,13 @@ You can start with an empty Python file:
 
 .. code-block:: console
 
-    $ touch detecting_incidents.py
+    $ touch quick_guide.py
 
 Alternatively, you can download the Python file directly from git:
 
 .. code-block:: console
 
-    $ curl https://raw.githubusercontent.com/aiops/logsight-sdk-py/main/docs/source/detecting_incidents_app/detecting_incidents_app.py --output detecting_incidents.py
-
-
-Download a log data file
-========================
-
-As a example, we will use a sample log data file from Apache Hadoop platform:
-
-.. code-block:: console
-
-    $ curl https://raw.githubusercontent.com/aiops/logsight-sdk-py/main/docs/source/detecting_incidents_app/Hadoop_2k.log --output Hadoop_2k.log
+    $ curl https://raw.githubusercontent.com/aiops/logsight-sdk-py/main/docs/source/quick_guide/quick_guide.py --output quick_guide.py
 
 
 Install the client library
@@ -100,19 +87,19 @@ or directly from the sources:
 Create environment variables
 =============================
 
-Using the private key from your subscription, create one environment variables for authentication:
+Using the password from your subscription, create one environment variables for authentication:
 
-+ LOGSIGHT_PRIVATE_KEY - The private key for authenticating your requests
-+ LOGSIGHT_EMAIL - The email associated with your subscription
++ LOGSIGHT_PASSWORD - Password for authenticating your requests
++ LOGSIGHT_EMAIL - Email associated with your subscription
 
 Copy the following text to your bash file:
 
 .. code-block:: console
 
-    $ export LOGSIGHT_PRIVATE_KEY=<replace-with-your-anomaly-detector-key>
+    $ export LOGSIGHT_PASSWORD=<replace-with-your-password>
     $ export LOGSIGHT_EMAIL=<replace-with-your-email>
 
-After you add the environment variable, run source ~/.bashrc from your console window to make the changes effective.
+After you add the environment variables, you may want to add them to ~/.bashrc.
 
 
 For the impatient
@@ -120,17 +107,16 @@ For the impatient
 
 .. code-block:: console
 
-    mkdir detecting_incidents
-    cd detecting_incidents
+    mkdir quick_guide
+    cd quick_guide
     python3 -m venv venv
     source venv/bin/activate
-    curl https://raw.githubusercontent.com/aiops/logsight-sdk-py/main/docs/source/detecting_incidents/detecting_incidents.py --output detecting_incidents_app.py
-    curl https://raw.githubusercontent.com/aiops/logsight-sdk-py/main/docs/source/detecting_incidents/Hadoop_2k.log --output Hadoop_2k.log
+    curl https://raw.githubusercontent.com/aiops/logsight-sdk-py/main/docs/source/quick_guide/quick_guide.py --output detecting_incidents_app.py
     pip install logsight-sdk-py
-    unset LOGSIGHT_PRIVATE_KEY LOGSIGHT_EMAIL
-    export LOGSIGHT_PRIVATE_KEY='mgewxky59zm1euavowtjon9igc'
-    export LOGSIGHT_EMAIL='jorge.cardoso.pt@gmail.com'
-    python detecting_incidents.py
+    unset LOGSIGHT_PASSWORD LOGSIGHT_EMAIL
+    export LOGSIGHT_PASSWORD=mgewxky59zm1euavowtjon9igc
+    export LOGSIGHT_EMAIL=jorge.cardoso.pt@gmail.com
+    python quick_guide.py
 
 
 Code example
@@ -140,15 +126,15 @@ The following code snippets show what can be achieved with the Logsight SDK clie
 
 + Authenticate the client
 + Attach the logger
-+ Send log data loaded from a file
-+ Detect incident in the entire log data set
-+ Show the details of the incident
++ Log logging statements
++ Verify the new deployment
++ Show the results of the verification
 
 
 Load packages
 =============
 
-Load the various packages used in this detecting incidents guide.
+Load the various packages used in this guide.
 
 .. code:: python
 
@@ -156,28 +142,26 @@ Load the various packages used in this detecting incidents guide.
     import time
     import logging
 
+    from logsight.config import set_host
+    from logsight.exceptions import InternalServerError
+    from logsight.authentication import LogsightAuthentication
     from logsight.logger.logger import LogsightLogger
-    from logsight.result.result import LogsightResult
-    from logsight.utils import now
+    from logsight.compare import LogsightCompare
 
 
 Authenticate the client
 =======================
 
-To enable client authentication, set your PRIVATE_KEY and e-mail.
+To enable client authentication, set your LOGSIGHT_PASSWORD and LOGSIGHT_EMAIL.
+If you use an on-prem deployment, setup the endpoint of your logsight system using function `set_host`.
 
 .. code:: python
 
-    PRIVATE_KEY = os.getenv('LOGSIGHT_PRIVATE_KEY') or 'mgewxky59zm1euavowtjon9igc'
     EMAIL = os.getenv('LOGSIGHT_EMAIL') or 'jorge.cardoso.pt@gmail.com'
+    PASSWORD = os.getenv('LOGSIGHT_PASSWORD') or 'jambus-kujdog-jexGe4'
+    set_host("https://demo.logsight.ai/api/v1/")
 
-Indicate the name of the application to which you will send log data.
-For example, apache_server, kafka, website or backend.
-This guide sends log data to the application detecting_incidents_app.
-
-.. code:: python
-
-    APP_NAME = 'detecting_incidents_app'
+    auth = LogsightAuthentication(email=EMAIL, password=PASSWORD)
 
 
 Attach the logger
@@ -187,7 +171,7 @@ Add logsight.ai logging handler to your logging system:
 
 .. code:: python
 
-    handler = LogsightLogger(PRIVATE_KEY, EMAIL, APP_NAME)
+    handler = LogsightLogger(auth.token, 'my_app')
     handler.setLevel(logging.DEBUG)
 
     logger = logging.getLogger(__name__)
@@ -195,104 +179,93 @@ Add logsight.ai logging handler to your logging system:
     logger.addHandler(handler)
 
 
-Load log data from a file
-=========================
+Execute Redis Version v1.1.1
+============================
 
-+ Open a file with your log data (logs file samples from several systems are available at loghub_)
-+ Read all the log records from the file
-+ Split log messages and remove the timestamp
-+ Store log_records with tuples of the form: (log level, log message)
+We assume you are a core developer of Redis in-memory data structure store.
 
-.. _loghub: https://github.com/logpai/loghub
-
++ Run v1.1.1 of your Redis application
++ Logs are tagged with: service=redis and version=v1.1.1
++ Logs generated are transparently sent to logsight.ai
 
 .. code:: python
 
-    log_records = []
-    try:
-        f = open('Hadoop_2k.log', 'r')
+    print('Redis running (v1.1.1)')
+    tags_1 = {'service': 'redis', 'version': 'v1.1.1'}
+    handler.set_tags(tags=tags_1)
+    for i in range(10):
+        logger.info(f'Connecting to database (instance ID: {i % 4})')
+        logger.info(f'Reading {i * 100} KBytes')
+        logger.info(f'Closing connection (instance ID: {i % 4})')
+    handler.flush()
 
-        for i, line in enumerate(f.readlines()):
-            tokens = line.split()
-            level_idx, msg_idx = 2, 3
-            log_records.append((tokens[level_idx], ' '.join(tokens[msg_idx:])))
-
-    except OSError:
-        sys.exit('Could not open/read file')
+Your Redis deployment runs for several months without any problems.
+It is deemed reliable.
 
 
+Execute Redis version v2.1.1
+============================
 
-Send log records
-================
+You implement a few new features for Redis.
+Your new version is v2.1.1.
 
-+ Store a timestamp indicating when log records started to be sent
-+ Iterate over the log records, extract the log level and log message
-+ Send the log level and message using the logger and the appropriate log function
-+ Once all records have been sent, flush the log handler to force buffered records to be sent
-+ Store a timestamp indicating when the last log record was sent
++ Now, you run v2.1.1 of your Redis application in pre-production
++ Logs are tagged with: service=redis and version=v2.1.1
++ Logs generated are transparently sent to logsight.ai
 
 .. code:: python
 
-    dt_start = now()
-    print('Starting log records sending', dt_start)
-
-    mapping = {'INFO': logger.info, 'WARNING': logger.warning, 'WARN': logger.warning,
-               'ERROR': logger.error, 'DEBUG': logger.debug, 'CRITICAL': logger.critical,
-               'FATAL': logger.critical}
-
-    for i, m in enumerate(log_records):
-        level, message = m[0].upper(), m[1]
-        print(i, level, message)
-
-        if level in mapping:
-            mapping[level](message)
-        else:
-            sys.exit('Unknown log level. Log record number %d: %s %s' % (i, level, message))
+    print('Redis running (v2.1.1)')
+    tags_2 = {'service': 'redis', 'version': 'v2.1.1'}
+    handler.set_tags(tags=tags_2)
+    for i in range(15):
+        logger.info(f'Connecting to database (instance ID: {i % 4})')
+        logger.info(f'Unable to read {i * 100} KBytes')
+        logger.error(f'Underlying storage is corrupted')
+        logger.info(f'Closing connection (instance ID: {i % 4})')
 
     handler.flush()
 
-    dt_end = now()
-    print('Ended log records sending', dt_end)
 
+Verify New Release of Redis
+===========================
 
-Detect the anomaly status of the latest data point
-==================================================
-
-+ Wait 60 seconds after sending the last log record to allow logsight.ai AI-driven processing to finish
-+ Query logsight.ai for possible incidents
++ You call the Compare function of Logsight to verify the new deployment
 
 .. code:: python
 
-    sleep_time = 60
-    print(f'Sleeping {sleep_time} seconds')
-    time.sleep(sleep_time)
+    print('Calculate new deployment risk')
+    comp = LogsightCompare(auth.token)
+    result = {}
+    retry = 5
+    while retry:
+        try:
+            result = comp.compare(baseline_tags=tags_1, candidate_tags=tags_2)
+            break
+        except InternalServerError as e:
+            print(f'Trying in 5s (#{retry})')
+            time.sleep(5)
+            retry -= 1
 
-    incidents = LogsightResult(PRIVATE_KEY, EMAIL, APP_NAME)\
-        .get_results(dt_start, dt_end, 'incidents')
 
 
-Show incidents
-==============
+Show verification results
+=========================
 
-Iterate over the list of incidents received and print the incidents' properties
+Display the deployment risk and access the webpage with the verification results
 
 .. code:: python
 
-    for j, i in enumerate(incidents):
-        print('Incident:', j + 1, 'Score:', i.total_score, '(', i.timestamp_start, i.timestamp_end, ')')
+    print(f'Deployment risk: {result["risk"]}')
+    print(f'Report webpage: {result["link"]}')
 
+You can copy the url to your browser to see the results of the evaluation.
 
 Run the application
 *******************
 
-Run the Python code from your detecting_incidents_app directory.
+Run the Python code from your quick_guide directory.
 
 .. code-block:: console
 
-    $ python detecting_incidents_app.py
-
-
-Clean up resources
-*******************
-
-Delete the application_ `detecting_incidents_app` from your subscription.
+    $ python quick_guide.py

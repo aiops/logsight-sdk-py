@@ -28,6 +28,7 @@ for i in range(10):
     logger.info(f'Connecting to database (instance ID: {i % 4})')
     logger.info(f'Reading {i * 100} KBytes')
     logger.info(f'Closing connection (instance ID: {i % 4})')
+handler.flush()
 
 print('Redis running (v2.1.2)')
 tags_2 = {'service': 'redis', 'version': 'v2.1.53'}
@@ -37,7 +38,6 @@ for i in range(15):
     logger.info(f'Unable to read {i * 100} KBytes')
     logger.error(f'Underlying storage is corrupted')
     logger.info(f'Closing connection (instance ID: {i % 4})')
-
 handler.flush()
 
 print('Calculate new deployment risk')
