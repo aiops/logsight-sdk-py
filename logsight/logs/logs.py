@@ -6,10 +6,10 @@ from logsight.api_client import APIClient
 from logsight.endpoints import PATH_LOGS_SINGLES
 
 
-def create_single(app_id, level, message, tags, timestamp=None, metadata=None):
+def create_single(app_name, level, message, tags, timestamp=None, metadata=None):
     timestamp = timestamp or datetime.datetime.now(tz=tzlocal()).isoformat()
     r = {
-        'applicationId': app_id,
+        'applicationName': app_name,
         'timestamp': timestamp,
         'level': level,
         'message': message,

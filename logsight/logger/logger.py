@@ -7,18 +7,18 @@ from logsight.logs import LogsightLogs, create_single
 class LogsightLogger(BufferingHandler):
     buffer_lifespan_seconds = 1
 
-    def __init__(self, token, app_id=None):
+    def __init__(self, token, app_name):
         """Creates an logger handler.
 
         Args:
             token (str): Token.
-            app_id (str): Application id.
+            app_name (str): Application name.
 
         """
         BufferingHandler.__init__(self, capacity=128)
 
         self.token = token
-        self.app_id = app_id
+        self.app_name = app_name
 
         self.logsight_logs = LogsightLogs(token)
         self.last_emit = 0
@@ -51,7 +51,7 @@ class LogsightLogger(BufferingHandler):
     def flush(self):
         self.acquire()
         try:
-            msgs = [create_single(app_id=self.app_id,
+            msgs = [create_single(app_name=self.app_name,
                                   level=record.levelname,
                                   message=self.format(record),
                                   tags=self.tags,
