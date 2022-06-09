@@ -53,7 +53,7 @@ class TestLogger(unittest.TestCase):
     @classmethod
     def __setup_handler(cls):
         logsight_handler = LogsightLogger(token=cls.auth.token,
-                                          app_id=cls.app_id)
+                                          app_name=APP_NAME)
         logsight_handler.setLevel(logging.DEBUG)
 
         logger = logging.getLogger(__name__)

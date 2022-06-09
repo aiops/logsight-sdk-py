@@ -13,7 +13,7 @@ PASSWORD = os.getenv('LOGSIGHT_PASSWORD') or 'jambus-kujdog-jexGe4'
 set_host("https://demo.logsight.ai/api/v1/")
 
 auth = LogsightAuthentication(email=EMAIL, password=PASSWORD)
-handler = LogsightLogger(auth.token)
+handler = LogsightLogger(auth.token, "myapp")
 handler.setLevel(logging.DEBUG)
 
 logger = logging.getLogger(__name__)
