@@ -1,6 +1,10 @@
 CHANGELOG
 *********
 
+0.2.2 (2022-06-09)
+-------------------
+- Improved testing
+
 0.2.1 (2022-06-09)
 -------------------
 - SDK modified to support new Logsight API
