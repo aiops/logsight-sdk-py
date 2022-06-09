@@ -18,7 +18,7 @@ Use the Logsight SDK for Python to:
 
 Prerequisites
 *************
-+ logsight.ai_ subscription (create one for free to get your private key)
++ logsight.ai_ subscription (create one for free)
 + You will need the `login` and `password` to paste into the code below, later
 
 .. _logsight.ai: https://logsight.ai/
