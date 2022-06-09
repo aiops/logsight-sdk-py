@@ -11,7 +11,7 @@ from logsight.authentication import LogsightAuthentication
 from logsight.applications import LogsightApplications
 from logsight.logger.logger import LogsightLogger
 
-APP_NAME = 'test_logger'
+APP_NAME = 'app_test_logger'
 N_LOG_MESSAGES_TO_SEND = 450
 LOGGING_TO_SYS_STDOUT = True
 
@@ -48,11 +48,12 @@ class TestLogger(unittest.TestCase):
         for tag in ['v1.1.1', 'v2.2.2']:
             self._send_log_messages(log_file_name=LOG_FILES['helloworld'],
                                     n_messages=N_LOG_MESSAGES_TO_SEND,
-                                    tags={"main": tag})
+                                    tags={'version': tag})
 
     @classmethod
     def __setup_handler(cls):
-        logsight_handler = LogsightLogger(token=cls.auth.token, tags={"main": 'v1.1.2'}, app_id=cls.app_id)
+        logsight_handler = LogsightLogger(token=cls.auth.token,
+                                          app_id=cls.app_id)
         logsight_handler.setLevel(logging.DEBUG)
 
         logger = logging.getLogger(__name__)
@@ -77,35 +78,12 @@ class TestLogger(unittest.TestCase):
         for i, (level, message) in enumerate(load_log_file(log_file_name, n_messages)):
             if verbose and i % 100 == 0:
                 print(f'Sending message # (app_name: {self.app_id}): {i}')
-            self._send_log_message(i, level, message, tags)
+            self._send_log_message(i, level, message)
 
-    def _send_log_message(self, i, level, message, tag):
+    def _send_log_message(self, i, level, message):
         if level.lower() not in ['info', 'warning', 'error', 'debug', 'critical']:
             sys.exit('Error parsing level for log message number %d: %s %s' % (i, level, message))
         eval('self.logger.' + level.lower() + f"(\'{message}\')")
-
-    # def test_invalid_key(self):
-    #     private_key = '27x'
-    #     with self.assertRaises(Unauthorized):
-    #         LogsightResult(private_key, EMAIL, APP_NAME).\
-    #             get_results(self.dt_start, self.dt_end, 'log_ad')
-    #
-    # def test_invalid_app_name(self):
-    #     invalid_app_name = 'invalid_app_name'
-    #     with self.assertRaises(Unauthorized):
-    #         LogsightResult(PRIVATE_KEY, EMAIL, invalid_app_name).\
-    #             get_results(self.dt_start, self.dt_end, 'log_quality')
-    #
-    # def test_invalid_timestamp(self):
-    #     timestamp_short = '2021-10-07'
-    #     with self.assertRaises(BadRequest):
-    #         LogsightResult(PRIVATE_KEY, EMAIL, APP_NAME).\
-    #             get_results(self.dt_start, timestamp_short, 'log_quality')
-    #
-    # def test_invalid_incident_type(self):
-    #     with self.assertRaises(BadRequest):
-    #         LogsightResult(PRIVATE_KEY, EMAIL, APP_NAME).\
-    #             get_results(self.dt_start, self.dt_end, 'invalid_incident_type')
 
 
 if __name__ == '__main__':

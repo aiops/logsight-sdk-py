@@ -2,7 +2,27 @@
 Applications
 -------------------
 
-.. automodule:: logsight.application.application
+.. automodule:: logsight.applications.applications
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :special-members: __init__
+
+
+Authentication
+-------------------
+
+.. autoclass:: logsight.authentication.LogsightAuthentication
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :special-members: __init__
+
+
+Compare
+-------------------
+
+.. autoclass:: logsight.compare.LogsightCompare
    :members:
    :undoc-members:
    :show-inheritance:
@@ -13,57 +33,30 @@ Logger
 -------------
 
 .. autoclass:: logsight.logger.logger.LogsightLogger
-   :members: buffer_lifespan_seconds
-   :undoc-members:
-   :show-inheritance:
-   :special-members: __init__
-
-
-Result
--------------
-
-.. autoclass:: logsight.result.result.LogsightResult
    :members:
    :undoc-members:
    :show-inheritance:
    :special-members: __init__
 
 
-Template
--------------
+Logs
+-------------------
 
-.. autoclass:: logsight.result.template.Template
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-
-Incident
--------------
-
-.. autoclass:: logsight.result.incident.Incident
+.. autoclass:: logsight.logs.LogsightLogs
    :members:
    :undoc-members:
    :show-inheritance:
    :special-members: __init__
 
 
-Quality
--------------
+Users
+-------------------
 
-.. autoclass:: logsight.result.quality.Quality
+.. autoclass:: logsight.users.LogsightUsers
    :members:
    :undoc-members:
    :show-inheritance:
-
-
-SemanticAd
--------------
-
-.. autoclass:: logsight.result.semantic_ad.SemanticAd
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :special-members: __init__
 
 
 Exceptions

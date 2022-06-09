@@ -1,7 +1,7 @@
 import unittest
 
 from tests.config import HOST_API, EMAIL, PASSWORD
-from tests.utils import generate_logs
+from tests.utils import generate_singles
 
 from logsight.config import set_host
 from logsight.authentication import LogsightAuthentication
@@ -27,13 +27,18 @@ class TestLogs(unittest.TestCase):
     def tearDownClass(cls):
         cls.app_mng.delete(cls.app_id)
 
-    def test_send_logs_and_flush(self):
-        n_log_messages = 60
+    def test_singles(self):
+        n_log_messages = 90
         g = LogsightLogs(self.auth.token)
-        p = generate_logs(n=n_log_messages)
-        r1 = g.send(p, tags={'main': 'v1.1.3'}, app_id=self.app_id)
-        print(r1)
-        self.assertEqual(r1['logsCount'], n_log_messages)
+        tags = {
+            'system': 'hadoop',
+            'version': '1.1.2',
+            'env': 'pre-production'
+        }
+        p = generate_singles(self.app_id, tags, n=n_log_messages)
+        res = g.send_singles(p)[0]
+        print(res)
+        self.assertEqual(res['logsCount'], n_log_messages)
 
 
 if __name__ == '__main__':

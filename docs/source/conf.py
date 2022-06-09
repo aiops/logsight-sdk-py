@@ -24,7 +24,7 @@ print(sys.path)
 # -- Project information -----------------------------------------------------
 
 project = 'Logsight SDK Python'
-copyright = '2021, logsight.ai, GmbH'
+copyright = '2022, logsight.ai, GmbH'
 author = 'Jorge Cardoso'
 
 # The full version, including alpha/beta/rc tags

@@ -1,5 +1,5 @@
 import logsight.config
-from logsight.endpoints import PATH_USERS, PATH_USERS_DELETE, PATH_LOGIN
+from logsight.endpoints import PATH_USERS, PATH_USERS_DELETE, PATH_AUTH_LOGIN
 from logsight.api_client import APIClient
 
 
