@@ -6,10 +6,9 @@ from logsight.api_client import APIClient
 from logsight.endpoints import PATH_LOGS_SINGLES
 
 
-def create_single(app_name, level, message, tags, timestamp=None, metadata=None):
+def create_single(level, message, tags, timestamp=None, metadata=None):
     timestamp = timestamp or datetime.datetime.now(tz=tzlocal()).isoformat()
     r = {
-        'applicationName': app_name,
         'timestamp': timestamp,
         'level': level,
         'message': message,
@@ -39,8 +38,6 @@ class LogsightLogs(APIClient):
             log_lst (List[dict]): Log records/messages.
             [
               {
-                "applicationId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "applicationName": "string",
                 "level": "string",
                 "message": "string",
                 "metadata": {
@@ -58,14 +55,11 @@ class LogsightLogs(APIClient):
             ]
 
         Returns:
-            list:
-            [
+            dict:
                 {
-                  "applicationId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "logsCount": 0,
                   "receiptId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 }
-            ]
 
         """
         headers = {

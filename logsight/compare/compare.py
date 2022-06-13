@@ -3,7 +3,7 @@ from logsight.endpoints import (PATH_POST_COMPARE,
                                 PATH_GET_COMPARE,
                                 PATH_GET_COMPARE_ID,
                                 PATH_DELETE_COMPARE,
-                                PATH_POST_STATUS)
+                                PATH_POST_COMPARE_STATUS)
 from logsight.api_client import APIClient
 
 
@@ -192,6 +192,6 @@ class LogsightCompare(APIClient):
             'Authorization': f'Bearer {self.token}'
         }
         return self._post(host=logsight.config.HOST_API,
-                          path=PATH_POST_STATUS,
+                          path=PATH_POST_COMPARE_STATUS,
                           json=payload,
                           headers=headers)

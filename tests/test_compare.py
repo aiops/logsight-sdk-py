@@ -6,7 +6,6 @@ from tests.utils import generate_singles
 
 from logsight.config import set_host
 from logsight.authentication import LogsightAuthentication
-from logsight.applications import LogsightApplications
 from logsight.compare import LogsightCompare
 from logsight.exceptions import Conflict, InternalServerError
 from logsight.logs import LogsightLogs
@@ -15,7 +14,6 @@ APP_NAME = 'unittest_compare_app'
 
 
 class TestCompare(unittest.TestCase):
-    app_id = None
     tags_v1 = {'system': 'hadoop', 'version': 'v1.0.0'}
     tags_v2 = {'system': 'hadoop', 'version': 'v2.0.0'}
     receipt_id = None
@@ -25,20 +23,14 @@ class TestCompare(unittest.TestCase):
         super(TestCompare, cls).setUpClass()
         set_host(HOST_API)
         cls.auth = LogsightAuthentication(email=EMAIL, password=PASSWORD)
-        cls.app_mng = LogsightApplications(cls.auth.user_id, cls.auth.token)
-        cls.app_id = cls.app_mng.create(APP_NAME)['applicationId']
         cls._send_logs()
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.app_mng.delete(cls.app_id)
 
     @classmethod
     def _send_logs(cls):
         n_log_messages = 60
         g = LogsightLogs(cls.auth.token)
-        g.send_singles(generate_singles(tags=cls.tags_v1, app_id=cls.app_id, delta=0, n=n_log_messages))
-        r = g.send_singles(generate_singles(tags=cls.tags_v2, app_id=cls.app_id, delta=-2, n=n_log_messages))[0]
+        g.send_singles(generate_singles(tags=cls.tags_v1, delta=0, n=n_log_messages))
+        r = g.send_singles(generate_singles(tags=cls.tags_v2,  delta=-2, n=n_log_messages))
         cls.receipt_id = r['receiptId']
 
     @classmethod

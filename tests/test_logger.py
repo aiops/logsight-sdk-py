@@ -8,7 +8,6 @@ from tests.integration.load_logs import LOG_FILES
 
 from logsight.config import set_host
 from logsight.authentication import LogsightAuthentication
-from logsight.applications import LogsightApplications
 from logsight.logger.logger import LogsightLogger
 
 APP_NAME = 'app_test_logger'
@@ -32,8 +31,6 @@ class TestLogger(unittest.TestCase):
         super(TestLogger, cls).setUpClass()
         set_host(HOST_API)
         cls.auth = LogsightAuthentication(email=EMAIL, password=PASSWORD)
-        cls.app_mng = LogsightApplications(cls.auth.user_id, cls.auth.token)
-        cls.app_id = cls.app_mng.create(APP_NAME)['applicationId']
         cls.logger, cls.handler = cls.__setup_handler()
 
     @classmethod
@@ -42,7 +39,6 @@ class TestLogger(unittest.TestCase):
         # Since the remove_handler will flush the messages in the
         # internal buffer
         cls.__remove_handler(cls.logger, cls.handler)
-        cls.app_mng.delete(cls.app_id)
 
     def test_logging(self):
         for tag in ['v1.1.1', 'v2.2.2']:
@@ -52,8 +48,7 @@ class TestLogger(unittest.TestCase):
 
     @classmethod
     def __setup_handler(cls):
-        logsight_handler = LogsightLogger(token=cls.auth.token,
-                                          app_name=APP_NAME)
+        logsight_handler = LogsightLogger(token=cls.auth.token)
         logsight_handler.setLevel(logging.DEBUG)
 
         logger = logging.getLogger(__name__)

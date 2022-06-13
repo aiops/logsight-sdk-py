@@ -24,10 +24,9 @@ from dateutil.tz import tzlocal
 #     return logs
 
 
-def create_single(app_id, level, message, tags, timestamp=None, metadata=None):
+def create_single(level, message, tags, timestamp=None, metadata=None):
     timestamp = timestamp or datetime.datetime.now(tz=tzlocal()).isoformat()
     r = {
-        'applicationId': app_id,
         'timestamp': timestamp,
         'level': level,
         'message': message,
@@ -38,13 +37,12 @@ def create_single(app_id, level, message, tags, timestamp=None, metadata=None):
     return r
 
 
-def generate_singles(app_id, tags, delta=0, n=60):
+def generate_singles(tags, delta=0, n=60):
     """ Generate logs using (a variation of) iso8106 format """
     m = "[main] org.apache.hadoop.mapreduce: " \
         "Failed to connect. Executing with tokens: {i}"
     d = datetime.datetime.now(tz=tzlocal()) + datetime.timedelta(days=delta)
-    logs = [create_single(app_id=app_id,
-                          level='INFO',
+    logs = [create_single(level='INFO',
                           message=m.format(i=i),
                           tags=tags,
                           timestamp=d.isoformat(),

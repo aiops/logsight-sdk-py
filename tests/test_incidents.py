@@ -1,16 +1,9 @@
 import unittest
-import datetime
-import time
 
 from tests.config import HOST_API, EMAIL, PASSWORD
-from tests.utils import generate_singles
 
 from logsight.config import set_host
 from logsight.authentication import LogsightAuthentication
-from logsight.applications import LogsightApplications
-from logsight.logs import LogsightLogs
-from logsight.incidents import LogsightIncident
-from logsight.exceptions import Conflict, InternalServerError
 
 APP_NAME = 'class_test_incidents'
 
@@ -26,14 +19,11 @@ class TestIncidents(unittest.TestCase):
         super(TestIncidents, cls).setUpClass()
         set_host(HOST_API)
         cls.auth = LogsightAuthentication(email=EMAIL, password=PASSWORD)
-        cls.app_mng = LogsightApplications(cls.auth.user_id, cls.auth.token)
-        cls.app_id = cls.app_mng.create(APP_NAME)['applicationId']
-        cls._send_logs()
+        # cls._send_logs()
 
     @classmethod
     def tearDownClass(cls):
-        cls.app_mng.delete(cls.app_id)
-
+        pass
     # @classmethod
     # def _send_logs(cls):
     #     n_log_messages = 90

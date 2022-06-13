@@ -8,12 +8,12 @@ from logsight.authentication import LogsightAuthentication
 from logsight.logger.logger import LogsightLogger
 from logsight.compare import LogsightCompare
 
-EMAIL = os.getenv('LOGSIGHT_EMAIL') or 'jorge.cardoso.pt@gmail.com'
-PASSWORD = os.getenv('LOGSIGHT_PASSWORD') or 'jambus-kujdog-jexGe4'
-set_host("https://demo.logsight.ai/api/v1/")
+EMAIL = os.getenv('LOGSIGHT_EMAIL') or 'nedelkoski@tu-berlin.de'
+PASSWORD = os.getenv('LOGSIGHT_PASSWORD') or 'sasho123'
+set_host("http://localhost:4200/api/v1/")
 
 auth = LogsightAuthentication(email=EMAIL, password=PASSWORD)
-handler = LogsightLogger(auth.token, 'my_app')
+handler = LogsightLogger(auth.token)
 handler.setLevel(logging.DEBUG)
 
 logger = logging.getLogger(__name__)
@@ -22,7 +22,7 @@ logger.addHandler(handler)
 
 
 print('Redis running (v1.1.2)')
-tags_1 = {'service': 'redis', 'version': 'v1.1.52'}
+tags_1 = {'service': 'redis', 'version': 'v1.1.53'}
 handler.set_tags(tags=tags_1)
 for i in range(10):
     logger.info(f'Connecting to database (instance ID: {i % 4})')
@@ -31,7 +31,7 @@ for i in range(10):
 handler.flush()
 
 print('Redis running (v2.1.2)')
-tags_2 = {'service': 'redis', 'version': 'v2.1.53'}
+tags_2 = {'service': 'redis', 'version': 'v2.1.54'}
 handler.set_tags(tags=tags_2)
 for i in range(15):
     logger.info(f'Connecting to database (instance ID: {i % 4})')
