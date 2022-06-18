@@ -48,8 +48,7 @@ class LogsightLogger(BufferingHandler):
     def flush(self):
         self.acquire()
         try:
-            msgs = [create_single(
-                                  level=record.levelname,
+            msgs = [create_single(level=record.levelname,
                                   message=self.format(record),
                                   tags=self.tags,
                                   timestamp=None,

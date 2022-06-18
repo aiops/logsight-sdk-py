@@ -10,7 +10,6 @@ from logsight.config import set_host
 from logsight.authentication import LogsightAuthentication
 from logsight.logger.logger import LogsightLogger
 
-APP_NAME = 'app_test_logger'
 N_LOG_MESSAGES_TO_SEND = 450
 LOGGING_TO_SYS_STDOUT = True
 

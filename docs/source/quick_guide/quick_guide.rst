@@ -111,7 +111,7 @@ For the impatient
     cd quick_guide
     python3 -m venv venv
     source venv/bin/activate
-    curl https://raw.githubusercontent.com/aiops/logsight-sdk-py/main/docs/source/quick_guide/quick_guide.py --output detecting_incidents_app.py
+    curl https://raw.githubusercontent.com/aiops/logsight-sdk-py/main/docs/source/quick_guide/quick_guide.py --output quick_guide.py
     pip install logsight-sdk-py
     unset LOGSIGHT_PASSWORD LOGSIGHT_EMAIL
     export LOGSIGHT_PASSWORD=mgewxky59zm1euavowtjon9igc
@@ -171,7 +171,7 @@ Add logsight.ai logging handler to your logging system:
 
 .. code:: python
 
-    handler = LogsightLogger(auth.token, 'my_app')
+    handler = LogsightLogger(auth.token)
     handler.setLevel(logging.DEBUG)
 
     logger = logging.getLogger(__name__)
@@ -223,7 +223,6 @@ Your new version is v2.1.1.
         logger.info(f'Unable to read {i * 100} KBytes')
         logger.error(f'Underlying storage is corrupted')
         logger.info(f'Closing connection (instance ID: {i % 4})')
-
     handler.flush()
 
 

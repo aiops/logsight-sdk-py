@@ -30,9 +30,9 @@ class LogsightAuthentication(APIClient):
             token (str): Access token
             user_id (str): Identifier of the user
         """
-        payload = {"email": self.email,
-                   "password": self.password}
-        headers = {"content-type": "application/json"}
+        payload = {'email': self.email,
+                   'password': self.password}
+        headers = {'Content-Type': 'application/json'}
         r = self._post(logsight.config.HOST_API,
                        PATH_AUTH_LOGIN,
                        json=payload,

@@ -63,8 +63,8 @@ class LogsightLogs(APIClient):
 
         """
         headers = {
-            "content-type": "application/json",
-            "Authorization": f"Bearer {self.token}"
+            'Content-Type': 'application/json',
+            'Authorization': f'Bearer {self.token}'
         }
         return self._post(host=logsight.config.HOST_API,
                           path=PATH_LOGS_SINGLES,
@@ -124,7 +124,7 @@ class LogsightLogs(APIClient):
     #         'receiptId': receipt_id,
     #     }
     #     headers = {
-    #         'content-type': 'application/json',
+    #         'Content-Type': 'application/json',
     #         'Authorization': f'Bearer {self.token}'
     #     }
     #     return self._post(host=HOST_API,

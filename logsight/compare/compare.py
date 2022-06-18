@@ -75,7 +75,7 @@ class LogsightCompare(APIClient):
             'logsReceiptId': log_receipt_id
         }
         headers = {
-            'content-type': 'application/json',
+            'Content-Type': 'application/json',
             'Authorization': f'Bearer {self.token}'
         }
         return self._post(host=logsight.config.HOST_API,
@@ -114,7 +114,7 @@ class LogsightCompare(APIClient):
 
         """
         headers = {
-            'content-type': 'application/json',
+            'Content-Type': 'application/json',
             'Authorization': f'Bearer {self.token}'
         }
         return self._get(host=logsight.config.HOST_API,
@@ -140,7 +140,7 @@ class LogsightCompare(APIClient):
 
         """
         headers = {
-            'content-type': 'application/json',
+            'Content-Type': 'application/json',
             'Authorization': f'Bearer {self.token}'
         }
         return self._get(host=logsight.config.HOST_API,
@@ -161,7 +161,7 @@ class LogsightCompare(APIClient):
 
         """
         headers = {
-            'content-type': 'application/json',
+            'Content-Type': 'application/json',
             'Authorization': f'Bearer {self.token}'
         }
         return self._delete(host=logsight.config.HOST_API,
@@ -188,7 +188,7 @@ class LogsightCompare(APIClient):
             'compareStatus': status
         }
         headers = {
-            'content-type': 'application/json',
+            'Content-Type': 'application/json',
             'Authorization': f'Bearer {self.token}'
         }
         return self._post(host=logsight.config.HOST_API,

@@ -1,1 +1,1 @@
-from .incidents import LogsightIncident
+from .incidents import LogsightIncidents
