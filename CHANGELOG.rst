@@ -1,6 +1,13 @@
 CHANGELOG
 *********
 
+
+0.2.5 (2022-06-18)
+-------------------
+- Replaced private emails
+- Added unittests for incidents
+- Removing application completely
+
 0.2.2 (2022-06-09)
 -------------------
 - Improved testing
