@@ -8,8 +8,9 @@ from logsight.authentication import LogsightAuthentication
 from logsight.logger.logger import LogsightLogger
 from logsight.compare import LogsightCompare
 
-EMAIL = os.getenv('LOGSIGHT_EMAIL') or 'jorge.cardoso.pt@gmail.com'
-PASSWORD = os.getenv('LOGSIGHT_PASSWORD') or 'jambus-kujdog-jexGe4'
+
+EMAIL = os.getenv('LOGSIGHT_EMAIL') or 'logsight.testing.001@gmail.com'
+PASSWORD = os.getenv('LOGSIGHT_PASSWORD') or 'mowfU5-fyfden-fefzib'
 set_host('https://demo.logsight.ai/api/v1/')
 
 auth = LogsightAuthentication(email=EMAIL, password=PASSWORD)

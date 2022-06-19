@@ -12,8 +12,8 @@ setup(
     description='Logsight SDK Python',
     long_description=long_description,
     long_description_content_type='text/x-rst',
-    author='Jorge Cardoso',
-    author_email='jorge.cardoso.pt@gmail.com',
+    author='logsight.ai',
+    author_email='support@logsight.ai',
     url="https://github.com/aiops/logsight-sdk-py",
     project_urls={
         "Documentation": "https://logsight-sdk-py.readthedocs.io/en/latest/",
