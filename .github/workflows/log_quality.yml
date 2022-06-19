@@ -2,7 +2,9 @@ name: Log Quality
 
 on:
   push:
-    branches: [ develop ]
+    tags:
+      # Only execute action if tags are attached to commit
+      - '*.*.*'
 
 jobs:
   check-log-quality:
