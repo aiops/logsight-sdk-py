@@ -3,17 +3,20 @@ from dateutil.tz import tzlocal
 
 import logsight.config
 from logsight.api_client import APIClient
-from logsight.endpoints import PATH_LOGS
+from logsight.endpoints import PATH_LOGS_SINGLES
 
 
-def create_log_record(level, message, timestamp=None, metadata=None):
+def create_single(level, message, tags, timestamp=None, metadata=None):
     timestamp = timestamp or datetime.datetime.now(tz=tzlocal()).isoformat()
-    return {
+    r = {
         'timestamp': timestamp,
         'level': level,
         'message': message,
-        'metadata': metadata or '',
+        'tags': tags
     }
+    if metadata:
+        r.update({'metadata': metadata})
+    return r
 
 
 class LogsightLogs(APIClient):
@@ -28,58 +31,44 @@ class LogsightLogs(APIClient):
         super().__init__()
         self.token = token
 
-    def send(self, log_lst, tags, app_id=None, app_name=None):
+    def send_singles(self, log_lst):
         """Send log records to an application.
 
         Args:
-            app_id (str): Application id.
-            app_name (str): Application name.
             log_lst (List[dict]): Log records/messages.
-                 [
-                    {
-                        'level': 'string',
-                        'message': 'string',
-                        'metadata': 'string',
-                        'timestamp': 'string'
-                    }
-                ],
-            tags (dict): Tags to associate with log records.
+            [
+              {
+                "level": "string",
+                "message": "string",
+                "metadata": {
+                  "additionalProp1": "string",
+                  "additionalProp2": "string",
+                  "additionalProp3": "string"
+                },
+                "tags": {
+                  "additionalProp1": "string",
+                  "additionalProp2": "string",
+                  "additionalProp3": "string"
+                },
+                "timestamp": "string"
+              }
+            ]
 
         Returns:
             dict:
-            {
-              "applicationId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "logsCount": 0,
-              "receiptId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "source": "string"
-            }
-
-        Raises:
-            TODO(jcardoso)
+                {
+                  "logsCount": 0,
+                  "receiptId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                }
 
         """
-        if app_name is None and app_id is not None:
-            payload = {
-                'applicationId': app_id,
-                'logs': log_lst,
-                'tags': tags
-            }
-        elif app_name is not None and app_id is None:
-            payload = {
-                'applicationName': app_id,
-                'logs': log_lst,
-                'tags': tags
-            }
-        else:
-            raise AttributeError("Please provide correct application name or ID")
-
         headers = {
-            "content-type": "application/json",
+            'Content-Type': 'application/json',
             'Authorization': f'Bearer {self.token}'
         }
         return self._post(host=logsight.config.HOST_API,
-                          path=PATH_LOGS,
-                          json=payload,
+                          path=PATH_LOGS_SINGLES,
+                          json=log_lst,
                           headers=headers)
 
     # def upload(self, app_id, file, tag):
@@ -135,7 +124,7 @@ class LogsightLogs(APIClient):
     #         'receiptId': receipt_id,
     #     }
     #     headers = {
-    #         'content-type': 'application/json',
+    #         'Content-Type': 'application/json',
     #         'Authorization': f'Bearer {self.token}'
     #     }
     #     return self._post(host=HOST_API,

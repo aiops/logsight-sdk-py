@@ -22,8 +22,7 @@ class APIClient:
                 "Content could not be converted from JSON: %s" % r.text
             )
 
-    def _post(self, host, path, json=None, files=None, headers=None,
-              verbose=False):
+    def _post(self, host, path, json=None, files=None, headers=None):
         try:
             url = urllib.parse.urljoin(host, path)
             if json:
@@ -45,13 +44,16 @@ class APIClient:
                 "Content could not be converted from JSON: %s" % r.text
             )
 
-    def _delete(self, host, path, headers=None):
+    def _delete(self, host, path, headers=None, ignore_return_data=False):
         try:
             url = urllib.parse.urljoin(host, path)
             r = requests.delete(url, headers=headers)
             r.raise_for_status()
         except requests.exceptions.HTTPError as err:
             raise from_dict(js.loads(err.response.text))
+
+        if ignore_return_data:
+            return None
 
         try:
             return js.loads(r.text)

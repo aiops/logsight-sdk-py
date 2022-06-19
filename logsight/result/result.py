@@ -58,7 +58,7 @@ class LogsightResult(APIClient):
         """
         data = {
             "private-key": self.private_key,
-            "email": self.email,
+            'email': self.email,
             "app": self.app_name,
             "start-time": start_time,
             "end-time": end_time,

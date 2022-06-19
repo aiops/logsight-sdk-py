@@ -1,12 +1,12 @@
 import logsight.config
-from logsight.endpoints import PATH_LOGIN
+from logsight.endpoints import PATH_AUTH_LOGIN
 from logsight.api_client import APIClient
 
 
 class LogsightAuthentication(APIClient):
 
     def __init__(self, email, password):
-        """Class to manage users.
+        """Class to authenticate users.
 
         Args:
             email (str): Email associated with the subscription.
@@ -30,11 +30,11 @@ class LogsightAuthentication(APIClient):
             token (str): Access token
             user_id (str): Identifier of the user
         """
-        payload = {"email": self.email,
-                   "password": self.password}
-        headers = {"content-type": "application/json"}
+        payload = {'email': self.email,
+                   'password': self.password}
+        headers = {'Content-Type': 'application/json'}
         r = self._post(logsight.config.HOST_API,
-                       PATH_LOGIN,
+                       PATH_AUTH_LOGIN,
                        json=payload,
                        headers=headers)
 

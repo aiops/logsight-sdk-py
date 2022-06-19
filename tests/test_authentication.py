@@ -15,8 +15,9 @@ class TestAuthentication(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         super(TestAuthentication, cls).setUpClass()
+        set_host(HOST_API)
 
-    def test_set_invalid_host(self):
+    def test_set_host_invalid(self):
         set_host('https://invalid_host_logsight.ai/api/v1/')
         with self.assertRaises(ServiceUnavailable):
             LogsightAuthentication(email=EMAIL, password=PASSWORD).token

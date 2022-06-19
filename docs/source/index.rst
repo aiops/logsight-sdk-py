@@ -16,9 +16,9 @@ Logsight SDK Python
 
 .. toctree::
    :maxdepth: 2
-   :caption: Detecting Incidents
+   :caption: Quick Guide
 
-   detecting_incidents/quick_guide
+   quick_guide/quick_guide
 
 
 .. toctree::
