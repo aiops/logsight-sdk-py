@@ -125,6 +125,7 @@ Code example
 The following code snippets show what can be achieved with the Logsight SDK client library for Python:
 
 + Authenticate the client
++ Set tags
 + Attach the logger
 + Log logging statements
 + Verify the new deployment
@@ -164,6 +165,7 @@ If you use an on-prem deployment, setup the endpoint of your logsight system usi
     auth = LogsightAuthentication(email=EMAIL, password=PASSWORD)
 
 
+
 Attach the logger
 =================
 
@@ -178,6 +180,28 @@ Add logsight.ai logging handler to your logging system:
     logger.setLevel(logging.DEBUG)
     logger.addHandler(handler)
 
+
+Set tags
+========
+
+You can set tags using a dictionary
+
+.. code:: python
+
+    tags = {'service': 'redis', 'version': 'v1'}
+
+or by using environment variables. To set tags as environment variables you need to use the prefix ``LOGSIGHT_TAG``.
+
+.. code-block:: console
+
+    $ export LOGSIGHT_TAG_SERVICE=redis
+
+.. code:: python
+
+    from config import get_tags_from_env
+
+    env_tags = get_tags_from_env()  # {"service": "redis"}
+    handler.set_tags(tags=env_tags)
 
 Execute Redis Version v1.1.1
 ============================
