@@ -17,6 +17,8 @@ class TestCompare(unittest.TestCase):
     tags_v1 = {'system': 'hadoop', 'version': 'v1.0.0'}
     tags_v2 = {'system': 'hadoop', 'version': 'v2.0.0'}
     receipt_id = None
+    start_time = "now-12h"
+    stop_time = "now"
 
     @classmethod
     def setUpClass(cls):
@@ -35,7 +37,7 @@ class TestCompare(unittest.TestCase):
 
     @classmethod
     def _compare_with_retry(cls, comp, baseline_tags, candidate_tags, receipt_id):
-        attempt, max_attempts = 0, 5
+        attempt, max_attempts = 0, 10
         r = None
         while attempt < max_attempts:
             try:
@@ -61,7 +63,7 @@ class TestCompare(unittest.TestCase):
 
     def test_ls_comparisons(self):
         comp = LogsightCompare(self.auth.token)
-        r = comp.ls_comparisons()
+        r = comp.ls_comparisons(self.start_time, self.stop_time)
 
         self.assertIsInstance(r, dict)
         self.assertTrue('listCompare' in r)
@@ -71,7 +73,7 @@ class TestCompare(unittest.TestCase):
         comp = LogsightCompare(self.auth.token)
         r1 = self._compare_with_retry(comp, self.tags_v1, self.tags_v2, self.receipt_id)
         comp.rm_comparison_id(r1['compareId'])
-        r2 = comp.ls_comparisons()
+        r2 = comp.ls_comparisons(self.start_time, self.stop_time)
         self.assertFalse(any(i for i in r2['listCompare'] if i['_id'] == r1['compareId']))
 
     def test_compare_status(self):

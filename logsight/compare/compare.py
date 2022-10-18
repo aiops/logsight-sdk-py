@@ -83,7 +83,7 @@ class LogsightCompare(APIClient):
                           json=payload,
                           headers=headers)
 
-    def ls_comparisons(self):
+    def ls_comparisons(self, start_time, stop_time):
         """List comparisons stored.
 
         Returns:
@@ -118,7 +118,7 @@ class LogsightCompare(APIClient):
             'Authorization': f'Bearer {self.token}'
         }
         return self._get(host=logsight.config.HOST_API,
-                         path=PATH_GET_COMPARE,
+                         path=PATH_GET_COMPARE+f"?startTime={start_time}&stopTime={stop_time}",
                          headers=headers)
 
     def get_comparison_id(self, comp_id):
