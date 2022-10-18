@@ -34,10 +34,11 @@ class TestCompare(unittest.TestCase):
         g.send_singles(generate_singles(tags=cls.tags_v1, delta=0, n=n_log_messages))
         r = g.send_singles(generate_singles(tags=cls.tags_v2,  delta=-2, n=n_log_messages))
         cls.receipt_id = r['receiptId']
+        print("Receipt ID: ", r['receiptId'])
 
     @classmethod
     def _compare_with_retry(cls, comp, baseline_tags, candidate_tags, receipt_id):
-        attempt, max_attempts = 0, 10
+        attempt, max_attempts = 0, 30
         r = None
         while attempt < max_attempts:
             try:
@@ -45,10 +46,12 @@ class TestCompare(unittest.TestCase):
                                  candidate_tags=candidate_tags,
                                  log_receipt_id=receipt_id)
                 break
-            except Conflict:
+            except Conflict as e:
+                print("Exception", e)
                 time.sleep(1)
                 attempt += 1
-            except InternalServerError:
+            except InternalServerError as e:
+                print("Exception", e)
                 time.sleep(1)
                 attempt += 1
         return r
