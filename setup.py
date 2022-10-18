@@ -7,13 +7,13 @@ with open("README.rst", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
-    name='logsight-sdk-py',
+    name='logsight_sdk-sdk-py',
     version=VERSION,
     description='Logsight SDK Python',
     long_description=long_description,
     long_description_content_type='text/x-rst',
-    author='logsight.ai',
-    author_email='support@logsight.ai',
+    author='logsight_sdk.ai',
+    author_email='support@logsight_sdk.ai',
     url="https://github.com/aiops/logsight-sdk-py",
     project_urls={
         "Documentation": "https://logsight-sdk-py.readthedocs.io/en/latest/",

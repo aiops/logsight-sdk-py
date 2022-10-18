@@ -4,12 +4,12 @@ from dateutil.tz import tzlocal
 
 from tests.config import HOST_API, EMAIL, PASSWORD
 
-from logsight.config import set_host
-from logsight.authentication import LogsightAuthentication
-from logsight.incidents import LogsightIncidents
+from logsight_sdk.config import set_host
+from logsight_sdk.authentication import LogsightAuthentication
+from logsight_sdk.incidents import LogsightIncidents
 
-from logsight.exceptions import (NotFound,
-                                 InternalServerError)
+from logsight_sdk.exceptions import (NotFound,
+                                     InternalServerError)
 
 
 class TestIncidents(unittest.TestCase):

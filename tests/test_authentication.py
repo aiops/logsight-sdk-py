@@ -1,11 +1,11 @@
 import unittest
 
 from tests.config import HOST_API, EMAIL, PASSWORD
-from logsight.config import set_host
-from logsight.authentication import LogsightAuthentication
-from logsight.exceptions import (Unauthorized,
-                                 NotFound,
-                                 ServiceUnavailable)
+from logsight_sdk.config import set_host
+from logsight_sdk.authentication import LogsightAuthentication
+from logsight_sdk.exceptions import (Unauthorized,
+                                     NotFound,
+                                     ServiceUnavailable)
 
 
 class TestAuthentication(unittest.TestCase):

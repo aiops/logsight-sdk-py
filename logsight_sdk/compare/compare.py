@@ -1,10 +1,10 @@
-import logsight.config
-from logsight.endpoints import (PATH_POST_COMPARE,
-                                PATH_GET_COMPARE,
-                                PATH_GET_COMPARE_ID,
-                                PATH_DELETE_COMPARE,
-                                PATH_POST_COMPARE_STATUS)
-from logsight.api_client import APIClient
+import logsight_sdk.config
+from logsight_sdk.endpoints import (PATH_POST_COMPARE,
+                                    PATH_GET_COMPARE,
+                                    PATH_GET_COMPARE_ID,
+                                    PATH_DELETE_COMPARE,
+                                    PATH_POST_COMPARE_STATUS)
+from logsight_sdk.api_client import APIClient
 
 
 class LogsightCompare(APIClient):
@@ -78,7 +78,7 @@ class LogsightCompare(APIClient):
             'Content-Type': 'application/json',
             'Authorization': f'Bearer {self.token}'
         }
-        return self._post(host=logsight.config.HOST_API,
+        return self._post(host=logsight_sdk.config.HOST_API,
                           path=PATH_POST_COMPARE,
                           json=payload,
                           headers=headers)
@@ -117,7 +117,7 @@ class LogsightCompare(APIClient):
             'Content-Type': 'application/json',
             'Authorization': f'Bearer {self.token}'
         }
-        return self._get(host=logsight.config.HOST_API,
+        return self._get(host=logsight_sdk.config.HOST_API,
                          path=PATH_GET_COMPARE+f"?startTime={start_time}&stopTime={stop_time}",
                          headers=headers)
 
@@ -143,7 +143,7 @@ class LogsightCompare(APIClient):
             'Content-Type': 'application/json',
             'Authorization': f'Bearer {self.token}'
         }
-        return self._get(host=logsight.config.HOST_API,
+        return self._get(host=logsight_sdk.config.HOST_API,
                          path=PATH_GET_COMPARE_ID.format(compareId=comp_id),
                          headers=headers)
 
@@ -164,7 +164,7 @@ class LogsightCompare(APIClient):
             'Content-Type': 'application/json',
             'Authorization': f'Bearer {self.token}'
         }
-        return self._delete(host=logsight.config.HOST_API,
+        return self._delete(host=logsight_sdk.config.HOST_API,
                             path=PATH_DELETE_COMPARE.format(compareId=comp_id),
                             headers=headers,
                             ignore_return_data=True)
@@ -191,7 +191,7 @@ class LogsightCompare(APIClient):
             'Content-Type': 'application/json',
             'Authorization': f'Bearer {self.token}'
         }
-        return self._post(host=logsight.config.HOST_API,
+        return self._post(host=logsight_sdk.config.HOST_API,
                           path=PATH_POST_COMPARE_STATUS,
                           json=payload,
                           headers=headers)

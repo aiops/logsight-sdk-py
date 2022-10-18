@@ -16,7 +16,7 @@
 # our Python source codes reside.
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../../logsight/'))
+sys.path.insert(0, os.path.abspath('../../logsight_sdk/'))
 sys.path.insert(0, os.path.abspath('../../'))
 print(sys.path)
 
@@ -24,8 +24,8 @@ print(sys.path)
 # -- Project information -----------------------------------------------------
 
 project = 'Logsight SDK Python'
-copyright = '2022, logsight.ai, GmbH'
-author = 'logsight'
+copyright = '2022, logsight_sdk.ai, GmbH'
+author = 'logsight_sdk'
 
 # The full version, including alpha/beta/rc tags
 release = '0.2.4'

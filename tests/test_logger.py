@@ -6,9 +6,9 @@ import unittest
 from tests.config import HOST_API, EMAIL, PASSWORD
 from tests.integration.load_logs import LOG_FILES
 
-from logsight.config import set_host
-from logsight.authentication import LogsightAuthentication
-from logsight.logger.logger import LogsightLogger
+from logsight_sdk.config import set_host
+from logsight_sdk.authentication import LogsightAuthentication
+from logsight_sdk.logger.logger import LogsightLogger
 
 N_LOG_MESSAGES_TO_SEND = 450
 LOGGING_TO_SYS_STDOUT = True

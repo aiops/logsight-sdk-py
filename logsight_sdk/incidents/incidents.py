@@ -1,9 +1,9 @@
-import logsight.config
-from logsight.endpoints import (PATH_POST_INCIDENTS,
-                                PATH_GET_INCIDENT_ID,
-                                PATH_DELETE_INCIDENT,
-                                PATH_POST_INCIDENT_STATUS)
-from logsight.api_client import APIClient
+import logsight_sdk.config
+from logsight_sdk.endpoints import (PATH_POST_INCIDENTS,
+                                    PATH_GET_INCIDENT_ID,
+                                    PATH_DELETE_INCIDENT,
+                                    PATH_POST_INCIDENT_STATUS)
+from logsight_sdk.api_client import APIClient
 
 
 class LogsightIncidents(APIClient):
@@ -79,7 +79,7 @@ class LogsightIncidents(APIClient):
             'Content-Type': 'application/json',
             'Authorization': f'Bearer {self.token}'
         }
-        return self._post(host=logsight.config.HOST_API,
+        return self._post(host=logsight_sdk.config.HOST_API,
                           path=PATH_POST_INCIDENTS,
                           json=payload,
                           headers=headers)
@@ -106,7 +106,7 @@ class LogsightIncidents(APIClient):
             'Content-Type': 'application/json',
             'Authorization': f'Bearer {self.token}'
         }
-        return self._post(host=logsight.config.HOST_API,
+        return self._post(host=logsight_sdk.config.HOST_API,
                           path=PATH_POST_INCIDENT_STATUS,
                           json=payload,
                           headers=headers)
@@ -180,7 +180,7 @@ class LogsightIncidents(APIClient):
             'Content-Type': 'application/json',
             'Authorization': f'Bearer {self.token}'
         }
-        return self._get(host=logsight.config.HOST_API,
+        return self._get(host=logsight_sdk.config.HOST_API,
                          path=PATH_GET_INCIDENT_ID.format(incidentId=incident_id),
                          headers=headers)
 
@@ -201,7 +201,7 @@ class LogsightIncidents(APIClient):
             'Content-Type': 'application/json',
             'Authorization': f'Bearer {self.token}'
         }
-        return self._delete(host=logsight.config.HOST_API,
+        return self._delete(host=logsight_sdk.config.HOST_API,
                             path=PATH_DELETE_INCIDENT.format(incidentId=incident_id),
                             headers=headers,
                             ignore_return_data=False)

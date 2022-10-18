@@ -1,8 +1,8 @@
 import unittest
 
 from tests.config import EMAIL, PASSWORD
-from logsight.users import LogsightUsers
-from logsight.exceptions import Conflict, Unauthorized
+from logsight_sdk.users import LogsightUsers
+from logsight_sdk.exceptions import Conflict, Unauthorized
 
 
 class TestUsers(unittest.TestCase):

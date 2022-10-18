@@ -1,7 +1,7 @@
 from logging.handlers import BufferingHandler
 import time
 
-from logsight.logs import LogsightLogs, create_single
+from logsight_sdk.logs import LogsightLogs, create_single
 
 
 class LogsightLogger(BufferingHandler):

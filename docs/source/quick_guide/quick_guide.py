@@ -2,14 +2,14 @@ import os
 import time
 import logging
 
-from logsight.config import set_host
-from logsight.exceptions import InternalServerError
-from logsight.authentication import LogsightAuthentication
-from logsight.logger.logger import LogsightLogger
-from logsight.compare import LogsightCompare
+from logsight_sdk.config import set_host
+from logsight_sdk.exceptions import InternalServerError
+from logsight_sdk.authentication import LogsightAuthentication
+from logsight_sdk.logger.logger import LogsightLogger
+from logsight_sdk.compare import LogsightCompare
 
 
-EMAIL = os.getenv('LOGSIGHT_EMAIL') or 'logsight.testing.001@gmail.com'
+EMAIL = os.getenv('LOGSIGHT_EMAIL') or 'logsight_sdk.testing.001@gmail.com'
 PASSWORD = os.getenv('LOGSIGHT_PASSWORD') or 'mowfU5-fyfden-fefzib'
 set_host('https://demo.logsight.ai/api/v1/')
 

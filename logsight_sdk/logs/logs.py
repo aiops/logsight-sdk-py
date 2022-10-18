@@ -1,9 +1,9 @@
 import datetime
 from dateutil.tz import tzlocal
 
-import logsight.config
-from logsight.api_client import APIClient
-from logsight.endpoints import PATH_LOGS_SINGLES
+import logsight_sdk.config
+from logsight_sdk.api_client import APIClient
+from logsight_sdk.endpoints import PATH_LOGS_SINGLES
 
 
 def create_single(level, message, tags, timestamp=None, metadata=None):
@@ -66,7 +66,7 @@ class LogsightLogs(APIClient):
             'Content-Type': 'application/json',
             'Authorization': f'Bearer {self.token}'
         }
-        return self._post(host=logsight.config.HOST_API,
+        return self._post(host=logsight_sdk.config.HOST_API,
                           path=PATH_LOGS_SINGLES,
                           json=log_lst,
                           headers=headers)

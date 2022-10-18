@@ -3,7 +3,7 @@ import logging
 from dateutil.tz import tzlocal
 import datetime
 
-from logsight.logger.logger import LogsightLogger
+from logsight_sdk.logger.logger import LogsightLogger
 
 
 if __name__ == '__main__':
