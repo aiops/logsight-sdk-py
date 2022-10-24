@@ -4,19 +4,21 @@ import unittest
 from tests.config import HOST_API, EMAIL, PASSWORD
 from tests.utils import generate_singles
 
-from logsight.config import set_host
-from logsight.authentication import LogsightAuthentication
-from logsight.compare import LogsightCompare
-from logsight.exceptions import Conflict, InternalServerError
-from logsight.logs import LogsightLogs
+from logsight_sdk.config import set_host
+from logsight_sdk.authentication import LogsightAuthentication
+from logsight_sdk.compare import LogsightCompare
+from logsight_sdk.exceptions import Conflict, InternalServerError
+from logsight_sdk.logs import LogsightLogs
 
 APP_NAME = 'unittest_compare_app'
 
 
 class TestCompare(unittest.TestCase):
-    tags_v1 = {'system': 'hadoop', 'version': 'v1.0.0'}
-    tags_v2 = {'system': 'hadoop', 'version': 'v2.0.0'}
+    tags_v1 = {'system': 'hadoop', 'version': 'v1.0.5'}
+    tags_v2 = {'system': 'hadoop', 'version': 'v2.0.5'}
     receipt_id = None
+    start_time = "now-12h"
+    stop_time = "now"
 
     @classmethod
     def setUpClass(cls):
@@ -34,26 +36,26 @@ class TestCompare(unittest.TestCase):
         cls.receipt_id = r['receiptId']
 
     @classmethod
-    def _compare_with_retry(cls, comp, baseline_tags, candidate_tags, receipt_id):
-        attempt, max_attempts = 0, 5
+    def _compare_with_retry(cls, auth_token, baseline_tags, candidate_tags, receipt_id):
+        attempt, max_attempts = 0, 30
         r = None
         while attempt < max_attempts:
             try:
+                comp = LogsightCompare(auth_token)
                 r = comp.compare(baseline_tags=baseline_tags,
                                  candidate_tags=candidate_tags,
                                  log_receipt_id=receipt_id)
                 break
-            except Conflict:
-                time.sleep(1)
+            except Conflict as e:
+                time.sleep(2)
                 attempt += 1
-            except InternalServerError:
-                time.sleep(1)
+            except InternalServerError as e:
+                time.sleep(2)
                 attempt += 1
         return r
 
     def test_compare(self):
-        comp = LogsightCompare(self.auth.token)
-        r = self._compare_with_retry(comp, self.tags_v1, self.tags_v2, self.receipt_id)
+        r = self._compare_with_retry(self.auth.token, self.tags_v1, self.tags_v2, self.receipt_id)
 
         self.assertIsInstance(r, dict)
         self.assertTrue('totalLogCount' in r)
@@ -61,7 +63,7 @@ class TestCompare(unittest.TestCase):
 
     def test_ls_comparisons(self):
         comp = LogsightCompare(self.auth.token)
-        r = comp.ls_comparisons()
+        r = comp.ls_comparisons(self.start_time, self.stop_time)
 
         self.assertIsInstance(r, dict)
         self.assertTrue('listCompare' in r)
@@ -69,14 +71,14 @@ class TestCompare(unittest.TestCase):
 
     def test_create_delete_comparison(self):
         comp = LogsightCompare(self.auth.token)
-        r1 = self._compare_with_retry(comp, self.tags_v1, self.tags_v2, self.receipt_id)
+        r1 = self._compare_with_retry(self.auth.token, self.tags_v1, self.tags_v2, self.receipt_id)
         comp.rm_comparison_id(r1['compareId'])
-        r2 = comp.ls_comparisons()
+        r2 = comp.ls_comparisons(self.start_time, self.stop_time)
         self.assertFalse(any(i for i in r2['listCompare'] if i['_id'] == r1['compareId']))
 
     def test_compare_status(self):
         comp = LogsightCompare(self.auth.token)
-        r1 = self._compare_with_retry(comp, self.tags_v1, self.tags_v2, self.receipt_id)
+        r1 = self._compare_with_retry(self.auth.token, self.tags_v1, self.tags_v2, self.receipt_id)
 
         self.assertIsInstance(r1, dict)
         self.assertTrue('compareId' in r1)

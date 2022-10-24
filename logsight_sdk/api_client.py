@@ -2,7 +2,7 @@ import requests
 import urllib.parse
 import json as js
 
-from logsight.exceptions import from_dict, DataCorruption, ServiceUnavailable
+from logsight_sdk.exceptions import from_dict, DataCorruption, ServiceUnavailable
 
 
 class APIClient:

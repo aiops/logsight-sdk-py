@@ -1,3 +1,4 @@
-HOST_API = "http://localhost/api/v1/"
-EMAIL = 'logsight.testing.001@gmail.com'
-PASSWORD = 'mowfU5-fyfden-fefzib'
+import os
+HOST_API = os.getenv("LOGSIGHT_HOST_API", "http://localhost:8080/api/v1/")
+EMAIL = os.getenv("LOGSIGHT_EMAIL", 'email@email.com')
+PASSWORD = os.getenv("LOGSIGHT_PASSWORD", 'password')

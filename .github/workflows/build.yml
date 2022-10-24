@@ -43,7 +43,7 @@ jobs:
 
 #      - name: Test with unittest
 #        run: |
-#          export PYTHONPATH=$PYTHONPATH:/home/runner/work/logsight-python-sdk/logsight-python-sdk
+#          export PYTHONPATH=$PYTHONPATH:/home/runner/work/logsight_sdk-python-sdk/logsight_sdk-python-sdk
 #          cd tests
 #          python -m unittest discover
 #          cd ..

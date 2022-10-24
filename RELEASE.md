@@ -81,7 +81,7 @@ echo "New release: $version"
 # Create a branch from the current HEAD (does not touch local changes)
 git checkout -b release/$version develop
 
-# Update automatically or manually the version in setup.py and ./logsight_cli/logsight-cli.py
+# Update automatically or manually the version in setup.py and ./logsight_cli/logsight_sdk-cli.py
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     sed -i "/^VERSION/s;[^ ]*$;'$version';" setup.py
 elif [[ "$OSTYPE" == "darwin"* ]]; then
@@ -123,10 +123,10 @@ python3 setup.py sdist bdist_wheel
 twine check dist/*
 
 twine upload --repository testpypi dist/*
-python3 -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ logsight-cli-py
-python3 -m pip uninstall logsight-cli-py
+python3 -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ logsight_sdk-cli-py
+python3 -m pip uninstall logsight_sdk-cli-py
 
 twine upload dist/*
-python3 -m pip install logsight-cli-py
+python3 -m pip install logsight_sdk-cli-py
 }
 ```

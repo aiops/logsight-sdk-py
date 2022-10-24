@@ -1,9 +1,9 @@
-import logsight.config
-from logsight.api_client import APIClient
-from logsight.result.result_seq import ResultSeq
-from logsight.result.template import Template
-from logsight.result.incident import Incident
-from logsight.result.quality import Quality
+import logsight_sdk.config
+from logsight_sdk.api_client import APIClient
+from logsight_sdk.result.result_seq import ResultSeq
+from logsight_sdk.result.template import Template
+from logsight_sdk.result.incident import Incident
+from logsight_sdk.result.quality import Quality
 
 
 def _object_factory(anomaly_type, data):
@@ -66,4 +66,4 @@ class LogsightResult(APIClient):
         }
         PATH_RESULTS = 'Deprecated'
         return _object_factory(anomaly_type,
-                               self._post(logsight.config.HOST_API, PATH_RESULTS, data))
+                               self._post(logsight_sdk.config.HOST_API, PATH_RESULTS, data))

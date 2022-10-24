@@ -3,9 +3,9 @@ import unittest
 from tests.config import HOST_API, EMAIL, PASSWORD
 from tests.utils import generate_singles
 
-from logsight.config import set_host
-from logsight.authentication import LogsightAuthentication
-from logsight.logs import LogsightLogs
+from logsight_sdk.config import set_host
+from logsight_sdk.authentication import LogsightAuthentication
+from logsight_sdk.logs import LogsightLogs
 
 APP_NAME = 'unittest_TestLogs'
 
