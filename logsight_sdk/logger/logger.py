@@ -13,7 +13,7 @@ class LogsightLogger(BufferingHandler):
         Args:
             token (str): Token.
         """
-        BufferingHandler.__init__(self, capacity=128)
+        BufferingHandler.__init__(self, capacity=12)
 
         self.token = token
 
